@@ -9,14 +9,17 @@ const levels = [
   { id: "nback-13", name: "VANGUARDIA", trials: 13 },
   { id: "nback-21", name: "CENTINELA", trials: 21 },
 ] as const;
+
 type Level = (typeof levels)[number];
 type Phase = "setup" | "countdown" | "trial" | "result";
 type Speed = "lento" | "normal" | "rapido";
-type NBackTrial = { symbol: string; match: boolean };
+type Block = { first: string; second: string; answer: string; match: boolean };
+
 const SYMBOLS = ["◆", "●", "▲", "■", "✦", "⬟"];
 const PERFECT = 25;
 const PROGRESS = "cognition-nback-progress";
 const SCORES = "cognition-nback-scores";
+
 function readProgress() {
   try {
     const value = JSON.parse(localStorage.getItem(PROGRESS) ?? "{}");
@@ -25,6 +28,7 @@ function readProgress() {
     return {};
   }
 }
+
 function gamePercent(progress: Record<string, number>) {
   return Math.round(
     (levels.reduce(
@@ -35,42 +39,19 @@ function gamePercent(progress: Record<string, number>) {
       100,
   );
 }
-function makeSequence(length: number): NBackTrial[] {
-  const sequence: NBackTrial[] = [];
-  for (let index = 0; index < length; index += 1) {
-    if (index < 2) {
-      sequence.push({
-        symbol: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-        match: false,
-      });
-      continue;
-    }
-    const match = Math.random() < 0.42;
-    if (match)
-      sequence.push({ symbol: sequence[index - 2].symbol, match: true });
-    else {
-      const alternatives = SYMBOLS.filter(
-        (symbol) => symbol !== sequence[index - 2].symbol,
-      );
-      sequence.push({
-        symbol: alternatives[Math.floor(Math.random() * alternatives.length)],
-        match: false,
-      });
-    }
-  }
-  const scored = sequence.slice(2);
-  if (scored.length >= 2 && !scored.some((trial) => trial.match))
-    sequence[2] = { symbol: sequence[0].symbol, match: true };
-  if (scored.length >= 2 && scored.every((trial) => trial.match)) {
-    const alternatives = SYMBOLS.filter(
-      (symbol) => symbol !== sequence[1].symbol,
-    );
-    sequence[3] = {
-      symbol: alternatives[Math.floor(Math.random() * alternatives.length)],
-      match: false,
-    };
-  }
-  return sequence;
+
+function randomSymbol(exclude?: string) {
+  const pool = exclude
+    ? SYMBOLS.filter((symbol) => symbol !== exclude)
+    : SYMBOLS;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function createBlock(): Block {
+  const first = randomSymbol();
+  const second = randomSymbol();
+  const match = Math.random() > 0.5;
+  return { first, second, answer: match ? first : randomSymbol(first), match };
 }
 
 export function NBackScreen() {
@@ -79,8 +60,9 @@ export function NBackScreen() {
   const [level, setLevel] = useState<Level>(levels[0]);
   const [progress, setProgress] =
     useState<Record<string, number>>(readProgress);
-  const [sequence, setSequence] = useState<NBackTrial[]>([]);
-  const [index, setIndex] = useState(0);
+  const [block, setBlock] = useState<Block>(createBlock);
+  const [blockIndex, setBlockIndex] = useState(0);
+  const [step, setStep] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [countdown, setCountdown] = useState(3);
   const [speed, setSpeed] = useState<Speed>("normal");
@@ -91,6 +73,7 @@ export function NBackScreen() {
     perfect: number;
     game: number;
   } | null>(null);
+
   useEffect(() => {
     if (phase !== "countdown") return;
     const timer = window.setInterval(
@@ -98,8 +81,7 @@ export function NBackScreen() {
         setCountdown((current) => {
           if (current <= 1) {
             window.clearInterval(timer);
-            setIndex(0);
-            setCorrect(0);
+            setStep(0);
             setPhase("trial");
             return 0;
           }
@@ -109,15 +91,17 @@ export function NBackScreen() {
     );
     return () => window.clearInterval(timer);
   }, [phase]);
+
   useEffect(() => {
     if (phase !== "trial") return;
     const duration = speed === "lento" ? 2200 : speed === "rapido" ? 850 : 1400;
     const timer = window.setTimeout(() => {
-      if (index < sequence.length - 1) setIndex((current) => current + 1);
-      else finish(correct);
+      if (step < 2) setStep((current) => current + 1);
+      else completeBlock(correct);
     }, duration);
     return () => window.clearTimeout(timer);
-  }, [phase, index, sequence, speed]);
+  }, [phase, step, block, speed]);
+
   useEffect(() => {
     if (phase !== "setup") return;
     const old = document.body.style.overflow;
@@ -126,31 +110,41 @@ export function NBackScreen() {
       document.body.style.overflow = old;
     };
   }, [phase]);
+
   const start = (nextLevel: Level) => {
     setLevel(nextLevel);
-    setSequence(makeSequence(nextLevel.trials));
-    setIndex(0);
+    setBlock(createBlock());
+    setBlockIndex(0);
+    setStep(0);
     setCorrect(0);
     setCountdown(3);
     setResult(null);
     setPhase("countdown");
   };
-  const finish = (totalCorrect: number) => {
-    const scoredTrials = Math.max(sequence.length - 2, 1);
-    const perfect = totalCorrect === scoredTrials;
+
+  const completeBlock = (totalCorrect: number) => {
+    if (blockIndex < level.trials - 1) {
+      setCorrect(totalCorrect);
+      setBlockIndex((current) => current + 1);
+      setBlock(createBlock());
+      setStep(0);
+      return;
+    }
+    const perfect = totalCorrect === level.trials;
     const next = { ...progress };
     if (perfect) next[level.id] = Math.min(PERFECT, (next[level.id] ?? 0) + 1);
     setProgress(next);
-    if (perfect)
+    if (perfect) {
       try {
         localStorage.setItem(PROGRESS, JSON.stringify(next));
       } catch {
         /* restricted */
       }
+    }
     const data = {
-      score: Math.round((totalCorrect / scoredTrials) * 100),
+      score: Math.round((totalCorrect / level.trials) * 100),
       correct: totalCorrect,
-      total: scoredTrials,
+      total: level.trials,
       perfect: next[level.id] ?? 0,
       game: gamePercent(next),
     };
@@ -162,7 +156,6 @@ export function NBackScreen() {
       list.push({
         ...data,
         level: level.id,
-        sequence,
         createdAt: new Date().toISOString(),
       });
       localStorage.setItem(SCORES, JSON.stringify(list.slice(-100)));
@@ -170,15 +163,14 @@ export function NBackScreen() {
       /* restricted */
     }
   };
+
   const answer = (match: boolean) => {
-    if (phase !== "trial" || index < 2) return;
-    const isMatch = sequence[index].match;
-    const next = correct + (match === isMatch ? 1 : 0);
-    setCorrect(next);
-    if (index < sequence.length - 1) setIndex((current) => current + 1);
-    else finish(next);
+    if (phase !== "trial" || step !== 2) return;
+    completeBlock(correct + (match === block.match ? 1 : 0));
   };
-  const display = sequence[index]?.symbol;
+
+  const display =
+    step === 0 ? block.first : step === 1 ? block.second : block.answer;
   return (
     <main className="cognitive-game-screen">
       <header className="cognitive-game-header">
@@ -194,9 +186,8 @@ export function NBackScreen() {
             <span>MEMORIA DE TRABAJO // ACTUALIZACIÓN MENTAL</span>
             <h1>MEMORIA N-BACK</h1>
             <p>
-              Mira un símbolo a la vez. Las dos primeras rondas son de
-              preparación. Desde la tercera, responde SÍ si coincide con el
-              símbolo de hace dos rondas o NO si es diferente.
+              Memoriza dos símbolos. En el tercero, compara con el primero y
+              responde. Después comenzará un bloque nuevo.
             </p>
           </div>
           <div className="cognitive-speed-picker">
@@ -217,7 +208,7 @@ export function NBackScreen() {
           <div className="cognitive-levels">
             {levels.map((item) => (
               <button type="button" key={item.id} onClick={() => start(item)}>
-                <small>{item.trials} RONDAS</small>
+                <small>{item.trials} BLOQUES</small>
                 <strong>{item.name}</strong>
                 <em>
                   {progress[item.id] ?? 0}/{PERFECT} PERFECTAS
@@ -235,26 +226,25 @@ export function NBackScreen() {
             </div>
           )}
           {phase === "trial" && (
-            <div className="cognitive-trial nback-trial-enter" key={index}>
+            <div
+              className="cognitive-trial nback-trial-enter"
+              key={`${blockIndex}-${step}`}
+            >
               <span>
-                {index < 2
-                  ? `PREPARACIÓN ${index + 1} / 2`
-                  : `RESPUESTA ${index - 1} / ${sequence.length - 2}`}
+                {step < 2
+                  ? `MEMORIZA ${step + 1} / 2`
+                  : `RESPUESTA · BLOQUE ${blockIndex + 1} / ${level.trials}`}
               </span>
               <div className="nback-symbol">{display}</div>
               <p>
-                {index < 2
+                {step < 2
                   ? "MEMORIZA ESTE SÍMBOLO"
-                  : "COMPARA CON EL SÍMBOLO DE HACE DOS RONDAS"}
+                  : "COMPARA CON EL PRIMER SÍMBOLO DEL BLOQUE"}
               </p>
-              <strong>
-                {index < 2
-                  ? "PREPARACIÓN"
-                  : "COMPARA, RESPONDE Y MEMORIZA ESTE SÍMBOLO"}
-              </strong>
-              {index < 2 ? (
+              <strong>{step < 2 ? "PREPARACIÓN" : "ELIGE UNA OPCIÓN"}</strong>
+              {step < 2 ? (
                 <div className="nback-preparation-note">
-                  NO RESPONDAS TODAVÍA · SOLO MEMORIZA
+                  NO RESPONDAS · SOLO MEMORIZA
                 </div>
               ) : (
                 <div className="cognitive-actions">
@@ -281,7 +271,7 @@ export function NBackScreen() {
                 <small>%</small>
               </strong>
               <p>
-                {result.correct} de {result.total} respuestas correctas
+                {result.correct} de {result.total} bloques correctos
               </p>
               <em>
                 NIVEL: {result.perfect}/{PERFECT} PERFECTAS · JUEGO:{" "}
