@@ -34,7 +34,7 @@
 }
 .cognitive-game-intro {
   width: min(980px, 100%);
-  margin: 28px auto 24px;
+  margin: 14px auto 20px;
   text-align: left;
 }
 .cognitive-game-intro-heading {
@@ -51,8 +51,8 @@
 .cognitive-game-intro h1 {
   margin: 0;
   font-family: "Rajdhani", "Arial Narrow", sans-serif;
-  font-size: clamp(1.8rem, 3.5vw, 3.1rem);
-  letter-spacing: 0.08em;
+  font-size: clamp(1.55rem, 3vw, 2.6rem);
+  letter-spacing: 0.03em;
   line-height: 1;
 }
 .cognitive-game-intro p {
@@ -270,7 +270,7 @@
     padding: 22px 16px 32px;
   }
   .cognitive-game-intro h1 {
-    font-size: 1.45rem;
+    font-size: 1.3rem;
   }
   .cognitive-game-intro p {
     font-size: 0.82rem;
