@@ -1,10 +1,48 @@
+import { useEffect, useRef, useState } from 'react'
+import { animate } from 'animejs'
 import '../styles/serial-recall.css'
+
+const silhouettes = [
+  { name: 'Perro', image: '/assets/animals/perro.png' },
+  { name: 'Gato', image: '/assets/animals/gato.png' },
+  { name: 'León', image: '/assets/animals/leon.png' },
+  { name: 'Tigre', image: '/assets/animals/tigre.png' },
+  { name: 'Elefante', image: '/assets/animals/elefante.png' },
+]
 
 type SerialRecallScreenProps = {
   onBack: () => void
 }
 
 export function SerialRecallScreen({ onBack }: SerialRecallScreenProps) {
+  const [sequence, setSequence] = useState(() => silhouettes.slice(0, 3))
+  const sequenceRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      const shuffled = [...silhouettes].sort(() => Math.random() - 0.5)
+      setSequence(shuffled.slice(0, 3))
+    }, 2200)
+
+    return () => window.clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    if (!sequenceRef.current) return
+
+    const transition = animate(sequenceRef.current.querySelectorAll('.preview-silhouette'), {
+      opacity: [0, 1],
+      scale: [0.86, 1],
+      delay: (_element, index) => (index ?? 0) * 90,
+      duration: 520,
+      ease: 'outCubic',
+    })
+
+    return () => {
+      transition.pause()
+    }
+  }, [sequence])
+
   return (
     <main className="serial-recall-screen">
       <header className="training-header">
@@ -20,10 +58,13 @@ export function SerialRecallScreen({ onBack }: SerialRecallScreenProps) {
         <p>Memorize the sequence. Reproduce it in the exact order.</p>
       </section>
 
-      <section className="training-placeholder" aria-label="Pantalla de entrenamiento en construcción">
-        <div className="training-crosshair" aria-hidden="true" />
-        <span>TRAINING MODULE READY</span>
-        <strong>SEQUENCE 01</strong>
+      <section ref={sequenceRef} className="preview-sequence" aria-label="Vista previa de la secuencia">
+        {sequence.map((silhouette, index) => (
+          <div className="preview-silhouette" key={`${silhouette.name}-${index}`}>
+            <span className="preview-index">0{index + 1}</span>
+            <img src={silhouette.image} alt="" />
+          </div>
+        ))}
       </section>
     </main>
   )
