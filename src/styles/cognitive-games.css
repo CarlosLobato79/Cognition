@@ -71,6 +71,7 @@
   margin: 0 auto;
 }
 .cognitive-levels button {
+  min-width: 0;
   display: grid;
   min-height: 130px;
   align-content: space-between;
@@ -283,8 +284,12 @@
     padding: 13px;
   }
   .cognitive-levels strong {
-    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+    font-size: clamp(0.95rem, 4vw, 1.2rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
   }
+  .cognitive-levels button span { min-width: 0; }
   .search-field {
     grid-template-columns: repeat(4, 58px);
     gap: 7px;
@@ -470,6 +475,12 @@
   font-size: 1.3rem;
   letter-spacing: 0.12em;
   text-shadow: 0 0 18px rgba(176, 245, 84, 0.45);
+}
+
+.visual-search-response {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
 }
 .search-field.is-covered span {
   background: #111d23;

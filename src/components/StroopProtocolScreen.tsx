@@ -258,7 +258,8 @@ export function StroopProtocolScreen() {
                 RONDA {trialIndex + 1} / {trials.length}
               </div>
               <div
-                className="stroop-word"
+                key={`${trialIndex}-${trials[trialIndex].word}-${trials[trialIndex].ink}`}
+                className="stroop-word stroop-word-enter"
                 style={{
                   color: colors.find(
                     (color) => color.id === trials[trialIndex].ink,

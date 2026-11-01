@@ -609,7 +609,7 @@ export function SerialRecallScreen() {
 
       {trainingPhase !== "idle" && (
         <section
-          className="training-session"
+          className={`training-session${trainingPhase === "selection" ? " is-selection" : ""}`}
           aria-label="Sesión de entrenamiento"
         >
           {trainingPhase === "countdown" && (

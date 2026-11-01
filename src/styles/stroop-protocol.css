@@ -20,6 +20,12 @@
 .stroop-protocol-trial { display: grid; justify-items: center; gap: 30px; width: min(840px,92vw); text-align: center; }
 .stroop-protocol-status,.stroop-protocol-trial p,.stroop-protocol-result>span,.stroop-protocol-result em { color: rgba(100,232,244,.76); font-family: 'Rajdhani','Arial Narrow',sans-serif; font-size: .74rem; font-style: normal; font-weight: 700; letter-spacing: .16em; }
 .stroop-word { min-width: 8ch; font-family: 'Rajdhani','Arial Narrow',sans-serif; font-size: clamp(4rem,13vw,10rem); font-weight: 800; letter-spacing: .08em; line-height: .9; text-shadow: 0 0 26px rgba(255,255,255,.08); }
+.stroop-word-enter { animation: stroop-stimulus-in 360ms cubic-bezier(.22,.8,.25,1) both; }
+@keyframes stroop-stimulus-in {
+  0% { opacity: .08; filter: brightness(2.1); transform: scale(.88); text-shadow: 0 0 0 transparent; }
+  45% { opacity: 1; filter: brightness(1.35); transform: scale(1.04); text-shadow: 0 0 42px currentColor; }
+  100% { opacity: 1; filter: brightness(1); transform: scale(1); text-shadow: 0 0 26px rgba(255,255,255,.08); }
+}
 .stroop-protocol-trial p { margin: 0; }
 .stroop-protocol-actions { display: grid; grid-template-columns: repeat(4,minmax(100px,1fr)); gap: 12px; width: min(700px,100%); }
 .stroop-protocol-actions button { border: 1px solid color-mix(in srgb,var(--option-color) 55%,#fff 20%); background: color-mix(in srgb,var(--option-color) 11%,transparent); padding: 16px 10px; color: var(--option-color); cursor: pointer; font-family: 'Rajdhani','Arial Narrow',sans-serif; font-size: .82rem; font-weight: 700; letter-spacing: .1em; transition: background 160ms ease,border-color 160ms ease,transform 160ms ease; }

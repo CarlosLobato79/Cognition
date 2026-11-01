@@ -569,6 +569,20 @@
   color: #fff;
 }
 
+.training-session.is-selection {
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  padding: clamp(24px, 5vh, 56px) 4vw;
+  scrollbar-gutter: stable;
+}
+
+.training-session.is-selection .selection-display {
+  flex: 0 0 auto;
+  margin: auto;
+}
+
 .countdown-display {
   animation: countdown-pulse 900ms ease both;
   color: #fff;
@@ -792,6 +806,7 @@
   .training-info { grid-template-columns: 1fr; gap: 22px; margin-top: 20px; }
   .level-modal-backdrop { align-items: start; padding-top: 14vh; }
   .training-session { padding: 24px 14px; }
+  .training-session.is-selection { padding: 24px 14px; }
   .memorize-display { gap: 24px; }
   .memorize-display img { width: min(64vw, 280px); height: min(64vw, 280px); }
   .memorize-display span { letter-spacing: 0.16em; }
@@ -799,8 +814,25 @@
   .selection-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .selection-card { min-height: 150px; }
   .selection-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 5px); }
-  .selection-large .selection-cards { grid-template-columns: repeat(auto-fit, minmax(38px, 1fr)); gap: 4px; }
-  .selection-large .selection-card { min-height: 48px; }
+  .selection-large .selection-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .selection-large .selection-card {
+    min-height: clamp(64px, 18vw, 82px);
+  }
+
+  .selection-large .selection-card img {
+    width: 60%;
+    height: 60%;
+  }
+
+  .selection-large .selection-order {
+    top: 6px;
+    left: 7px;
+    font-size: 0.72rem;
+  }
   .result-actions { flex-direction: column; width: min(260px, 100%); }
   .training-setup-screen { padding: 22px 16px 32px; }
   .training-setup-header { align-items: flex-start; flex-direction: column; gap: 14px; }

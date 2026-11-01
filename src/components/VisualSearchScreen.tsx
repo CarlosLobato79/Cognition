@@ -70,6 +70,7 @@ export function VisualSearchScreen() {
   const [speed, setSpeed] = useState<Speed>("normal");
   const [mode, setMode] = useState<Mode>("practica");
   const [revealed, setRevealed] = useState(false);
+  const [awaitingAnswer, setAwaitingAnswer] = useState(false);
   const [result, setResult] = useState<{
     score: number;
     correct: number;
@@ -96,16 +97,20 @@ export function VisualSearchScreen() {
     return () => window.clearInterval(timer);
   }, [phase]);
   useEffect(() => {
-    if (phase !== "trial" || mode === "practica" || !revealed) return;
+    if (
+      phase !== "trial" ||
+      mode === "practica" ||
+      !revealed ||
+      awaitingAnswer
+    )
+      return;
     const duration = speed === "lento" ? 1800 : speed === "rapido" ? 700 : 1200;
     const timer = window.setTimeout(() => {
-      if (index < items.length - 1) {
-        setRevealed(false);
-        setIndex((current) => current + 1);
-      } else finish(correct + (items[index]?.target ? 0 : 1));
+      setRevealed(false);
+      setAwaitingAnswer(true);
     }, duration);
     return () => window.clearTimeout(timer);
-  }, [phase, index, items, speed, mode, revealed]);
+  }, [phase, index, items, speed, mode, revealed, awaitingAnswer]);
   useEffect(() => {
     if (!revealed) return;
     const cells = document.querySelectorAll(".visual-search-reveal-stage span");
@@ -133,6 +138,7 @@ export function VisualSearchScreen() {
     setItems(Array.from({ length: nextLevel.trials }, makeTrial));
     setIndex(0);
     setRevealed(false);
+    setAwaitingAnswer(false);
     setCorrect(0);
     setCountdown(3);
     setResult(null);
@@ -173,12 +179,18 @@ export function VisualSearchScreen() {
     }
   };
   const answer = (found: boolean) => {
-    if (phase !== "trial" || !items[index] || !revealed) return;
+    if (
+      phase !== "trial" ||
+      !items[index] ||
+      (mode === "practica" ? !revealed : !awaitingAnswer)
+    )
+      return;
     const right = found === items[index].target;
     const next = correct + (right ? 1 : 0);
     setCorrect(next);
     if (index < items.length - 1) {
       setRevealed(false);
+      setAwaitingAnswer(false);
       setIndex((current) => current + 1);
     } else finish(next);
   };
@@ -263,7 +275,7 @@ export function VisualSearchScreen() {
               <strong className="visual-search-target">
                 BUSCA: {items[index]?.targetShape}
               </strong>
-              {!revealed ? (
+              {!revealed && !awaitingAnswer ? (
                 <>
                   <div className="search-field is-covered">
                     {Array.from({ length: 16 }, (_, cell) => (
@@ -281,7 +293,7 @@ export function VisualSearchScreen() {
                     BUSCAR AHORA
                   </button>
                 </>
-              ) : (
+              ) : revealed ? (
                 <>
                   <div className="search-field visual-search-reveal-stage">
                     {Array.from({ length: 16 }, (_, cell) => {
@@ -300,18 +312,40 @@ export function VisualSearchScreen() {
                       );
                     })}
                   </div>
+                  {mode === "practica" ? (
+                    <>
+                      <strong className="visual-search-ready">
+                        RESPONDE AHORA: ¿APARECE {items[index]?.targetShape}?
+                      </strong>
+                      <div className="cognitive-actions">
+                        <button type="button" onClick={() => answer(true)}>
+                          SÍ, APARECE
+                        </button>
+                        <button type="button" onClick={() => answer(false)}>
+                          NO, NO APARECE
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <strong className="visual-search-ready">
+                      OBSERVA · LA FIGURA SE OCULTARÁ
+                    </strong>
+                  )}
+                </>
+              ) : (
+                <div className="visual-search-response">
                   <strong className="visual-search-ready">
-                    RESPONDE AHORA: ¿APARECE {items[index]?.targetShape}?
+                    ¿APARECÍA {items[index]?.targetShape}?
                   </strong>
                   <div className="cognitive-actions">
                     <button type="button" onClick={() => answer(true)}>
-                      SÍ, APARECE
+                      SÍ, APARECÍA
                     </button>
                     <button type="button" onClick={() => answer(false)}>
-                      NO, NO APARECE
+                      NO, NO APARECÍA
                     </button>
                   </div>
-                </>
+                </div>
               )}
             </div>
           )}

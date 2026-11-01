@@ -243,7 +243,7 @@ export function MainMenu() {
           <h1>MÓDULOS DE ENTRENAMIENTO</h1>
           <p>Selecciona una habilidad cognitiva para comenzar.</p>
         </div>
-        <span className="menu-header-index">09 MÓDULOS</span>
+        <span className="menu-header-index">12 MÓDULOS</span>
       </header>
 
       <nav className="module-filters" aria-label="Filtrar por área cognitiva">
@@ -295,10 +295,6 @@ export function MainMenu() {
             aria-labelledby="module-modal-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="module-modal-visual">
-              <span>{selectedModule.id}</span>
-              <img src={assetUrl(selectedModule.image)} alt="" />
-            </div>
             <div className="module-modal-copy">
               <img className="module-modal-logo" src={assetUrl('assets/cognition-brain-logo.png')} alt="Cognition" />
               <div className="module-modal-topline">
