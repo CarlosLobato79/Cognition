@@ -11,6 +11,9 @@ import { PatternComparisonScreen } from './components/PatternComparisonScreen'
 import { ListSortingScreen } from './components/ListSortingScreen'
 import { SymbolDigitScreen } from './components/SymbolDigitScreen'
 import { AuditoryRecallScreen } from './components/AuditoryRecallScreen'
+import { GoNoGoScreen } from './components/GoNoGoScreen'
+import { NBackScreen } from './components/NBackScreen'
+import { VisualSearchScreen } from './components/VisualSearchScreen'
 import './styles/splash.css'
 
 export function App() {
@@ -117,6 +120,9 @@ export function App() {
           <Route path="/training/list-sorting" element={<ListSortingScreen />} />
           <Route path="/training/symbol-digit" element={<SymbolDigitScreen />} />
           <Route path="/training/auditory-recall" element={<AuditoryRecallScreen />} />
+          <Route path="/training/go-no-go" element={<GoNoGoScreen />} />
+          <Route path="/training/n-back" element={<NBackScreen />} />
+          <Route path="/training/visual-search" element={<VisualSearchScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}

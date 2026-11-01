@@ -94,6 +94,36 @@ const modules = [
     areas: ['MEMORIA AUDITIVA', 'MEMORIA', 'ATENCIÓN'],
     available: true,
   },
+  {
+    id: '10',
+    name: 'Inhibición',
+    path: '/training/go-no-go',
+    image: '/assets/brain-side-profile.png',
+    definition: 'Evalúa la capacidad de responder ante una señal relevante y detener una respuesta automática ante una señal de bloqueo.',
+    benefits: 'Entrena control inhibitorio, atención sostenida y autorregulación de la respuesta.',
+    areas: ['FUNCIÓN EJECUTIVA', 'ATENCIÓN'],
+    available: true,
+  },
+  {
+    id: '11',
+    name: 'Memoria N-Back',
+    path: '/training/n-back',
+    image: '/assets/brain-side-profile.png',
+    definition: 'Evalúa la capacidad de actualizar y comparar información reciente mientras la memoria se mantiene activa.',
+    benefits: 'Entrena memoria de trabajo, actualización mental, atención y control de interferencias.',
+    areas: ['MEMORIA', 'ATENCIÓN'],
+    available: true,
+  },
+  {
+    id: '12',
+    name: 'Búsqueda Visual',
+    path: '/training/visual-search',
+    image: '/assets/brain-side-profile.png',
+    definition: 'Evalúa la capacidad de encontrar rápidamente un estímulo relevante entre elementos distractores.',
+    benefits: 'Entrena atención selectiva, exploración visual y velocidad de detección.',
+    areas: ['ATENCIÓN', 'VELOCIDAD'],
+    available: true,
+  },
 ]
 
 const serialRecallLevels = ['level-3', 'level-5', 'level-8', 'level-13', 'level-21', 'level-34', 'level-55', 'level-89']
@@ -105,6 +135,9 @@ const patternComparisonLevels = ['pattern-3', 'pattern-5', 'pattern-8', 'pattern
 const listSortingLevels = ['sorting-3', 'sorting-5', 'sorting-8', 'sorting-13', 'sorting-21']
 const symbolDigitLevels = ['symbol-3', 'symbol-5', 'symbol-8', 'symbol-13', 'symbol-21']
 const auditoryRecallLevels = ['auditory-3', 'auditory-5', 'auditory-8', 'auditory-13', 'auditory-21']
+const goNoGoLevels = ['gng-3', 'gng-5', 'gng-8', 'gng-13', 'gng-21']
+const nBackLevels = ['nback-3', 'nback-5', 'nback-8', 'nback-13', 'nback-21']
+const visualSearchLevels = ['search-3', 'search-5', 'search-8', 'search-13', 'search-21']
 const PERFECT_RUNS_REQUIRED = 25
 const filterAreas = ['TODAS', 'MEMORIA', 'ATENCIÓN', 'FUNCIÓN EJECUTIVA', 'VELOCIDAD', 'MEMORIA AUDITIVA'] as const
 
@@ -132,6 +165,9 @@ export function MainMenu() {
   const [listSortingPercent, setListSortingPercent] = useState(() => readGameProgress('cognition-list-sorting-progress', listSortingLevels))
   const [symbolDigitPercent, setSymbolDigitPercent] = useState(() => readGameProgress('cognition-symbol-digit-progress', symbolDigitLevels))
   const [auditoryRecallPercent, setAuditoryRecallPercent] = useState(() => readGameProgress('cognition-auditory-recall-progress', auditoryRecallLevels))
+  const [goNoGoPercent, setGoNoGoPercent] = useState(() => readGameProgress('cognition-go-no-go-progress', goNoGoLevels))
+  const [nBackPercent, setNBackPercent] = useState(() => readGameProgress('cognition-nback-progress', nBackLevels))
+  const [visualSearchPercent, setVisualSearchPercent] = useState(() => readGameProgress('cognition-visual-search-progress', visualSearchLevels))
 
   useEffect(() => {
     const cards = menuRef.current?.querySelectorAll('.module-card')
@@ -175,6 +211,9 @@ export function MainMenu() {
       setListSortingPercent(readGameProgress('cognition-list-sorting-progress', listSortingLevels))
       setSymbolDigitPercent(readGameProgress('cognition-symbol-digit-progress', symbolDigitLevels))
       setAuditoryRecallPercent(readGameProgress('cognition-auditory-recall-progress', auditoryRecallLevels))
+      setGoNoGoPercent(readGameProgress('cognition-go-no-go-progress', goNoGoLevels))
+      setNBackPercent(readGameProgress('cognition-nback-progress', nBackLevels))
+      setVisualSearchPercent(readGameProgress('cognition-visual-search-progress', visualSearchLevels))
     }
     window.addEventListener('storage', refreshProgress)
     window.addEventListener('focus', refreshProgress)
@@ -231,7 +270,7 @@ export function MainMenu() {
               <span className="module-card-status">{module.available ? 'DISPONIBLE' : 'PRÓXIMAMENTE'}</span>
               <span className="module-card-name">{module.name}</span>
               <span className="module-card-description">{module.definition}</span>
-              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : module.id === '09' ? auditoryRecallPercent : 0}% COMPLETADO</span>
+              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : module.id === '09' ? auditoryRecallPercent : module.id === '10' ? goNoGoPercent : module.id === '11' ? nBackPercent : module.id === '12' ? visualSearchPercent : 0}% COMPLETADO</span>
             </span>
             <img className="module-card-image" src={module.image} alt="" />
           </button>
