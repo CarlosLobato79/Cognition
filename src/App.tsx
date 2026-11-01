@@ -14,6 +14,7 @@ import { AuditoryRecallScreen } from "./components/AuditoryRecallScreen";
 import { GoNoGoScreen } from "./components/GoNoGoScreen";
 import { NBackScreen } from "./components/NBackScreen";
 import { VisualSearchScreen } from "./components/VisualSearchScreen";
+import { assetUrl } from "./utils/assets";
 import "./styles/splash.css";
 import "./styles/responsive.css";
 
@@ -93,7 +94,7 @@ export function App() {
               <div className="logo-aura" aria-hidden="true" />
               <img
                 className="brain-image-logo"
-                src="/assets/cognition-brain-logo.png"
+                src={assetUrl("assets/cognition-brain-logo.png")}
                 alt="Cognition"
               />
             </div>

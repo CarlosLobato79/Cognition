@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/spatial-grid.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -212,7 +213,7 @@ export function SpatialGridScreen() {
             <span>COGNITION // ENTRENAMIENTO 04</span>
           </header>
           <div className="spatial-grid-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>MEMORIA DE TRABAJO // CONTROL VISUOESPACIAL</span>
             <h1>MEMORIA ESPACIAL</h1>
             <p>Observa la secuencia. Repite cada posición en el mismo orden.</p>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/dimensional-shift.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -219,7 +220,7 @@ export function DimensionalShiftScreen() {
             <span>COGNITION // ENTRENAMIENTO 05</span>
           </header>
           <div className="dimensional-shift-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>FUNCIÓN EJECUTIVA // CAMBIO DE REGLA</span>
             <h1>CAMBIO DE REGLA</h1>
             <p>Cambia la regla. Clasifica el estímulo. Mantén el control.</p>

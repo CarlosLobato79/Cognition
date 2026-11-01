@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/middle-vector.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -211,7 +212,7 @@ export function MiddleVectorScreen() {
             <span>COGNITION // ENTRENAMIENTO 02</span>
           </header>
           <div className="middle-vector-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>ATENCIÓN // CONTROL INHIBITORIO</span>
             <h1>ATENCIÓN CENTRAL</h1>
             <p>

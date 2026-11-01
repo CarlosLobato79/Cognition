@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/cognitive-games.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   { id: "nback-3", name: "INICIO", trials: 3 },
@@ -182,7 +183,7 @@ export function NBackScreen() {
       {phase === "setup" && (
         <section className="cognitive-game-setup">
           <div className="cognitive-game-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>MEMORIA DE TRABAJO // ACTUALIZACIÓN MENTAL</span>
             <h1>MEMORIA N-BACK</h1>
             <p>

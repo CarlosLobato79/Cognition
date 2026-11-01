@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { animate } from "animejs";
 import { useNavigate } from "react-router-dom";
 import "../styles/cognitive-games.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   { id: "search-3", name: "INICIO", trials: 3 },
@@ -192,7 +193,7 @@ export function VisualSearchScreen() {
       {phase === "setup" && (
         <section className="cognitive-game-setup">
           <div className="cognitive-game-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>ATENCIÓN // BÚSQUEDA VISUAL</span>
             <h1>BÚSQUEDA VISUAL</h1>
             <p>

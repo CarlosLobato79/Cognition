@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/list-sorting.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -255,7 +256,7 @@ export function ListSortingScreen() {
             <span>COGNITION // ENTRENAMIENTO 07</span>
           </header>
           <div className="list-sorting-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>MEMORIA DE TRABAJO // ORGANIZACIÓN MENTAL</span>
             <h1>ORDENAMIENTO MENTAL</h1>
             <p>Memoriza la lista y ordénala de menor a mayor.</p>

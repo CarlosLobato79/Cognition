@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/pattern-comparison.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -213,7 +214,7 @@ export function PatternComparisonScreen() {
             <span>COGNITION // ENTRENAMIENTO 06</span>
           </header>
           <div className="pattern-comparison-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>VELOCIDAD DE PROCESAMIENTO // COMPARACIÓN VISUAL</span>
             <h1>COMPARACIÓN VISUAL</h1>
             <p>

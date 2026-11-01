@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { animate } from "animejs";
 import { useNavigate } from "react-router-dom";
 import "../styles/serial-recall.css";
+import { assetUrl } from "../utils/assets";
 
 const silhouettes = [
   { name: "Abeja", image: "/assets/animals/abeja.svg" },
@@ -432,7 +433,7 @@ export function SerialRecallScreen() {
             className="preview-silhouette"
             key={`${silhouette.name}-${index}`}
           >
-            <img src={silhouette.image} alt="" />
+            <img src={assetUrl(silhouette.image)} alt="" />
           </div>
         ))}
       </section>
@@ -489,7 +490,7 @@ export function SerialRecallScreen() {
           <div className="training-setup-intro">
             <img
               className="training-setup-logo"
-              src="/assets/cognition-brain-logo.png"
+              src={assetUrl("assets/cognition-brain-logo.png")}
               alt="Cognition"
             />
             <span className="training-kicker">MEMORIA SECUENCIAL</span>
@@ -570,7 +571,7 @@ export function SerialRecallScreen() {
                         <img
                           loading="lazy"
                           decoding="async"
-                          src={animal.image}
+                          src={assetUrl(animal.image)}
                           alt={`Silueta de ${animal.name}`}
                         />
                       </div>
@@ -626,7 +627,7 @@ export function SerialRecallScreen() {
               className="memorize-display"
               key={activeSequence[memorizeIndex].name}
             >
-              <img src={activeSequence[memorizeIndex].image} alt="" />
+              <img src={assetUrl(activeSequence[memorizeIndex].image)} alt="" />
               <span>{activeSequence[memorizeIndex].name.toUpperCase()}</span>
             </div>
           )}
@@ -655,7 +656,7 @@ export function SerialRecallScreen() {
                       {order > 0 && (
                         <span className="selection-order">{order}</span>
                       )}
-                      <img src={animal.image} alt="" />
+                      <img src={assetUrl(animal.image)} alt="" />
                     </button>
                   );
                 })}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/auditory-recall.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -353,7 +354,7 @@ export function AuditoryRecallScreen() {
             <span>COGNITION // ENTRENAMIENTO 09</span>
           </header>
           <div className="auditory-recall-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>MEMORIA EPISÓDICA // APRENDIZAJE AUDITIVO</span>
             <h1>RECUERDO AUDITIVO</h1>
             <p>

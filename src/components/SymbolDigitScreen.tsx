@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/symbol-digit.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -214,7 +215,7 @@ export function SymbolDigitScreen() {
             <span>COGNITION // ENTRENAMIENTO 08</span>
           </header>
           <div className="symbol-digit-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>VELOCIDAD DE PROCESAMIENTO // ASOCIACIÓN VISUAL</span>
             <h1>SÍMBOLO Y NÚMERO</h1>
             <p>

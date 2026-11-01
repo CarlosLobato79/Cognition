@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import { useNavigate } from 'react-router-dom'
 import '../styles/main-menu.css'
+import { assetUrl } from '../utils/assets'
 
 const modules = [
   {
@@ -272,14 +273,14 @@ export function MainMenu() {
               <span className="module-card-description">{module.definition}</span>
               <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : module.id === '09' ? auditoryRecallPercent : module.id === '10' ? goNoGoPercent : module.id === '11' ? nBackPercent : module.id === '12' ? visualSearchPercent : 0}% COMPLETADO</span>
             </span>
-            <img className="module-card-image" src={module.image} alt="" />
+            <img className="module-card-image" src={assetUrl(module.image)} alt="" />
           </button>
         ))}
       </section>
 
       <footer className="menu-footer" aria-label="Identidad de Cognition">
         <div className="menu-brand">
-          <img src="/assets/cognition-brain-logo.png" alt="" />
+          <img src={assetUrl('assets/cognition-brain-logo.png')} alt="" />
           <span>COGNITIVE READINESS SYSTEM</span>
         </div>
         <span className="menu-footer-wordmark">COGNITION</span>
@@ -296,10 +297,10 @@ export function MainMenu() {
           >
             <div className="module-modal-visual">
               <span>{selectedModule.id}</span>
-              <img src={selectedModule.image} alt="" />
+              <img src={assetUrl(selectedModule.image)} alt="" />
             </div>
             <div className="module-modal-copy">
-              <img className="module-modal-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" />
+              <img className="module-modal-logo" src={assetUrl('assets/cognition-brain-logo.png')} alt="Cognition" />
               <div className="module-modal-topline">
                 <span>{selectedModule.available ? 'ENTRENAMIENTO DISPONIBLE' : 'EN DESARROLLO'}</span>
                 <button type="button" aria-label="Cerrar" onClick={() => setSelectedModule(null)}>×</button>

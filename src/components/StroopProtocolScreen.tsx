@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/stroop-protocol.css";
+import { assetUrl } from "../utils/assets";
 
 const levels = [
   {
@@ -212,7 +213,7 @@ export function StroopProtocolScreen() {
             <span>COGNITION // ENTRENAMIENTO 03</span>
           </header>
           <div className="stroop-protocol-intro">
-            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <img src={assetUrl("assets/cognition-brain-logo.png")} alt="Cognition" />
             <span>FUNCIÓN EJECUTIVA // CONTROL INHIBITORIO</span>
             <h1>CONTROL DE COLORES</h1>
             <p>Ignora la palabra. Responde según el color de la tinta.</p>
