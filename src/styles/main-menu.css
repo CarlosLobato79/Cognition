@@ -62,6 +62,28 @@
   text-indent: 0.12em;
 }
 
+.menu-header-copy > span,
+.menu-header-index {
+  color: rgba(100, 232, 244, 0.72);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.menu-header-copy h1 {
+  margin: 12px 0 10px;
+  font-size: clamp(2.1rem, 5vw, 4.5rem);
+  letter-spacing: 0.08em;
+  line-height: 0.9;
+}
+
+.menu-header-copy p {
+  margin: 0;
+  color: rgba(177, 205, 214, 0.62);
+  font-size: 0.92rem;
+}
+
 .menu-footer {
   display: flex;
   align-items: center;
@@ -337,6 +359,8 @@
   .main-menu { gap: 3.6rem; padding: 34px 24px 52px; }
   .menu-header { align-items: flex-start; flex-direction: column-reverse; gap: 20px; padding-right: 24px; }
   .menu-header h1 { font-size: clamp(3.7rem, 18vw, 6rem); }
+  .menu-header-copy h1 { font-size: clamp(2.2rem, 11vw, 4rem); }
+  .menu-header-index { align-self: flex-end; }
   .menu-brand { font-size: 0.62rem; }
   .menu-brand img { width: 40px; height: 40px; }
   .menu-footer { align-items: flex-start; flex-direction: column; gap: 14px; }

@@ -182,6 +182,15 @@ export function MainMenu() {
   return (
     <main ref={menuRef} className="main-menu" aria-label="Módulos de Cognition">
       <div className="menu-grid" aria-hidden="true" />
+      <header className="menu-header">
+        <div className="menu-header-copy">
+          <span>ENTRENAMIENTO COGNITIVO // CENTRO DE CONTROL</span>
+          <h1>MÓDULOS DE ENTRENAMIENTO</h1>
+          <p>Selecciona una habilidad cognitiva para comenzar.</p>
+        </div>
+        <span className="menu-header-index">09 MÓDULOS</span>
+      </header>
+
       <section className="module-rail" aria-label="Módulos de entrenamiento">
         {modules.map((module) => (
           <button
