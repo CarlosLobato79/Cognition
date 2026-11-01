@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { MainMenu } from './components/MainMenu'
 import { SerialRecallScreen } from './components/SerialRecallScreen'
 import { MiddleVectorScreen } from './components/MiddleVectorScreen'
+import { StroopProtocolScreen } from './components/StroopProtocolScreen'
 import './styles/splash.css'
 
 export function App() {
@@ -103,6 +104,7 @@ export function App() {
           <Route path="/" element={<MainMenu />} />
           <Route path="/training/immediate-serial-recall" element={<SerialRecallScreen />} />
           <Route path="/training/middle-vector" element={<MiddleVectorScreen />} />
+          <Route path="/training/stroop-protocol" element={<StroopProtocolScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}

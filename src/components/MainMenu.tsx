@@ -24,12 +24,12 @@ const modules = [
   },
   {
     id: '03',
-    name: 'Echo Span',
-    path: '#',
-    image: '/assets/animals/leon.svg',
-    definition: 'Mide la capacidad de retener y reproducir información breve después de una exposición inmediata.',
-    benefits: 'Entrena memoria de trabajo, control atencional y precisión de respuesta.',
-    available: false,
+    name: 'Stroop Protocol',
+    path: '/training/stroop-protocol',
+    image: '/assets/brain-side-profile.png',
+    definition: 'Mide la capacidad de ignorar una respuesta automática y seleccionar la información relevante del estímulo.',
+    benefits: 'Entrena control inhibitorio, flexibilidad cognitiva, atención selectiva y velocidad de procesamiento.',
+    available: true,
   },
   {
     id: '04',
@@ -53,6 +53,7 @@ const modules = [
 
 const serialRecallLevels = ['level-3', 'level-5', 'level-8', 'level-13', 'level-21', 'level-34', 'level-55', 'level-89']
 const middleVectorLevels = ['vector-3', 'vector-5', 'vector-8', 'vector-13', 'vector-21']
+const stroopProtocolLevels = ['stroop-3', 'stroop-5', 'stroop-8', 'stroop-13', 'stroop-21']
 const PERFECT_RUNS_REQUIRED = 25
 
 function readGameProgress(storageKey: string, levelIds: string[]) {
@@ -71,6 +72,7 @@ export function MainMenu() {
   const [selectedModule, setSelectedModule] = useState<(typeof modules)[number] | null>(null)
   const [serialRecallPercent, setSerialRecallPercent] = useState(() => readGameProgress('cognition-training-progress', serialRecallLevels))
   const [middleVectorPercent, setMiddleVectorPercent] = useState(() => readGameProgress('cognition-middle-vector-progress', middleVectorLevels))
+  const [stroopProtocolPercent, setStroopProtocolPercent] = useState(() => readGameProgress('cognition-stroop-protocol-progress', stroopProtocolLevels))
 
   useEffect(() => {
     const cards = menuRef.current?.querySelectorAll('.module-card')
@@ -103,6 +105,7 @@ export function MainMenu() {
     const refreshProgress = () => {
       setSerialRecallPercent(readGameProgress('cognition-training-progress', serialRecallLevels))
       setMiddleVectorPercent(readGameProgress('cognition-middle-vector-progress', middleVectorLevels))
+      setStroopProtocolPercent(readGameProgress('cognition-stroop-protocol-progress', stroopProtocolLevels))
     }
     window.addEventListener('storage', refreshProgress)
     window.addEventListener('focus', refreshProgress)
@@ -146,7 +149,7 @@ export function MainMenu() {
             <span className="module-card-content">
               <span className="module-card-status">{module.available ? 'READY' : 'PROXIMAMENTE'}</span>
               <span className="module-card-name">{module.name}</span>
-              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : 0}% COMPLETADO</span>
+              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : 0}% COMPLETADO</span>
             </span>
             <img className="module-card-image" src={module.image} alt="" />
           </button>
