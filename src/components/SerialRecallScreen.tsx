@@ -362,6 +362,16 @@ export function SerialRecallScreen() {
                 </div>
                 <p>La biblioteca contiene {silhouettes.length} siluetas vectorizadas para los protocolos de entrenamiento.</p>
                 <span className="vault-panel-count">{silhouettes.length} ACTIVOS DISPONIBLES</span>
+                <div className="vault-grid" aria-label="Siluetas disponibles">
+                  {silhouettes.map((animal) => (
+                    <div className="vault-item" key={animal.name}>
+                      <div className="vault-item-image">
+                        <img src={animal.image} alt={`Silueta de ${animal.name}`} />
+                      </div>
+                      <span>{animal.name.toUpperCase()}</span>
+                    </div>
+                  ))}
+                </div>
               </section>
             </div>
           )}
