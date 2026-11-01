@@ -10,7 +10,20 @@ const levels = [
   { id: 'auditory-21', name: 'CENTINELA', description: '21 palabras · memoria avanzada', length: 21 },
 ] as const
 
-const words = ['BRÚJULA', 'TORRE', 'RÍO', 'MOTOR', 'NUBE', 'LLAVE', 'FARO', 'CAMINO', 'NÚCLEO', 'PUENTE', 'CÓDIGO', 'ESTRELLA', 'BOSQUE', 'RELOJ', 'SEÑAL', 'MÁSCARA', 'ÓRBITA', 'TRUENO', 'PLATA', 'HORIZONTE', 'CIRCUITO', 'RADAR', 'MONTAÑA', 'SOMBRA', 'VÉRTICE', 'ANCLA', 'PLANETA', 'MÓDULO', 'PULSO', 'AURORA']
+const words = [
+  'BRÚJULA', 'TORRE', 'RÍO', 'MOTOR', 'NUBE', 'LLAVE', 'FARO', 'CAMINO', 'NÚCLEO', 'PUENTE',
+  'CÓDIGO', 'ESTRELLA', 'BOSQUE', 'RELOJ', 'SEÑAL', 'MÁSCARA', 'ÓRBITA', 'TRUENO', 'PLATA', 'HORIZONTE',
+  'CIRCUITO', 'RADAR', 'MONTAÑA', 'SOMBRA', 'VÉRTICE', 'ANCLA', 'PLANETA', 'MÓDULO', 'PULSO', 'AURORA',
+  'VENTANA', 'MARTILLO', 'JARDÍN', 'CASCADA', 'ESPEJO', 'CAMPANA', 'VOLCÁN', 'PÁJARO', 'ARENA', 'COLUMNA',
+  'ESCUDO', 'PIRÁMIDE', 'COMETA', 'LINTERNA', 'TÚNEL', 'CUBO', 'OCÉANO', 'TECLADO', 'SEMILLA', 'RETRATO',
+  'CAVERNA', 'PLUMA', 'SATÉLITE', 'BARRERA', 'CABLE', 'TORMENTA', 'MADERA', 'MÁQUINA', 'DESIERTO', 'LAGO',
+  'CORAL', 'MURAL', 'ESCALERA', 'ALERTA', 'BRISA', 'TRÉBOL', 'CANCIÓN', 'MAPA', 'CRISTAL', 'VOLANTE',
+  'ANTENA', 'MISTERIO', 'PANTALLA', 'CINTA', 'MOLINO', 'ALAMBRE', 'FUEGO', 'HIELO', 'ISLA', 'TEATRO',
+  'COLUMPIO', 'GALAXIA', 'MÁRMOL', 'PINCEL', 'SENDERO', 'TIMÓN', 'PÓLVORA', 'CAMPAMENTO', 'AVIÓN', 'FLECHA',
+  'MURALLA', 'CEREZA', 'GRANITO', 'SIRENA', 'BÓVEDA', 'HÉLICE', 'PANTANO', 'TRÉN', 'VIGÍA', 'ESCALÓN',
+  'PLAZA', 'TINTA', 'CÚPULA', 'BÚSQUEDA', 'FÓSIL', 'CARTERA', 'RUTA', 'NÁUFRAGO', 'PÓRTICO', 'RELÁMPAGO',
+  'SILENCIO', 'ORILLA', 'TORNILLO', 'PÓSTER', 'SALTO', 'CENIZA', 'BANDERA', 'TRONCO', 'CAUDAL', 'DESTELLO',
+]
 type TrainingLevel = typeof levels[number]
 type Phase = 'setup' | 'countdown' | 'listen' | 'recall' | 'result'
 
