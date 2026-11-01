@@ -256,6 +256,134 @@
   letter-spacing: 0.04em;
 }
 
+.training-setup-screen {
+  position: fixed;
+  z-index: 15;
+  inset: 0;
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+  overflow-y: auto;
+  background: #05070a;
+  padding: 30px clamp(24px, 6vw, 96px) 44px;
+}
+
+.training-setup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(117, 160, 173, 0.24);
+  padding-bottom: 20px;
+}
+
+.training-setup-intro {
+  width: min(900px, 100%);
+  margin: clamp(2.8rem, 7vh, 5rem) auto 2.4rem;
+  text-align: center;
+}
+
+.training-setup-intro h1 {
+  margin: 14px 0 12px;
+  color: #fff;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: clamp(2rem, 5vw, 4.4rem);
+  letter-spacing: 0.08em;
+  line-height: 0.9;
+}
+
+.training-setup-intro p {
+  margin: 0;
+  color: rgba(177, 205, 214, 0.66);
+  font-size: 0.95rem;
+}
+
+.training-level-grid {
+  display: grid;
+  width: min(1180px, 100%);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.training-level-card {
+  position: relative;
+  display: grid;
+  min-height: 150px;
+  align-content: space-between;
+  border: 1px solid rgba(117, 160, 173, 0.32);
+  background: linear-gradient(145deg, rgba(17, 29, 35, 0.9), rgba(6, 11, 15, 0.98));
+  padding: 17px 18px;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.training-level-card:hover,
+.training-level-card:focus-visible {
+  border-color: rgba(176, 245, 84, 0.84);
+  background: linear-gradient(145deg, rgba(27, 49, 51, 0.94), rgba(6, 11, 15, 0.98));
+  outline: none;
+  transform: translateY(-4px);
+}
+
+.training-level-card.is-locked {
+  border-color: rgba(117, 160, 173, 0.18);
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.training-level-number,
+.training-level-status {
+  color: rgba(100, 232, 244, 0.72);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.training-level-count {
+  position: absolute;
+  top: 28px;
+  right: 18px;
+  color: rgba(245, 251, 255, 0.9);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 2.3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.training-level-copy {
+  display: grid;
+  gap: 5px;
+  margin-top: 28px;
+}
+
+.training-level-copy strong {
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 1.08rem;
+  letter-spacing: 0.1em;
+}
+
+.training-level-copy small {
+  max-width: 150px;
+  color: rgba(177, 205, 214, 0.62);
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.training-level-status { color: rgba(176, 245, 84, 0.72); }
+.training-level-card.is-locked .training-level-status { color: rgba(177, 205, 214, 0.6); }
+
+.training-setup-note {
+  margin: 22px auto 0;
+  color: rgba(177, 205, 214, 0.46);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
 .training-session {
   position: fixed;
   z-index: 20;
@@ -472,4 +600,15 @@
   .selection-card { min-height: 150px; }
   .selection-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 5px); }
   .result-actions { flex-direction: column; width: min(260px, 100%); }
+  .training-setup-screen { padding: 22px 16px 32px; }
+  .training-setup-header { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .training-code { align-self: flex-end; }
+  .training-setup-intro { margin-top: 2.8rem; }
+  .training-setup-intro h1 { font-size: 2.2rem; }
+  .training-setup-intro p { font-size: 0.84rem; line-height: 1.4; }
+  .training-level-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .training-level-card { min-height: 142px; padding: 14px; }
+  .training-level-count { top: 24px; right: 14px; font-size: 2rem; }
+  .training-level-copy strong { font-size: 0.88rem; }
+  .training-level-copy small { font-size: 0.68rem; }
 }

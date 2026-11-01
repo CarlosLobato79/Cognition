@@ -12,9 +12,17 @@ const silhouettes = [
 ]
 
 const levels = [
-  { id: 'recluta', name: 'RECLUTA', description: 'Inicio guiado · 3 siluetas', count: 3 },
-  { id: 'operador', name: 'OPERADOR', description: 'Ritmo táctico · 5 siluetas', count: 5 },
-  { id: 'elite', name: 'ÉLITE', description: 'Máxima exigencia · 5 siluetas', count: 5 },
+  { id: 'fib-1', name: 'RECLUTA', description: '1 silueta · activación', count: 1, available: true },
+  { id: 'fib-2', name: 'RASTREADOR', description: '2 siluetas · enfoque inicial', count: 2, available: true },
+  { id: 'fib-3', name: 'OPERADOR', description: '3 siluetas · memoria activa', count: 3, available: true },
+  { id: 'fib-5', name: 'VANGUARDIA', description: '5 siluetas · ritmo táctico', count: 5, available: true },
+  { id: 'fib-8', name: 'CENTINELA', description: '8 siluetas · próximamente', count: 8, available: false },
+  { id: 'fib-13', name: 'NÚCLEO', description: '13 siluetas · próximamente', count: 13, available: false },
+  { id: 'fib-21', name: 'ESTRATEGA', description: '21 siluetas · próximamente', count: 21, available: false },
+  { id: 'fib-34', name: 'MAESTRO', description: '34 siluetas · próximamente', count: 34, available: false },
+  { id: 'fib-55', name: 'COMANDO', description: '55 siluetas · próximamente', count: 55, available: false },
+  { id: 'fib-89', name: 'ÉLITE', description: '89 siluetas · próximamente', count: 89, available: false },
+  { id: 'fib-144', name: 'ASCENSIÓN', description: '144 siluetas · próximamente', count: 144, available: false },
 ] as const
 
 type TrainingLevel = typeof levels[number]
@@ -31,7 +39,7 @@ type TrainingResult = {
 export function SerialRecallScreen() {
   const navigate = useNavigate()
   const [sequence, setSequence] = useState(() => silhouettes.slice(0, 3))
-  const [isLevelModalOpen, setIsLevelModalOpen] = useState(true)
+  const [isSetupScreen, setIsSetupScreen] = useState(true)
   const [trainingPhase, setTrainingPhase] = useState<TrainingPhase>('idle')
   const [activeSequence, setActiveSequence] = useState<typeof silhouettes>([])
   const [selectionCards, setSelectionCards] = useState<typeof silhouettes>([])
@@ -102,18 +110,7 @@ export function SerialRecallScreen() {
   }, [activeSequence, memorizeIndex, trainingPhase])
 
   useEffect(() => {
-    if (!isLevelModalOpen) return
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsLevelModalOpen(false)
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isLevelModalOpen])
-
-  useEffect(() => {
-    const shouldLockScroll = isLevelModalOpen || trainingPhase !== 'idle'
+    const shouldLockScroll = isSetupScreen || trainingPhase !== 'idle'
     if (!shouldLockScroll) return
 
     const previousOverflow = document.body.style.overflow
@@ -122,7 +119,7 @@ export function SerialRecallScreen() {
     return () => {
       document.body.style.overflow = previousOverflow
     }
-  }, [isLevelModalOpen, trainingPhase])
+  }, [isSetupScreen, trainingPhase])
 
   const startTraining = (level: TrainingLevel) => {
     const nextSequence = [...silhouettes].sort(() => Math.random() - 0.5).slice(0, level.count)
@@ -132,7 +129,7 @@ export function SerialRecallScreen() {
     setSelectionOrder([])
     setTrainingResult(null)
     setTrainingPhase('countdown')
-    setIsLevelModalOpen(false)
+    setIsSetupScreen(false)
   }
 
   const handleCardSelection = (name: string) => {
@@ -188,7 +185,7 @@ export function SerialRecallScreen() {
         <span className="training-kicker">WORKING MEMORY</span>
         <h1>IMMEDIATE SERIAL RECALL</h1>
         <p>Memorize the sequence. Reproduce it in the exact order.</p>
-        <button className="start-training-button" type="button" onClick={() => setIsLevelModalOpen(true)}>
+        <button className="start-training-button" type="button" onClick={() => setIsSetupScreen(true)}>
           ENTRENAR
         </button>
       </section>
@@ -219,42 +216,43 @@ export function SerialRecallScreen() {
         </div>
       </section>
 
-      {isLevelModalOpen && (
-        <div className="level-modal-backdrop" role="presentation" onClick={() => setIsLevelModalOpen(false)}>
-          <section
-            className="level-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="level-modal-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="level-modal-header">
-              <div>
-                <span className="training-info-kicker">TRAINING PROTOCOL</span>
-                <h2 id="level-modal-title">SELECCIONA TU NIVEL</h2>
-              </div>
-              <button className="modal-close-button" type="button" aria-label="Cerrar" onClick={() => setIsLevelModalOpen(false)}>
-                ×
+      {isSetupScreen && (
+        <section className="training-setup-screen" aria-label="Configuración del entrenamiento">
+          <header className="training-setup-header">
+            <button className="back-button" type="button" onClick={() => navigate('/')}>
+              ← MENU
+            </button>
+            <span className="training-code">COGNITION // CONFIGURATION</span>
+          </header>
+
+          <div className="training-setup-intro">
+            <span className="training-kicker">IMMEDIATE SERIAL RECALL</span>
+            <h1>CONFIGURA TU ENTRENAMIENTO</h1>
+            <p>Selecciona la cantidad de siluetas. La progresión sigue la sucesión de Fibonacci.</p>
+          </div>
+
+          <div className="training-level-grid">
+            {levels.map((level, index) => (
+              <button
+                className={`training-level-card${level.available ? '' : ' is-locked'}`}
+                type="button"
+                key={level.id}
+                disabled={!level.available}
+                onClick={() => startTraining(level)}
+              >
+                <span className="training-level-number">{String(index + 1).padStart(2, '0')}</span>
+                <span className="training-level-count">{level.count}</span>
+                <span className="training-level-copy">
+                  <strong>{level.name}</strong>
+                  <small>{level.description}</small>
+                </span>
+                <span className="training-level-status">{level.available ? 'SELECCIONAR' : 'BLOQUEADO'}</span>
               </button>
-            </div>
+            ))}
+          </div>
 
-            <p className="level-modal-description">Configura la intensidad de tu primera sesión.</p>
-
-            <div className="level-options">
-              {levels.map((level, index) => (
-                <button className="level-option" type="button" key={level.id} onClick={() => startTraining(level)}>
-                  <span className="level-index">0{index + 1}</span>
-                  <span className="level-copy">
-                    <strong>{level.name}</strong>
-                    <small>{level.description}</small>
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            <p className="level-modal-note">Más protocolos se desbloquearán con tu progreso.</p>
-          </section>
-        </div>
+          <p className="training-setup-note">Siguiente expansión disponible al incorporar más siluetas al sistema.</p>
+        </section>
       )}
 
       {trainingPhase !== 'idle' && (
@@ -309,7 +307,7 @@ export function SerialRecallScreen() {
                 <button className="result-button result-button-primary" type="button" onClick={startNewSession}>
                   NUEVA SESIÓN
                 </button>
-                <button className="result-button" type="button" onClick={() => setTrainingPhase('idle')}>
+                <button className="result-button" type="button" onClick={() => { setTrainingPhase('idle'); setIsSetupScreen(true) }}>
                   VOLVER
                 </button>
               </div>
