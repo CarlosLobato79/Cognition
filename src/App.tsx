@@ -10,6 +10,7 @@ import { DimensionalShiftScreen } from './components/DimensionalShiftScreen'
 import { PatternComparisonScreen } from './components/PatternComparisonScreen'
 import { ListSortingScreen } from './components/ListSortingScreen'
 import { SymbolDigitScreen } from './components/SymbolDigitScreen'
+import { AuditoryRecallScreen } from './components/AuditoryRecallScreen'
 import './styles/splash.css'
 
 export function App() {
@@ -115,6 +116,7 @@ export function App() {
           <Route path="/training/pattern-comparison" element={<PatternComparisonScreen />} />
           <Route path="/training/list-sorting" element={<ListSortingScreen />} />
           <Route path="/training/symbol-digit" element={<SymbolDigitScreen />} />
+          <Route path="/training/auditory-recall" element={<AuditoryRecallScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}

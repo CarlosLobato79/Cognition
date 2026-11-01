@@ -76,6 +76,15 @@ const modules = [
     benefits: 'Entrena velocidad de procesamiento, atención, memoria asociativa y precisión bajo presión.',
     available: true,
   },
+  {
+    id: '09',
+    name: 'Auditory Recall',
+    path: '/training/auditory-recall',
+    image: '/assets/brain-side-profile.png',
+    definition: 'Evalúa la capacidad de escuchar, retener y reconocer palabras presentadas oralmente.',
+    benefits: 'Entrena memoria auditiva, aprendizaje verbal, atención sostenida y recuperación de información.',
+    available: true,
+  },
 ]
 
 const serialRecallLevels = ['level-3', 'level-5', 'level-8', 'level-13', 'level-21', 'level-34', 'level-55', 'level-89']
@@ -86,6 +95,7 @@ const dimensionalShiftLevels = ['shift-3', 'shift-5', 'shift-8', 'shift-13', 'sh
 const patternComparisonLevels = ['pattern-3', 'pattern-5', 'pattern-8', 'pattern-13', 'pattern-21']
 const listSortingLevels = ['sorting-3', 'sorting-5', 'sorting-8', 'sorting-13', 'sorting-21']
 const symbolDigitLevels = ['symbol-3', 'symbol-5', 'symbol-8', 'symbol-13', 'symbol-21']
+const auditoryRecallLevels = ['auditory-3', 'auditory-5', 'auditory-8', 'auditory-13', 'auditory-21']
 const PERFECT_RUNS_REQUIRED = 25
 
 function readGameProgress(storageKey: string, levelIds: string[]) {
@@ -110,6 +120,7 @@ export function MainMenu() {
   const [patternComparisonPercent, setPatternComparisonPercent] = useState(() => readGameProgress('cognition-pattern-comparison-progress', patternComparisonLevels))
   const [listSortingPercent, setListSortingPercent] = useState(() => readGameProgress('cognition-list-sorting-progress', listSortingLevels))
   const [symbolDigitPercent, setSymbolDigitPercent] = useState(() => readGameProgress('cognition-symbol-digit-progress', symbolDigitLevels))
+  const [auditoryRecallPercent, setAuditoryRecallPercent] = useState(() => readGameProgress('cognition-auditory-recall-progress', auditoryRecallLevels))
 
   useEffect(() => {
     const cards = menuRef.current?.querySelectorAll('.module-card')
@@ -148,6 +159,7 @@ export function MainMenu() {
       setPatternComparisonPercent(readGameProgress('cognition-pattern-comparison-progress', patternComparisonLevels))
       setListSortingPercent(readGameProgress('cognition-list-sorting-progress', listSortingLevels))
       setSymbolDigitPercent(readGameProgress('cognition-symbol-digit-progress', symbolDigitLevels))
+      setAuditoryRecallPercent(readGameProgress('cognition-auditory-recall-progress', auditoryRecallLevels))
     }
     window.addEventListener('storage', refreshProgress)
     window.addEventListener('focus', refreshProgress)
@@ -191,7 +203,7 @@ export function MainMenu() {
             <span className="module-card-content">
               <span className="module-card-status">{module.available ? 'READY' : 'PROXIMAMENTE'}</span>
               <span className="module-card-name">{module.name}</span>
-              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : 0}% COMPLETADO</span>
+              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : module.id === '09' ? auditoryRecallPercent : 0}% COMPLETADO</span>
             </span>
             <img className="module-card-image" src={module.image} alt="" />
           </button>
