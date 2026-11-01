@@ -173,12 +173,7 @@ export function SerialRecallScreen() {
     }
   }
 
-  const resetTraining = () => {
-    setTrainingResult(null)
-    setSelectionOrder([])
-    setTrainingPhase('countdown')
-    setCountdown(3)
-  }
+  const startNewSession = () => startTraining(activeLevel)
 
   return (
     <main className="serial-recall-screen">
@@ -311,8 +306,8 @@ export function SerialRecallScreen() {
               <p>{trainingResult.correctAnswers} de {trainingResult.total} posiciones correctas</p>
               <span className="result-saved">PUNTAJE GUARDADO LOCALMENTE</span>
               <div className="result-actions">
-                <button className="result-button result-button-primary" type="button" onClick={resetTraining}>
-                  REPETIR NIVEL
+                <button className="result-button result-button-primary" type="button" onClick={startNewSession}>
+                  NUEVA SESIÓN
                 </button>
                 <button className="result-button" type="button" onClick={() => setTrainingPhase('idle')}>
                   VOLVER
