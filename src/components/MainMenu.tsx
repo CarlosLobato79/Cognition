@@ -46,10 +46,24 @@ const modules = [
   },
 ]
 
+const serialRecallLevels = ['level-3', 'level-5', 'level-8', 'level-13', 'level-21', 'level-34', 'level-55', 'level-89']
+const PERFECT_RUNS_REQUIRED = 25
+
+function readSerialRecallProgress() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('cognition-training-progress') ?? '{}')
+    const completedRuns = serialRecallLevels.reduce((sum, levelId) => sum + Math.min(Number(stored[levelId]) || 0, PERFECT_RUNS_REQUIRED), 0)
+    return Math.round((completedRuns / (serialRecallLevels.length * PERFECT_RUNS_REQUIRED)) * 100)
+  } catch {
+    return 0
+  }
+}
+
 export function MainMenu() {
   const navigate = useNavigate()
   const menuRef = useRef<HTMLElement>(null)
   const [selectedModule, setSelectedModule] = useState<(typeof modules)[number] | null>(null)
+  const [completionPercent, setCompletionPercent] = useState(readSerialRecallProgress)
 
   useEffect(() => {
     const cards = menuRef.current?.querySelectorAll('.module-card')
@@ -79,6 +93,16 @@ export function MainMenu() {
   }, [selectedModule])
 
   useEffect(() => {
+    const refreshProgress = () => setCompletionPercent(readSerialRecallProgress())
+    window.addEventListener('storage', refreshProgress)
+    window.addEventListener('focus', refreshProgress)
+    return () => {
+      window.removeEventListener('storage', refreshProgress)
+      window.removeEventListener('focus', refreshProgress)
+    }
+  }, [])
+
+  useEffect(() => {
     if (!selectedModule) return
 
     const previousOverflow = document.body.style.overflow
@@ -95,6 +119,10 @@ export function MainMenu() {
         <div className="menu-brand">
           <img src="/assets/cognition-brain-logo.png" alt="" />
           <span>COGNITIVE READINESS SYSTEM</span>
+        </div>
+        <div className="menu-progress" aria-label={`Progreso de Immediate Serial Recall: ${completionPercent}%`}>
+          <span>TRAINING PROGRESS</span>
+          <strong>{completionPercent}%</strong>
         </div>
         <h1>COGNITION</h1>
       </header>

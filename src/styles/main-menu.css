@@ -50,6 +50,27 @@
   filter: drop-shadow(0 0 10px rgba(100, 234, 245, 0.3));
 }
 
+.menu-progress {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  margin-left: auto;
+  margin-right: clamp(24px, 4vw, 64px);
+  color: rgba(100, 232, 244, 0.72);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: right;
+}
+
+.menu-progress strong {
+  color: #b0f554;
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
 .menu-header h1 {
   margin: 0;
   color: #fff;
@@ -311,6 +332,7 @@
   .menu-header h1 { font-size: clamp(3.7rem, 18vw, 6rem); }
   .menu-brand { font-size: 0.62rem; }
   .menu-brand img { width: 40px; height: 40px; }
+  .menu-progress { justify-items: start; margin: 0; text-align: left; }
   .module-rail { grid-template-columns: 1fr; gap: 10px; }
   .module-card { min-height: 118px; }
   .module-card-content { padding-left: 42px; }
