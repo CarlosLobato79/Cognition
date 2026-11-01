@@ -197,7 +197,7 @@ export function SerialRecallScreen() {
         return
       }
       setMemorizeIndex((current) => current + 1)
-    }, 1600)
+    }, 1200)
 
     return () => window.clearTimeout(timer)
   }, [activeSequence, memorizeIndex, trainingPhase])
