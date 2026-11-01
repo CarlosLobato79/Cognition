@@ -42,12 +42,12 @@ const modules = [
   },
   {
     id: '05',
-    name: 'Cortex Lock',
-    path: '#',
-    image: '/assets/animals/elefante.svg',
-    definition: 'Desafío de consolidación y recuperación de patrones complejos bajo presión de tiempo.',
-    benefits: 'Entrena flexibilidad cognitiva, planificación y recuperación de información.',
-    available: false,
+    name: 'Dimensional Shift',
+    path: '/training/dimensional-shift',
+    image: '/assets/brain-side-profile.png',
+    definition: 'Evalúa la capacidad de cambiar de una regla mental a otra y mantener la estrategia correcta ante estímulos variables.',
+    benefits: 'Entrena flexibilidad cognitiva, cambio de criterio, atención y control ejecutivo.',
+    available: true,
   },
 ]
 
@@ -55,6 +55,7 @@ const serialRecallLevels = ['level-3', 'level-5', 'level-8', 'level-13', 'level-
 const middleVectorLevels = ['vector-3', 'vector-5', 'vector-8', 'vector-13', 'vector-21']
 const stroopProtocolLevels = ['stroop-3', 'stroop-5', 'stroop-8', 'stroop-13', 'stroop-21']
 const spatialGridLevels = ['spatial-3', 'spatial-5', 'spatial-8', 'spatial-13', 'spatial-21']
+const dimensionalShiftLevels = ['shift-3', 'shift-5', 'shift-8', 'shift-13', 'shift-21']
 const PERFECT_RUNS_REQUIRED = 25
 
 function readGameProgress(storageKey: string, levelIds: string[]) {
@@ -75,6 +76,7 @@ export function MainMenu() {
   const [middleVectorPercent, setMiddleVectorPercent] = useState(() => readGameProgress('cognition-middle-vector-progress', middleVectorLevels))
   const [stroopProtocolPercent, setStroopProtocolPercent] = useState(() => readGameProgress('cognition-stroop-protocol-progress', stroopProtocolLevels))
   const [spatialGridPercent, setSpatialGridPercent] = useState(() => readGameProgress('cognition-spatial-grid-progress', spatialGridLevels))
+  const [dimensionalShiftPercent, setDimensionalShiftPercent] = useState(() => readGameProgress('cognition-dimensional-shift-progress', dimensionalShiftLevels))
 
   useEffect(() => {
     const cards = menuRef.current?.querySelectorAll('.module-card')
@@ -109,6 +111,7 @@ export function MainMenu() {
       setMiddleVectorPercent(readGameProgress('cognition-middle-vector-progress', middleVectorLevels))
       setStroopProtocolPercent(readGameProgress('cognition-stroop-protocol-progress', stroopProtocolLevels))
       setSpatialGridPercent(readGameProgress('cognition-spatial-grid-progress', spatialGridLevels))
+      setDimensionalShiftPercent(readGameProgress('cognition-dimensional-shift-progress', dimensionalShiftLevels))
     }
     window.addEventListener('storage', refreshProgress)
     window.addEventListener('focus', refreshProgress)
@@ -152,7 +155,7 @@ export function MainMenu() {
             <span className="module-card-content">
               <span className="module-card-status">{module.available ? 'READY' : 'PROXIMAMENTE'}</span>
               <span className="module-card-name">{module.name}</span>
-              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : 0}% COMPLETADO</span>
+              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : 0}% COMPLETADO</span>
             </span>
             <img className="module-card-image" src={module.image} alt="" />
           </button>
