@@ -247,7 +247,9 @@ export function NBackScreen() {
                   ? "MEMORIZA ESTE SÍMBOLO"
                   : "COMPARA CON EL SÍMBOLO DE HACE DOS RONDAS"}
               </p>
-              <strong>{index < 2 ? "PREPARACIÓN" : "RESPONDE AHORA"}</strong>
+              <strong>
+                {index < 2 ? "PREPARACIÓN" : "COMPARA Y ELIGE UNA OPCIÓN"}
+              </strong>
               {index < 2 ? (
                 <div className="nback-preparation-note">
                   NO RESPONDAS TODAVÍA · SOLO MEMORIZA
