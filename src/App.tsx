@@ -8,6 +8,7 @@ import { StroopProtocolScreen } from './components/StroopProtocolScreen'
 import { SpatialGridScreen } from './components/SpatialGridScreen'
 import { DimensionalShiftScreen } from './components/DimensionalShiftScreen'
 import { PatternComparisonScreen } from './components/PatternComparisonScreen'
+import { ListSortingScreen } from './components/ListSortingScreen'
 import './styles/splash.css'
 
 export function App() {
@@ -111,6 +112,7 @@ export function App() {
           <Route path="/training/spatial-grid" element={<SpatialGridScreen />} />
           <Route path="/training/dimensional-shift" element={<DimensionalShiftScreen />} />
           <Route path="/training/pattern-comparison" element={<PatternComparisonScreen />} />
+          <Route path="/training/list-sorting" element={<ListSortingScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}
