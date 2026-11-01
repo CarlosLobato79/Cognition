@@ -8,3 +8,4 @@
 .nback-trial-enter>strong{max-width:min(560px,90vw);font-size:1.05rem;line-height:1.25;text-align:center}
 .visual-search-target{color:#b0f554;font-family:'Rajdhani','Arial Narrow',sans-serif;letter-spacing:.12em}
 .visual-search-ready{color:#fff;font-family:'Rajdhani','Arial Narrow',sans-serif;font-size:1.3rem;letter-spacing:.12em;text-shadow:0 0 18px rgba(176,245,84,.45)}
+.search-field.is-covered span{background:#111d23;color:#64e8f4;font-family:'Rajdhani','Arial Narrow',sans-serif;font-size:2rem;box-shadow:inset 0 0 18px rgba(100,232,244,.12)}.visual-search-reveal{border:1px solid rgba(176,245,84,.72);background:rgba(176,245,84,.1);padding:15px 24px;color:#b0f554;cursor:pointer;font-family:'Rajdhani','Arial Narrow',sans-serif;font-weight:700;letter-spacing:.12em}.visual-search-reveal:hover,.visual-search-reveal:focus-visible{background:rgba(176,245,84,.24);outline:none}

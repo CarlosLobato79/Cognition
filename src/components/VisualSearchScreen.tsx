@@ -53,6 +53,7 @@ export function VisualSearchScreen() {
   const [countdown, setCountdown] = useState(3);
   const [speed, setSpeed] = useState<Speed>("normal");
   const [mode, setMode] = useState<Mode>("practica");
+  const [revealed, setRevealed] = useState(false);
   const [result, setResult] = useState<{
     score: number;
     correct: number;
@@ -79,14 +80,16 @@ export function VisualSearchScreen() {
     return () => window.clearInterval(timer);
   }, [phase]);
   useEffect(() => {
-    if (phase !== "trial" || mode === "practica") return;
+    if (phase !== "trial" || mode === "practica" || !revealed) return;
     const duration = speed === "lento" ? 1800 : speed === "rapido" ? 700 : 1200;
     const timer = window.setTimeout(() => {
-      if (index < items.length - 1) setIndex((current) => current + 1);
-      else finish(correct + (items[index]?.target ? 0 : 1));
+      if (index < items.length - 1) {
+        setRevealed(false);
+        setIndex((current) => current + 1);
+      } else finish(correct + (items[index]?.target ? 0 : 1));
     }, duration);
     return () => window.clearTimeout(timer);
-  }, [phase, index, items, speed, mode]);
+  }, [phase, index, items, speed, mode, revealed]);
   useEffect(() => {
     if (phase !== "setup") return;
     const old = document.body.style.overflow;
@@ -99,6 +102,7 @@ export function VisualSearchScreen() {
     setLevel(nextLevel);
     setItems(Array.from({ length: nextLevel.trials }, makeTrial));
     setIndex(0);
+    setRevealed(false);
     setCorrect(0);
     setCountdown(3);
     setResult(null);
@@ -139,12 +143,14 @@ export function VisualSearchScreen() {
     }
   };
   const answer = (found: boolean) => {
-    if (phase !== "trial" || !items[index]) return;
+    if (phase !== "trial" || !items[index] || !revealed) return;
     const right = found === items[index].target;
     const next = correct + (right ? 1 : 0);
     setCorrect(next);
-    if (index < items.length - 1) setIndex((current) => current + 1);
-    else finish(next);
+    if (index < items.length - 1) {
+      setRevealed(false);
+      setIndex((current) => current + 1);
+    } else finish(next);
   };
   return (
     <main className="cognitive-game-screen">
@@ -223,28 +229,51 @@ export function VisualSearchScreen() {
                 NUEVA BÚSQUEDA · RONDA {index + 1} / {items.length}
               </span>
               <strong className="visual-search-target">BUSCA: ◆</strong>
-              <div className="search-field">
-                {Array.from({ length: 12 }, (_, cell) => (
-                  <span
-                    className={
-                      cell === 5 && items[index]?.target ? "is-target" : ""
-                    }
-                    key={cell}
+              {!revealed ? (
+                <>
+                  <div className="search-field is-covered">
+                    {Array.from({ length: 12 }, (_, cell) => (
+                      <span key={cell}>?</span>
+                    ))}
+                  </div>
+                  <strong className="visual-search-ready">
+                    PRESIONA PARA BUSCAR
+                  </strong>
+                  <button
+                    className="visual-search-reveal"
+                    type="button"
+                    onClick={() => setRevealed(true)}
                   >
-                    {cell === 5 ? items[index]?.shape : "●"}
-                  </span>
-                ))}
-              </div>
-              <strong className="visual-search-ready">BUSCA AHORA: ◆</strong>
-              <p>RESPONDE AHORA: ¿APARECE EL ROMBO?</p>
-              <div className="cognitive-actions">
-                <button type="button" onClick={() => answer(true)}>
-                  SÍ, APARECE
-                </button>
-                <button type="button" onClick={() => answer(false)}>
-                  NO, NO APARECE
-                </button>
-              </div>
+                    BUSCAR AHORA
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="search-field">
+                    {Array.from({ length: 12 }, (_, cell) => (
+                      <span
+                        className={
+                          cell === 5 && items[index]?.target ? "is-target" : ""
+                        }
+                        key={cell}
+                      >
+                        {cell === 5 ? items[index]?.shape : "●"}
+                      </span>
+                    ))}
+                  </div>
+                  <strong className="visual-search-ready">
+                    RESPONDE AHORA: ¿APARECE ◆?
+                  </strong>
+                  <div className="cognitive-actions">
+                    <button type="button" onClick={() => answer(true)}>
+                      SÍ, APARECE
+                    </button>
+                    <button type="button" onClick={() => answer(false)}>
+                      NO, NO APARECE
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           )}
           {phase === "result" && result && (
