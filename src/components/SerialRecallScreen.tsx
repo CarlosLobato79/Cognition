@@ -11,10 +11,24 @@ const silhouettes = [
   { name: 'Elefante', image: '/assets/animals/elefante.png' },
 ]
 
+const levels = [
+  { id: 'recluta', name: 'RECLUTA', description: 'Inicio guiado · 3 siluetas', count: 3 },
+  { id: 'operador', name: 'OPERADOR', description: 'Ritmo táctico · 5 siluetas', count: 5 },
+  { id: 'elite', name: 'ÉLITE', description: 'Máxima exigencia · 5 siluetas', count: 5 },
+] as const
+
+type TrainingPhase = 'idle' | 'countdown' | 'memorize' | 'selection'
+
 export function SerialRecallScreen() {
   const navigate = useNavigate()
   const [sequence, setSequence] = useState(() => silhouettes.slice(0, 3))
   const [isLevelModalOpen, setIsLevelModalOpen] = useState(false)
+  const [trainingPhase, setTrainingPhase] = useState<TrainingPhase>('idle')
+  const [activeSequence, setActiveSequence] = useState<typeof silhouettes>([])
+  const [selectionCards, setSelectionCards] = useState<typeof silhouettes>([])
+  const [selectionOrder, setSelectionOrder] = useState<string[]>([])
+  const [countdown, setCountdown] = useState(3)
+  const [memorizeIndex, setMemorizeIndex] = useState(0)
   const sequenceRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -43,6 +57,40 @@ export function SerialRecallScreen() {
   }, [sequence])
 
   useEffect(() => {
+    if (trainingPhase !== 'countdown') return
+
+    const timer = window.setInterval(() => {
+      setCountdown((current) => {
+        if (current <= 1) {
+          window.clearInterval(timer)
+          setMemorizeIndex(0)
+          setTrainingPhase('memorize')
+          return 0
+        }
+        return current - 1
+      })
+    }, 900)
+
+    return () => window.clearInterval(timer)
+  }, [trainingPhase])
+
+  useEffect(() => {
+    if (trainingPhase !== 'memorize') return
+
+    const timer = window.setTimeout(() => {
+      if (memorizeIndex >= activeSequence.length - 1) {
+        setSelectionCards([...activeSequence].sort(() => Math.random() - 0.5))
+        setSelectionOrder([])
+        setTrainingPhase('selection')
+        return
+      }
+      setMemorizeIndex((current) => current + 1)
+    }, 2200)
+
+    return () => window.clearTimeout(timer)
+  }, [activeSequence, memorizeIndex, trainingPhase])
+
+  useEffect(() => {
     if (!isLevelModalOpen) return
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -52,6 +100,20 @@ export function SerialRecallScreen() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isLevelModalOpen])
+
+  const startTraining = (count: number) => {
+    const nextSequence = [...silhouettes].sort(() => Math.random() - 0.5).slice(0, count)
+    setActiveSequence(nextSequence)
+    setCountdown(3)
+    setSelectionOrder([])
+    setTrainingPhase('countdown')
+    setIsLevelModalOpen(false)
+  }
+
+  const handleCardSelection = (name: string) => {
+    if (selectionOrder.includes(name)) return
+    setSelectionOrder((current) => [...current, name])
+  }
 
   return (
     <main className="serial-recall-screen">
@@ -119,32 +181,63 @@ export function SerialRecallScreen() {
             <p className="level-modal-description">Configura la intensidad de tu primera sesión.</p>
 
             <div className="level-options">
-              <button className="level-option" type="button">
-                <span className="level-index">01</span>
-                <span className="level-copy">
-                  <strong>RECLUTA</strong>
-                  <small>Inicio guiado · 3 siluetas</small>
-                </span>
-              </button>
-              <button className="level-option" type="button">
-                <span className="level-index">02</span>
-                <span className="level-copy">
-                  <strong>OPERADOR</strong>
-                  <small>Ritmo táctico · 5 siluetas</small>
-                </span>
-              </button>
-              <button className="level-option" type="button">
-                <span className="level-index">03</span>
-                <span className="level-copy">
-                  <strong>ÉLITE</strong>
-                  <small>Máxima exigencia · 7 siluetas</small>
-                </span>
-              </button>
+              {levels.map((level, index) => (
+                <button className="level-option" type="button" key={level.id} onClick={() => startTraining(level.count)}>
+                  <span className="level-index">0{index + 1}</span>
+                  <span className="level-copy">
+                    <strong>{level.name}</strong>
+                    <small>{level.description}</small>
+                  </span>
+                </button>
+              ))}
             </div>
 
             <p className="level-modal-note">Más protocolos se desbloquearán con tu progreso.</p>
           </section>
         </div>
+      )}
+
+      {trainingPhase !== 'idle' && (
+        <section className="training-session" aria-label="Sesión de entrenamiento">
+          {trainingPhase === 'countdown' && (
+            <div className="countdown-display" key={countdown} aria-live="assertive">
+              {countdown}
+            </div>
+          )}
+
+          {trainingPhase === 'memorize' && activeSequence[memorizeIndex] && (
+            <div className="memorize-display" key={activeSequence[memorizeIndex].name}>
+              <img src={activeSequence[memorizeIndex].image} alt="" />
+              <span>{activeSequence[memorizeIndex].name.toUpperCase()}</span>
+            </div>
+          )}
+
+          {trainingPhase === 'selection' && (
+            <div className="selection-display">
+              <div className="selection-heading">
+                <span>RECONSTRUYE LA SECUENCIA</span>
+                <small>{selectionOrder.length} / {activeSequence.length}</small>
+              </div>
+              <div className="selection-cards">
+                {selectionCards.map((animal) => {
+                  const order = selectionOrder.indexOf(animal.name) + 1
+                  return (
+                    <button
+                      className={`selection-card${order > 0 ? ' is-selected' : ''}`}
+                      type="button"
+                      key={animal.name}
+                      aria-label={`Elegir ${animal.name}`}
+                      onClick={() => handleCardSelection(animal.name)}
+                    >
+                      {order > 0 && <span className="selection-order">{order}</span>}
+                      <img src={animal.image} alt="" />
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </section>
       )}
     </main>
   )
