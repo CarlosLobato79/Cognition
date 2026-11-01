@@ -3,6 +3,7 @@ import { animate } from 'animejs'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { MainMenu } from './components/MainMenu'
 import { SerialRecallScreen } from './components/SerialRecallScreen'
+import { MiddleVectorScreen } from './components/MiddleVectorScreen'
 import './styles/splash.css'
 
 export function App() {
@@ -101,6 +102,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<MainMenu />} />
           <Route path="/training/immediate-serial-recall" element={<SerialRecallScreen />} />
+          <Route path="/training/middle-vector" element={<MiddleVectorScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}
