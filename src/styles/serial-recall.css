@@ -288,7 +288,6 @@
   display: grid;
   justify-items: center;
   gap: 34px;
-  animation: memorize-in 900ms ease both;
 }
 
 .memorize-display img {
@@ -304,11 +303,6 @@
   font-size: clamp(1.4rem, 4vw, 2.7rem);
   font-weight: 700;
   letter-spacing: 0.28em;
-}
-
-@keyframes memorize-in {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
 }
 
 .selection-display {
@@ -384,7 +378,6 @@
   display: grid;
   justify-items: center;
   width: min(620px, 92vw);
-  animation: memorize-in 700ms ease both;
   text-align: center;
 }
 
