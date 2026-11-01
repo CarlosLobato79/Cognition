@@ -159,8 +159,7 @@ export function GoNoGoScreen() {
             <span>FUNCIÓN EJECUTIVA // CONTROL INHIBITORIO</span>
             <h1>INHIBICIÓN</h1>
             <p>
-              Presiona RESPONDER cuando veas el círculo verde. Presiona OMITIR
-              cuando veas la X roja.
+              Presiona RESPONDER cuando veas el círculo verde. Si aparece la X roja, no toques nada.
             </p>
           </div>
           <div className="cognitive-speed-picker"><span>RITMO DE ESTÍMULOS</span><div>{(["lento", "normal", "rapido"] as Speed[]).map((option) => <button className={speed === option ? "is-active" : ""} type="button" key={option} onClick={() => setSpeed(option)}>{option === "rapido" ? "RÁPIDO" : option.toUpperCase()}</button>)}</div></div>
@@ -190,20 +189,17 @@ export function GoNoGoScreen() {
                 RONDA {index + 1} / {trials.length}
               </span>
               <p className="cognitive-instruction">
-                CÍRCULO VERDE = RESPONDER · X ROJA = OMITIR
+                CÍRCULO VERDE = TOCA · X ROJA = NO TOQUES NADA
               </p>
               <div
                 className={`gng-stimulus ${trials[index]?.go ? "is-go" : "is-stop"}`}
               >
                 {trials[index]?.go ? "●" : "✕"}
               </div>
-              <strong>{trials[index]?.go ? "RESPONDE" : "OMITE"}</strong>
+              <strong>{trials[index]?.go ? "TOCA RESPONDER" : "NO TOQUES NADA"}</strong>
               <div className="cognitive-actions">
                 <button type="button" onClick={() => answer(true)}>
                   RESPONDER
-                </button>
-                <button type="button" onClick={() => answer(false)}>
-                  OMITIR
                 </button>
               </div>
             </div>
