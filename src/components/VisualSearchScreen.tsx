@@ -158,9 +158,26 @@ export function VisualSearchScreen() {
             <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
             <span>ATENCIÓN // BÚSQUEDA VISUAL</span>
             <h1>BÚSQUEDA VISUAL</h1>
-            <p>Encuentra la figura diferente antes de que termine el tiempo.</p>
+            <p>
+              Busca el rombo ◆ entre los círculos. Responde si aparece o no
+              aparece.
+            </p>
           </div>
-          <div className="cognitive-speed-picker"><span>RITMO DE ESTÍMULOS</span><div>{(["lento", "normal", "rapido"] as Speed[]).map((option) => <button className={speed === option ? "is-active" : ""} type="button" key={option} onClick={() => setSpeed(option)}>{option === "rapido" ? "RÁPIDO" : option.toUpperCase()}</button>)}</div></div>
+          <div className="cognitive-speed-picker">
+            <span>RITMO DE ESTÍMULOS</span>
+            <div>
+              {(["lento", "normal", "rapido"] as Speed[]).map((option) => (
+                <button
+                  className={speed === option ? "is-active" : ""}
+                  type="button"
+                  key={option}
+                  onClick={() => setSpeed(option)}
+                >
+                  {option === "rapido" ? "RÁPIDO" : option.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="cognitive-levels">
             {levels.map((item) => (
               <button type="button" key={item.id} onClick={() => start(item)}>
@@ -182,10 +199,11 @@ export function VisualSearchScreen() {
             </div>
           )}
           {phase === "trial" && (
-            <div className="cognitive-trial">
+            <div className="cognitive-trial" key={index}>
               <span>
-                RONDA {index + 1} / {items.length}
+                NUEVA BÚSQUEDA · RONDA {index + 1} / {items.length}
               </span>
+              <strong className="visual-search-target">BUSCA: ◆</strong>
               <div className="search-field">
                 {Array.from({ length: 12 }, (_, cell) => (
                   <span
@@ -198,13 +216,13 @@ export function VisualSearchScreen() {
                   </span>
                 ))}
               </div>
-              <p>¿ENCONTRASTE LA FIGURA DIFERENTE?</p>
+              <p>¿APARECE EL ROMBO ◆ EN LA CUADRÍCULA?</p>
               <div className="cognitive-actions">
                 <button type="button" onClick={() => answer(true)}>
-                  SÍ, ENCONTRÉ
+                  SÍ, APARECE
                 </button>
                 <button type="button" onClick={() => answer(false)}>
-                  NO
+                  NO, NO APARECE
                 </button>
               </div>
             </div>

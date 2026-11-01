@@ -6,3 +6,4 @@
 .nback-trial-enter .nback-symbol{animation:nback-clear-stimulus 300ms ease both;background:transparent;border:0;box-shadow:none;color:#b0f554}@keyframes nback-clear-stimulus{0%{opacity:.35;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
 .nback-preparation-note{border:1px solid rgba(100,232,244,.42);background:rgba(100,232,244,.08);padding:13px 18px;color:#64e8f4;font-family:'Rajdhani','Arial Narrow',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em}
 .nback-trial-enter>strong{max-width:min(560px,90vw);font-size:1.05rem;line-height:1.25;text-align:center}
+.visual-search-target{color:#b0f554;font-family:'Rajdhani','Arial Narrow',sans-serif;letter-spacing:.12em}
