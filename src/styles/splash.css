@@ -51,10 +51,11 @@
   box-shadow: 0 0 48px rgba(50, 207, 224, 0.22), inset 0 0 34px rgba(50, 207, 224, 0.1);
 }
 
-.brain-logo {
+.brain-image-logo {
   position: relative;
   width: 126px;
   height: 126px;
+  object-fit: contain;
   fill: #fff;
   filter: drop-shadow(0 0 18px rgba(100, 234, 245, 0.35));
 }
@@ -114,7 +115,7 @@
 }
 
 .ready-mark { opacity: 0.1; }
-.ready-mark .brain-logo { width: 72px; height: 72px; }
+.ready-mark .brain-image-logo { width: 72px; height: 72px; }
 .dark-ready-state p { margin: 0; opacity: 0.32; }
 
 @media (prefers-reduced-motion: reduce) {

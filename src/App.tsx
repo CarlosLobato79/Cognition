@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
-import { BrainLogo } from './components/BrainLogo'
 import './styles/splash.css'
 
 export function App() {
@@ -68,7 +67,7 @@ export function App() {
           <div className="splash-content">
             <div ref={logoRef} className="logo-lockup">
               <div className="logo-aura" aria-hidden="true" />
-              <BrainLogo />
+              <img className="brain-image-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" />
             </div>
             <h1 ref={wordmarkRef}>COGNITION</h1>
             <p ref={statusRef} className="boot-status">
@@ -82,7 +81,7 @@ export function App() {
 
       {isBooted && (
         <section className="dark-ready-state" aria-label="Cognition listo">
-          <div className="ready-mark"><BrainLogo /></div>
+          <div className="ready-mark"><img className="brain-image-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" /></div>
           <p>COGNITION SYSTEM READY</p>
         </section>
       )}
