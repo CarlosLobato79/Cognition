@@ -230,6 +230,7 @@ export function MainMenu() {
             <span className="module-card-content">
               <span className="module-card-status">{module.available ? 'DISPONIBLE' : 'PRÓXIMAMENTE'}</span>
               <span className="module-card-name">{module.name}</span>
+              <span className="module-card-description">{module.definition}</span>
               <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : module.id === '09' ? auditoryRecallPercent : 0}% COMPLETADO</span>
             </span>
             <img className="module-card-image" src={module.image} alt="" />
