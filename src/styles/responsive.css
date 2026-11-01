@@ -1,0 +1,169 @@
+/* Ajustes compartidos para que las pantallas de configuración respiren en móvil y tablet. */
+.serial-recall-screen,
+.middle-vector-setup,
+.stroop-protocol-setup,
+.spatial-grid-setup,
+.dimensional-shift-setup,
+.pattern-comparison-setup,
+.list-sorting-setup,
+.symbol-digit-setup,
+.auditory-recall-setup,
+.cognitive-game-setup {
+  min-height: auto;
+}
+
+@media (max-width: 900px) {
+  .serial-recall-screen,
+  .middle-vector-setup,
+  .stroop-protocol-setup,
+  .spatial-grid-setup,
+  .dimensional-shift-setup,
+  .pattern-comparison-setup,
+  .list-sorting-setup,
+  .symbol-digit-setup,
+  .auditory-recall-setup,
+  .cognitive-game-setup {
+    padding: 22px 20px 40px;
+  }
+
+  .training-intro,
+  .middle-vector-intro,
+  .stroop-protocol-intro,
+  .spatial-grid-intro,
+  .dimensional-shift-intro,
+  .pattern-comparison-intro,
+  .list-sorting-intro,
+  .symbol-digit-intro,
+  .auditory-recall-intro,
+  .cognitive-game-intro {
+    margin: 28px auto 22px;
+  }
+
+  .training-intro h1,
+  .middle-vector-intro h1,
+  .stroop-protocol-intro h1,
+  .spatial-grid-intro h1,
+  .dimensional-shift-intro h1,
+  .pattern-comparison-intro h1,
+  .list-sorting-intro h1,
+  .symbol-digit-intro h1,
+  .auditory-recall-intro h1,
+  .cognitive-game-intro h1 {
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    letter-spacing: 0.06em;
+    line-height: 0.98;
+  }
+
+  .training-intro p,
+  .middle-vector-intro p,
+  .stroop-protocol-intro p,
+  .spatial-grid-intro p,
+  .dimensional-shift-intro p,
+  .pattern-comparison-intro p,
+  .list-sorting-intro p,
+  .symbol-digit-intro p,
+  .auditory-recall-intro p,
+  .cognitive-game-intro p {
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .middle-vector-levels,
+  .stroop-protocol-levels,
+  .spatial-grid-levels,
+  .dimensional-shift-levels,
+  .pattern-comparison-levels,
+  .list-sorting-levels,
+  .symbol-digit-levels,
+  .auditory-recall-levels,
+  .cognitive-levels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .middle-vector-level,
+  .stroop-protocol-level,
+  .spatial-grid-level,
+  .dimensional-shift-level,
+  .pattern-comparison-level,
+  .list-sorting-level,
+  .symbol-digit-level,
+  .auditory-recall-level,
+  .cognitive-levels button {
+    min-height: 128px;
+    padding: 14px;
+  }
+
+  .middle-vector-level strong,
+  .stroop-protocol-level strong,
+  .spatial-grid-level strong,
+  .dimensional-shift-level strong,
+  .pattern-comparison-level strong,
+  .list-sorting-level strong,
+  .symbol-digit-level strong,
+  .auditory-recall-level strong,
+  .cognitive-levels strong {
+    font-size: clamp(1.35rem, 4vw, 2rem);
+  }
+
+  .cognitive-game-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .training-header,
+  .middle-vector-header,
+  .stroop-protocol-header,
+  .spatial-grid-header,
+  .dimensional-shift-header,
+  .pattern-comparison-header,
+  .list-sorting-header,
+  .symbol-digit-header,
+  .auditory-recall-header,
+  .cognitive-game-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .training-code,
+  .middle-vector-header > span,
+  .stroop-protocol-header > span,
+  .spatial-grid-header > span,
+  .dimensional-shift-header > span,
+  .pattern-comparison-header > span,
+  .list-sorting-header > span,
+  .symbol-digit-header > span,
+  .auditory-recall-header > span,
+  .cognitive-game-header > span {
+    align-self: flex-end;
+    max-width: 100%;
+    text-align: right;
+  }
+
+  .training-intro h1,
+  .middle-vector-intro h1,
+  .stroop-protocol-intro h1,
+  .spatial-grid-intro h1,
+  .dimensional-shift-intro h1,
+  .pattern-comparison-intro h1,
+  .list-sorting-intro h1,
+  .symbol-digit-intro h1,
+  .auditory-recall-intro h1,
+  .cognitive-game-intro h1 {
+    font-size: clamp(1.65rem, 8vw, 2.35rem);
+  }
+
+  .middle-vector-level,
+  .stroop-protocol-level,
+  .spatial-grid-level,
+  .dimensional-shift-level,
+  .pattern-comparison-level,
+  .list-sorting-level,
+  .symbol-digit-level,
+  .auditory-recall-level,
+  .cognitive-levels button {
+    min-height: 116px;
+    padding: 12px;
+  }
+}

@@ -120,7 +120,7 @@ export function StroopProtocolScreen() {
   useEffect(() => {
     if (phase !== "setup") return;
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "auto";
     return () => {
       document.body.style.overflow = previousOverflow;
     };
