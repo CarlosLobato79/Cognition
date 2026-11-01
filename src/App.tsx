@@ -6,13 +6,21 @@ import { SerialRecallScreen } from './components/SerialRecallScreen'
 import './styles/splash.css'
 
 export function App() {
-  const [isBooted, setIsBooted] = useState(false)
+  const [isBooted, setIsBooted] = useState(() => {
+    try {
+      return sessionStorage.getItem('cognition-booted') === '1'
+    } catch {
+      return false
+    }
+  })
   const splashRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const wordmarkRef = useRef<HTMLHeadingElement>(null)
   const statusRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
+    if (isBooted) return
+
     const logoIntro = animate(logoRef.current!, {
       opacity: [0, 1],
       scale: [0.78, 1],
@@ -49,7 +57,14 @@ export function App() {
         opacity: [1, 0],
         duration: 850,
         ease: 'inOutQuad',
-        onComplete: () => setIsBooted(true),
+        onComplete: () => {
+          try {
+            sessionStorage.setItem('cognition-booted', '1')
+          } catch {
+            // Storage may be unavailable in restricted webviews.
+          }
+          setIsBooted(true)
+        },
       })
     }, 3900)
 
@@ -60,7 +75,7 @@ export function App() {
       statusIntro.pause()
       pulse.pause()
     }
-  }, [])
+  }, [isBooted])
 
   return (
     <main className="app-shell">

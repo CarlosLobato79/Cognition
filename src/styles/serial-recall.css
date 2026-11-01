@@ -302,6 +302,15 @@
   text-align: center;
 }
 
+.training-setup-logo {
+  display: block;
+  width: clamp(58px, 8vw, 92px);
+  height: clamp(58px, 8vw, 92px);
+  margin: 0 auto 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(100, 232, 244, 0.22));
+}
+
 .training-setup-intro h1 {
   margin: 14px 0 12px;
   color: #fff;

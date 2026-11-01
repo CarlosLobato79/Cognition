@@ -327,6 +327,7 @@ export function SerialRecallScreen() {
           </header>
 
           <div className="training-setup-intro">
+            <img className="training-setup-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" />
             <span className="training-kicker">IMMEDIATE SERIAL RECALL</span>
             <h1>CONFIGURA TU ENTRENAMIENTO</h1>
             <p>Selecciona la cantidad de siluetas para configurar tu sesión.</p>
