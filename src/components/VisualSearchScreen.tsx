@@ -192,10 +192,9 @@ export function VisualSearchScreen() {
       {phase === "setup" && (
         <section className="cognitive-game-setup">
           <div className="cognitive-game-intro">
-            <div className="cognitive-game-intro-heading">
-              <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
-              <h1>BÚSQUEDA VISUAL</h1>
-            </div>
+            <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
+            <span>ATENCIÓN // BÚSQUEDA VISUAL</span>
+            <h1>BÚSQUEDA VISUAL</h1>
             <p>
               Busca la figura objetivo entre figuras distractoras. Responde si
               aparece o no aparece.
