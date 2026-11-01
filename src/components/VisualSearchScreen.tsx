@@ -13,6 +13,7 @@ type Level = (typeof levels)[number];
 type Phase = "setup" | "countdown" | "trial" | "result";
 type Item = { shape: string; target: boolean };
 type Speed = "lento" | "normal" | "rapido";
+type Mode = "practica" | "evaluacion";
 const SHAPES = ["●", "■", "▲", "◆"];
 const PERFECT = 25;
 const PROGRESS = "cognition-visual-search-progress";
@@ -51,6 +52,7 @@ export function VisualSearchScreen() {
   const [correct, setCorrect] = useState(0);
   const [countdown, setCountdown] = useState(3);
   const [speed, setSpeed] = useState<Speed>("normal");
+  const [mode, setMode] = useState<Mode>("practica");
   const [result, setResult] = useState<{
     score: number;
     correct: number;
@@ -77,14 +79,14 @@ export function VisualSearchScreen() {
     return () => window.clearInterval(timer);
   }, [phase]);
   useEffect(() => {
-    if (phase !== "trial") return;
+    if (phase !== "trial" || mode === "practica") return;
     const duration = speed === "lento" ? 1800 : speed === "rapido" ? 700 : 1200;
     const timer = window.setTimeout(() => {
       if (index < items.length - 1) setIndex((current) => current + 1);
       else finish(correct + (items[index]?.target ? 0 : 1));
     }, duration);
     return () => window.clearTimeout(timer);
-  }, [phase, index, items, speed]);
+  }, [phase, index, items, speed, mode]);
   useEffect(() => {
     if (phase !== "setup") return;
     const old = document.body.style.overflow;
@@ -174,6 +176,23 @@ export function VisualSearchScreen() {
                   onClick={() => setSpeed(option)}
                 >
                   {option === "rapido" ? "RÁPIDO" : option.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="cognitive-speed-picker">
+            <span>MODO DE ENTRENAMIENTO</span>
+            <div>
+              {(["practica", "evaluacion"] as Mode[]).map((option) => (
+                <button
+                  className={mode === option ? "is-active" : ""}
+                  type="button"
+                  key={option}
+                  onClick={() => setMode(option)}
+                >
+                  {option === "practica"
+                    ? "PRÁCTICA · SIN TIEMPO"
+                    : "EVALUACIÓN · CON TIEMPO"}
                 </button>
               ))}
             </div>
