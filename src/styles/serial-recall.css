@@ -332,8 +332,9 @@
 
 .selection-cards {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 220px));
   gap: clamp(8px, 1.5vw, 22px);
+  justify-content: center;
 }
 
 .selection-card {
