@@ -12,7 +12,8 @@ html, body, #root { min-width: 100%; min-height: 100%; margin: 0; }
 
 body {
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: #05070a;
 }
 
