@@ -12,7 +12,12 @@ const levels = [
 ] as const;
 type Level = (typeof levels)[number];
 type Phase = "setup" | "countdown" | "trial" | "result";
-type Item = { shape: string; target: boolean };
+type Item = {
+  targetShape: string;
+  distractorShape: string;
+  target: boolean;
+  targetCell: number;
+};
 type Speed = "lento" | "normal" | "rapido";
 type Mode = "practica" | "evaluacion";
 const SHAPES = ["●", "■", "▲", "◆"];
@@ -38,8 +43,17 @@ function gamePercent(progress: Record<string, number>) {
   );
 }
 function makeTrial(): Item {
+  const targetShape = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+  const distractors = SHAPES.filter((shape) => shape !== targetShape);
+  const distractorShape =
+    distractors[Math.floor(Math.random() * distractors.length)];
   const target = Math.random() > 0.25;
-  return { shape: target ? "◆" : "●", target };
+  return {
+    targetShape,
+    distractorShape,
+    target,
+    targetCell: Math.floor(Math.random() * 16),
+  };
 }
 
 export function VisualSearchScreen() {
@@ -183,8 +197,8 @@ export function VisualSearchScreen() {
             <span>ATENCIÓN // BÚSQUEDA VISUAL</span>
             <h1>BÚSQUEDA VISUAL</h1>
             <p>
-              Busca el rombo ◆ entre los círculos. Responde si aparece o no
-              aparece.
+              Busca la figura objetivo entre figuras distractoras. Responde si
+              aparece o no aparece.
             </p>
           </div>
           <div className="cognitive-speed-picker">
@@ -244,11 +258,13 @@ export function VisualSearchScreen() {
               <span>
                 NUEVA BÚSQUEDA · RONDA {index + 1} / {items.length}
               </span>
-              <strong className="visual-search-target">BUSCA: ◆</strong>
+              <strong className="visual-search-target">
+                BUSCA: {items[index]?.targetShape}
+              </strong>
               {!revealed ? (
                 <>
                   <div className="search-field is-covered">
-                    {Array.from({ length: 12 }, (_, cell) => (
+                    {Array.from({ length: 16 }, (_, cell) => (
                       <span key={cell}>?</span>
                     ))}
                   </div>
@@ -266,19 +282,24 @@ export function VisualSearchScreen() {
               ) : (
                 <>
                   <div className="search-field visual-search-reveal-stage">
-                    {Array.from({ length: 12 }, (_, cell) => (
-                      <span
-                        className={
-                          cell === 5 && items[index]?.target ? "is-target" : ""
-                        }
-                        key={cell}
-                      >
-                        {cell === 5 ? items[index]?.shape : "●"}
-                      </span>
-                    ))}
+                    {Array.from({ length: 16 }, (_, cell) => {
+                      const isTargetCell =
+                        items[index]?.target &&
+                        cell === items[index]?.targetCell;
+                      return (
+                        <span
+                          className={isTargetCell ? "is-target" : ""}
+                          key={cell}
+                        >
+                          {isTargetCell
+                            ? items[index]?.targetShape
+                            : items[index]?.distractorShape}
+                        </span>
+                      );
+                    })}
                   </div>
                   <strong className="visual-search-ready">
-                    RESPONDE AHORA: ¿APARECE ◆?
+                    RESPONDE AHORA: ¿APARECE {items[index]?.targetShape}?
                   </strong>
                   <div className="cognitive-actions">
                     <button type="button" onClick={() => answer(true)}>
