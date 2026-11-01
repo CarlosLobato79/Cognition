@@ -1,0 +1,103 @@
+.serial-recall-screen {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 30px clamp(24px, 6vw, 96px) 60px;
+  background: #05070a;
+  color: #fff;
+}
+
+.training-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(117, 160, 173, 0.24);
+  padding-bottom: 20px;
+}
+
+.back-button {
+  border: 0;
+  background: transparent;
+  color: #64e8f4;
+  cursor: pointer;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.training-code,
+.training-kicker,
+.training-placeholder span {
+  color: rgba(100, 232, 244, 0.72);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.training-intro {
+  margin: clamp(5rem, 14vh, 9rem) auto 0;
+  text-align: center;
+}
+
+.training-intro h1 {
+  margin: 18px 0 12px;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5.8rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 0.9;
+}
+
+.training-intro p {
+  margin: 0;
+  color: rgba(177, 205, 214, 0.65);
+  font-size: 1rem;
+}
+
+.training-placeholder {
+  position: relative;
+  display: flex;
+  width: min(720px, 100%);
+  min-height: 260px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  margin: auto;
+  border: 1px solid rgba(100, 232, 244, 0.38);
+  background: rgba(12, 20, 25, 0.52);
+  color: #fff;
+}
+
+.training-placeholder strong {
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+}
+
+.training-crosshair {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(100, 232, 244, 0.48);
+  border-radius: 50%;
+}
+
+.training-crosshair::before,
+.training-crosshair::after {
+  position: absolute;
+  background: rgba(100, 232, 244, 0.48);
+  content: '';
+}
+
+.training-crosshair::before { top: 26px; left: -14px; width: 80px; height: 1px; }
+.training-crosshair::after { top: -14px; left: 26px; width: 1px; height: 80px; }
+
+@media (max-width: 600px) {
+  .training-header { align-items: flex-start; flex-direction: column; gap: 16px; }
+  .training-code { align-self: flex-end; }
+  .training-intro { margin-top: 4.5rem; }
+  .training-intro h1 { font-size: 2.6rem; }
+}

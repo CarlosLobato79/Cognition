@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import { MainMenu } from './components/MainMenu'
+import { SerialRecallScreen } from './components/SerialRecallScreen'
 import './styles/splash.css'
 
 export function App() {
   const [isBooted, setIsBooted] = useState(false)
+  const [activeScreen, setActiveScreen] = useState<'menu' | 'serial-recall'>('menu')
   const splashRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const wordmarkRef = useRef<HTMLHeadingElement>(null)
@@ -80,7 +82,8 @@ export function App() {
         </section>
       )}
 
-      {isBooted && <MainMenu />}
+      {isBooted && activeScreen === 'menu' && <MainMenu onSelectModule={setActiveScreen} />}
+      {isBooted && activeScreen === 'serial-recall' && <SerialRecallScreen onBack={() => setActiveScreen('menu')} />}
     </main>
   )
 }

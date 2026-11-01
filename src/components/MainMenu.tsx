@@ -3,14 +3,18 @@ import { animate } from 'animejs'
 import '../styles/main-menu.css'
 
 const modules = [
-  { id: '01', name: 'Sequence Core' },
+  { id: '01', name: 'Immediate Serial Recall' },
   { id: '02', name: 'Neural Grid' },
   { id: '03', name: 'Echo Span' },
   { id: '04', name: 'Focus Vector' },
   { id: '05', name: 'Cortex Lock' },
 ]
 
-export function MainMenu() {
+type MainMenuProps = {
+  onSelectModule: (module: 'serial-recall') => void
+}
+
+export function MainMenu({ onSelectModule }: MainMenuProps) {
   const menuRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -42,7 +46,13 @@ export function MainMenu() {
 
       <section className="module-rail" aria-label="Módulos de entrenamiento">
         {modules.map((module) => (
-          <button className="module-card" key={module.id} type="button" aria-label={`Módulo ${module.id}: ${module.name}`}>
+          <button
+            className="module-card"
+            key={module.id}
+            type="button"
+            aria-label={`Módulo ${module.id}: ${module.name}`}
+            onClick={module.id === '01' ? () => onSelectModule('serial-recall') : undefined}
+          >
             <span className="module-card-number">{module.id}</span>
             <span className="module-card-footer">
               <span className="module-card-status">PROXIMAMENTE</span>
