@@ -36,6 +36,12 @@ function gamePercent(progress: Record<string, number>) {
   );
 }
 
+function createTrials(length: number): Trial[] {
+  const required = [{ go: true }, { go: false }];
+  const remaining = Array.from({ length: Math.max(0, length - required.length) }, () => ({ go: Math.random() > 0.45 }));
+  return [...required, ...remaining].sort(() => Math.random() - 0.5);
+}
+
 export function GoNoGoScreen() {
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("setup");
@@ -94,9 +100,7 @@ export function GoNoGoScreen() {
   }, [phase]);
 
   const start = (nextLevel: Level) => {
-    const nextTrials = Array.from({ length: nextLevel.trials }, () => ({
-      go: Math.random() > 0.35,
-    }));
+    const nextTrials = createTrials(nextLevel.trials);
     setLevel(nextLevel);
     setTrials(nextTrials);
     setIndex(0);
