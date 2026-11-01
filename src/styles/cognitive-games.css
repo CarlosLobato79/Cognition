@@ -7,3 +7,4 @@
 .nback-preparation-note{border:1px solid rgba(100,232,244,.42);background:rgba(100,232,244,.08);padding:13px 18px;color:#64e8f4;font-family:'Rajdhani','Arial Narrow',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em}
 .nback-trial-enter>strong{max-width:min(560px,90vw);font-size:1.05rem;line-height:1.25;text-align:center}
 .visual-search-target{color:#b0f554;font-family:'Rajdhani','Arial Narrow',sans-serif;letter-spacing:.12em}
+.visual-search-ready{color:#fff;font-family:'Rajdhani','Arial Narrow',sans-serif;font-size:1.3rem;letter-spacing:.12em;text-shadow:0 0 18px rgba(176,245,84,.45)}

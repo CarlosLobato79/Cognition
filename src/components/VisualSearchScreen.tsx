@@ -216,7 +216,8 @@ export function VisualSearchScreen() {
                   </span>
                 ))}
               </div>
-              <p>¿APARECE EL ROMBO ◆ EN LA CUADRÍCULA?</p>
+              <strong className="visual-search-ready">BUSCA AHORA: ◆</strong>
+              <p>RESPONDE AHORA: ¿APARECE EL ROMBO?</p>
               <div className="cognitive-actions">
                 <button type="button" onClick={() => answer(true)}>
                   SÍ, APARECE
