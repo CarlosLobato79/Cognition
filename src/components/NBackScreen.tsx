@@ -248,7 +248,9 @@ export function NBackScreen() {
                   : "COMPARA CON EL SÍMBOLO DE HACE DOS RONDAS"}
               </p>
               <strong>
-                {index < 2 ? "PREPARACIÓN" : "COMPARA Y ELIGE UNA OPCIÓN"}
+                {index < 2
+                  ? "PREPARACIÓN"
+                  : "COMPARA, RESPONDE Y MEMORIZA ESTE SÍMBOLO"}
               </strong>
               {index < 2 ? (
                 <div className="nback-preparation-note">
