@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "../styles/cognitive-games.css";
 
 const levels = [
-  { id: "gng-3", name: "RECLUTA", trials: 3 },
-  { id: "gng-5", name: "RASTREADOR", trials: 5 },
-  { id: "gng-8", name: "OPERADOR", trials: 8 },
-  { id: "gng-13", name: "VANGUARDIA", trials: 13 },
-  { id: "gng-21", name: "CENTINELA", trials: 21 },
+  { id: "gng-3", name: "INICIO", trials: 3 },
+  { id: "gng-5", name: "EXPLORACIÓN", trials: 5 },
+  { id: "gng-8", name: "ENFOQUE", trials: 8 },
+  { id: "gng-13", name: "PRECISIÓN", trials: 13 },
+  { id: "gng-21", name: "DOMINIO", trials: 21 },
 ] as const;
 type Level = (typeof levels)[number];
 type Trial = { go: boolean };
@@ -38,7 +38,10 @@ function gamePercent(progress: Record<string, number>) {
 
 function createTrials(length: number): Trial[] {
   const required = [{ go: true }, { go: false }];
-  const remaining = Array.from({ length: Math.max(0, length - required.length) }, () => ({ go: Math.random() > 0.45 }));
+  const remaining = Array.from(
+    { length: Math.max(0, length - required.length) },
+    () => ({ go: Math.random() > 0.45 }),
+  );
   return [...required, ...remaining].sort(() => Math.random() - 0.5);
 }
 
@@ -165,10 +168,25 @@ export function GoNoGoScreen() {
             <span>FUNCIÓN EJECUTIVA // CONTROL INHIBITORIO</span>
             <h1>INHIBICIÓN</h1>
             <p>
-              Presiona RESPONDER cuando veas el círculo verde. Si aparece la X roja, no toques nada.
+              Presiona RESPONDER cuando veas el círculo verde. Si aparece la X
+              roja, no toques nada.
             </p>
           </div>
-          <div className="cognitive-speed-picker"><span>RITMO DE ESTÍMULOS</span><div>{(["lento", "normal", "rapido"] as Speed[]).map((option) => <button className={speed === option ? "is-active" : ""} type="button" key={option} onClick={() => setSpeed(option)}>{option === "rapido" ? "RÁPIDO" : option.toUpperCase()}</button>)}</div></div>
+          <div className="cognitive-speed-picker">
+            <span>RITMO DE ESTÍMULOS</span>
+            <div>
+              {(["lento", "normal", "rapido"] as Speed[]).map((option) => (
+                <button
+                  className={speed === option ? "is-active" : ""}
+                  type="button"
+                  key={option}
+                  onClick={() => setSpeed(option)}
+                >
+                  {option === "rapido" ? "RÁPIDO" : option.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="cognitive-levels">
             {levels.map((item) => (
               <button type="button" key={item.id} onClick={() => start(item)}>
@@ -203,7 +221,9 @@ export function GoNoGoScreen() {
               >
                 {trials[index]?.go ? "●" : "✕"}
               </div>
-              <strong>{trials[index]?.go ? "TOCA RESPONDER" : "NO TOQUES NADA"}</strong>
+              <strong>
+                {trials[index]?.go ? "TOCA RESPONDER" : "NO TOQUES NADA"}
+              </strong>
               <div className="cognitive-actions">
                 <button type="button" onClick={() => answer(true)}>
                   RESPONDER

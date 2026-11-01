@@ -6,9 +6,9 @@ import "../styles/cognitive-games.css";
 const levels = [
   { id: "search-3", name: "INICIO", trials: 3 },
   { id: "search-5", name: "EXPLORACIÓN", trials: 5 },
-  { id: "search-8", name: "ATENCIÓN", trials: 8 },
+  { id: "search-8", name: "ENFOQUE", trials: 8 },
   { id: "search-13", name: "PRECISIÓN", trials: 13 },
-  { id: "search-21", name: "DOMINIO VISUAL", trials: 21 },
+  { id: "search-21", name: "DOMINIO", trials: 21 },
 ] as const;
 type Level = (typeof levels)[number];
 type Phase = "setup" | "countdown" | "trial" | "result";
