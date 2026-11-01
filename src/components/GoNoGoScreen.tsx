@@ -192,6 +192,7 @@ export function GoNoGoScreen() {
                 CÍRCULO VERDE = TOCA · X ROJA = NO TOQUES NADA
               </p>
               <div
+                key={index}
                 className={`gng-stimulus ${trials[index]?.go ? "is-go" : "is-stop"}`}
               >
                 {trials[index]?.go ? "●" : "✕"}
