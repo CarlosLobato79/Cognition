@@ -98,10 +98,10 @@ export function App() {
             <h1 ref={wordmarkRef}>COGNITION</h1>
             <p ref={statusRef} className="boot-status">
               <span className="status-dot" />
-              INITIALIZING COGNITIVE SYSTEM
+              INICIANDO SISTEMA COGNITIVO
             </p>
           </div>
-          <p className="build-label">COGNITION // BUILD 0.1</p>
+          <p className="build-label">COGNITION // VERSIÓN 0.1</p>
         </section>
       )}
 

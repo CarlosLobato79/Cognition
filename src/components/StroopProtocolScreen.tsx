@@ -141,13 +141,13 @@ export function StroopProtocolScreen() {
       {phase === 'setup' && (
         <section className="stroop-protocol-setup" aria-label="Configuración de Stroop Protocol">
           <header className="stroop-protocol-header">
-            <button className="stroop-protocol-back" type="button" onClick={() => navigate('/')}>← MENU</button>
-            <span>COGNITION // TRAINING 03</span>
+            <button className="stroop-protocol-back" type="button" onClick={() => navigate('/')}>← MENÚ</button>
+            <span>COGNITION // ENTRENAMIENTO 03</span>
           </header>
           <div className="stroop-protocol-intro">
             <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
-            <span>EXECUTIVE FUNCTION // INHIBITORY CONTROL</span>
-            <h1>STROOP PROTOCOL</h1>
+            <span>FUNCIÓN EJECUTIVA // CONTROL INHIBITORIO</span>
+            <h1>CONTROL DE COLORES</h1>
             <p>Ignora la palabra. Responde según el color de la tinta.</p>
           </div>
           <div className="stroop-protocol-levels">
@@ -169,7 +169,7 @@ export function StroopProtocolScreen() {
 
           {phase === 'trial' && trials[trialIndex] && (
             <div className="stroop-protocol-trial">
-              <div className="stroop-protocol-status">ROUND {trialIndex + 1} / {trials.length}</div>
+              <div className="stroop-protocol-status">RONDA {trialIndex + 1} / {trials.length}</div>
               <div className="stroop-word" style={{ color: colors.find((color) => color.id === trials[trialIndex].ink)?.hex }}>
                 {colors.find((color) => color.id === trials[trialIndex].word)?.name}
               </div>
@@ -186,7 +186,7 @@ export function StroopProtocolScreen() {
 
           {phase === 'result' && result && (
             <div className="stroop-protocol-result">
-              <span>SESSION COMPLETE</span>
+              <span>SESIÓN COMPLETA</span>
               <h2>{result.score === 100 ? 'CONTROL CONFIRMADO' : 'SESIÓN FINALIZADA'}</h2>
               <strong>{result.score}<small>%</small></strong>
               <p>{result.correct} de {result.total} respuestas correctas</p>

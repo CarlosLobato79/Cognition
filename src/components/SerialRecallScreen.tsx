@@ -317,14 +317,14 @@ export function SerialRecallScreen() {
     <main className="serial-recall-screen">
       <header className="training-header">
         <button className="back-button" type="button" onClick={() => navigate('/')}>
-          ← MENU
+          ← MENÚ
         </button>
-        <span className="training-code">COGNITION // TRAINING 01</span>
+        <span className="training-code">COGNITION // ENTRENAMIENTO 01</span>
       </header>
 
       <section className="training-intro">
-        <span className="training-kicker">WORKING MEMORY</span>
-        <h1>IMMEDIATE SERIAL RECALL</h1>
+        <span className="training-kicker">MEMORIA DE TRABAJO</span>
+        <h1>MEMORIA SECUENCIAL</h1>
         <p>Memorize the sequence. Reproduce it in the exact order.</p>
         <button className="start-training-button" type="button" onClick={() => setIsSetupScreen(true)}>
           ENTRENAR
@@ -361,7 +361,7 @@ export function SerialRecallScreen() {
         <section className="training-setup-screen" aria-label="Configuración del entrenamiento">
           <header className="training-setup-header">
             <button className="back-button" type="button" onClick={() => navigate('/')}>
-              ← MENU
+              ← MENÚ
             </button>
             <span className="training-code">COGNITION // CONFIGURATION</span>
             <button className="silhouette-vault-button" type="button" onClick={() => { setVaultPage(0); setIsVaultOpen(true) }}>
@@ -371,7 +371,7 @@ export function SerialRecallScreen() {
 
           <div className="training-setup-intro">
             <img className="training-setup-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" />
-            <span className="training-kicker">IMMEDIATE SERIAL RECALL</span>
+            <span className="training-kicker">MEMORIA SECUENCIAL</span>
             <h1>CONFIGURA TU ENTRENAMIENTO</h1>
             <p>Selecciona la cantidad de siluetas para configurar tu sesión.</p>
           </div>
@@ -479,7 +479,7 @@ export function SerialRecallScreen() {
 
           {trainingPhase === 'result' && trainingResult && (
             <div className="result-display" role="status">
-              <span className="result-kicker">SESSION COMPLETE</span>
+              <span className="result-kicker">SESIÓN COMPLETA</span>
               <h2>{trainingResult.perfect ? 'SECUENCIA CORRECTA' : 'SECUENCIA INCORRECTA'}</h2>
               <div className="result-score">{trainingResult.score}<small>%</small></div>
               <p>{trainingResult.correctAnswers} de {trainingResult.total} posiciones correctas</p>

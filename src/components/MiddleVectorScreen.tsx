@@ -141,13 +141,13 @@ export function MiddleVectorScreen() {
       {phase === 'setup' && (
         <section className="middle-vector-setup" aria-label="Configuración de Middle Vector">
           <header className="middle-vector-header">
-            <button className="middle-vector-back" type="button" onClick={() => navigate('/')}>← MENU</button>
-            <span>COGNITION // TRAINING 02</span>
+            <button className="middle-vector-back" type="button" onClick={() => navigate('/')}>← MENÚ</button>
+            <span>COGNITION // ENTRENAMIENTO 02</span>
           </header>
           <div className="middle-vector-intro">
             <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
-            <span>ATTENTION // INHIBITORY CONTROL</span>
-            <h1>MIDDLE VECTOR</h1>
+            <span>ATENCIÓN // CONTROL INHIBITORIO</span>
+            <h1>ATENCIÓN CENTRAL</h1>
             <p>Enfócate en el centro. Ignora los distractores. Responde tan rápido como puedas.</p>
           </div>
           <div className="middle-vector-levels">
@@ -169,7 +169,7 @@ export function MiddleVectorScreen() {
 
           {phase === 'trial' && trials[trialIndex] && (
             <div className="middle-vector-trial">
-              <div className="middle-vector-status">ROUND {trialIndex + 1} / {trials.length}</div>
+              <div className="middle-vector-status">RONDA {trialIndex + 1} / {trials.length}</div>
               <div className="arrow-row" aria-label="Estímulo central">
                 {Array.from({ length: 5 }, (_, index) => (
                   <span className={index === 2 ? 'is-middle' : ''} key={index}>
@@ -187,7 +187,7 @@ export function MiddleVectorScreen() {
 
           {phase === 'result' && result && (
             <div className="middle-vector-result">
-              <span>SESSION COMPLETE</span>
+              <span>SESIÓN COMPLETA</span>
               <h2>{result.score === 100 ? 'CONTROL CONFIRMADO' : 'SESIÓN FINALIZADA'}</h2>
               <strong>{result.score}<small>%</small></strong>
               <p>{result.correct} de {result.total} respuestas correctas</p>

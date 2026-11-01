@@ -131,8 +131,8 @@ export function DimensionalShiftScreen() {
     <main className="dimensional-shift-screen">
       {phase === 'setup' && (
         <section className="dimensional-shift-setup" aria-label="Configuración de Dimensional Shift">
-          <header className="dimensional-shift-header"><button type="button" onClick={() => navigate('/')}>← MENU</button><span>COGNITION // TRAINING 05</span></header>
-          <div className="dimensional-shift-intro"><img src="/assets/cognition-brain-logo.png" alt="Cognition" /><span>EXECUTIVE FUNCTION // SET SHIFTING</span><h1>DIMENSIONAL SHIFT</h1><p>Cambia la regla. Clasifica el estímulo. Mantén el control.</p></div>
+          <header className="dimensional-shift-header"><button type="button" onClick={() => navigate('/')}>← MENÚ</button><span>COGNITION // ENTRENAMIENTO 05</span></header>
+          <div className="dimensional-shift-intro"><img src="/assets/cognition-brain-logo.png" alt="Cognition" /><span>FUNCIÓN EJECUTIVA // CAMBIO DE REGLA</span><h1>CAMBIO DE REGLA</h1><p>Cambia la regla. Clasifica el estímulo. Mantén el control.</p></div>
           <div className="dimensional-shift-levels">
             {levels.map((level, index) => <button className="dimensional-shift-level" type="button" key={level.id} onClick={() => startTraining(level)}><small>0{index + 1}</small><strong>{level.trials}</strong><span><b>{level.name}</b>{level.description}</span><em>{progress[level.id] ?? 0}/{PERFECT_RUNS_REQUIRED} PERFECTAS</em></button>)}
           </div>

@@ -6,7 +6,7 @@ import '../styles/main-menu.css'
 const modules = [
   {
     id: '01',
-    name: 'Immediate Serial Recall',
+    name: 'Memoria Secuencial',
     path: '/training/immediate-serial-recall',
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de mantener una secuencia breve en la memoria de trabajo y reproducirla en el orden exacto.',
@@ -15,7 +15,7 @@ const modules = [
   },
   {
     id: '02',
-    name: 'Middle Vector',
+    name: 'Atención Central',
     path: '/training/middle-vector',
     image: '/assets/brain-side-profile.png',
     definition: 'Mide la capacidad de enfocar un estímulo central e inhibir la información distractora que aparece a sus lados.',
@@ -24,7 +24,7 @@ const modules = [
   },
   {
     id: '03',
-    name: 'Stroop Protocol',
+    name: 'Control de Colores',
     path: '/training/stroop-protocol',
     image: '/assets/brain-side-profile.png',
     definition: 'Mide la capacidad de ignorar una respuesta automática y seleccionar la información relevante del estímulo.',
@@ -33,7 +33,7 @@ const modules = [
   },
   {
     id: '04',
-    name: 'Spatial Grid',
+    name: 'Memoria Espacial',
     path: '/training/spatial-grid',
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de recordar posiciones visuales y reproducir una secuencia espacial en el orden correcto.',
@@ -42,7 +42,7 @@ const modules = [
   },
   {
     id: '05',
-    name: 'Dimensional Shift',
+    name: 'Cambio de Regla',
     path: '/training/dimensional-shift',
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de cambiar de una regla mental a otra y mantener la estrategia correcta ante estímulos variables.',
@@ -51,7 +51,7 @@ const modules = [
   },
   {
     id: '06',
-    name: 'Pattern Comparison',
+    name: 'Comparación Visual',
     path: '/training/pattern-comparison',
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa qué tan rápido puedes comparar dos patrones visuales y detectar si son iguales o diferentes.',
@@ -60,7 +60,7 @@ const modules = [
   },
   {
     id: '07',
-    name: 'List Sorting',
+    name: 'Ordenamiento Mental',
     path: '/training/list-sorting',
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de recordar varios elementos y reorganizarlos mentalmente siguiendo una regla.',
@@ -69,7 +69,7 @@ const modules = [
   },
   {
     id: '08',
-    name: 'Symbol Digit',
+    name: 'Símbolo y Número',
     path: '/training/symbol-digit',
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la velocidad con la que puedes asociar símbolos visuales con números usando una clave cambiante.',
@@ -78,7 +78,7 @@ const modules = [
   },
   {
     id: '09',
-    name: 'Auditory Recall',
+    name: 'Recuerdo Auditivo',
     path: '/training/auditory-recall',
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de escuchar, retener y reconocer palabras presentadas oralmente.',
@@ -201,7 +201,7 @@ export function MainMenu() {
           >
             <span className="module-card-number">{module.id}</span>
             <span className="module-card-content">
-              <span className="module-card-status">{module.available ? 'READY' : 'PROXIMAMENTE'}</span>
+              <span className="module-card-status">{module.available ? 'DISPONIBLE' : 'PRÓXIMAMENTE'}</span>
               <span className="module-card-name">{module.name}</span>
               <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : module.id === '09' ? auditoryRecallPercent : 0}% COMPLETADO</span>
             </span>
@@ -226,7 +226,7 @@ export function MainMenu() {
             <div className="module-modal-copy">
               <img className="module-modal-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" />
               <div className="module-modal-topline">
-                <span>{selectedModule.available ? 'TRAINING READY' : 'IN DEVELOPMENT'}</span>
+                <span>{selectedModule.available ? 'ENTRENAMIENTO DISPONIBLE' : 'EN DESARROLLO'}</span>
                 <button type="button" aria-label="Cerrar" onClick={() => setSelectedModule(null)}>×</button>
               </div>
               <h2 id="module-modal-title">{selectedModule.name}</h2>

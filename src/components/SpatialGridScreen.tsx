@@ -131,13 +131,13 @@ export function SpatialGridScreen() {
       {phase === 'setup' && (
         <section className="spatial-grid-setup" aria-label="Configuración de Spatial Grid">
           <header className="spatial-grid-header">
-            <button className="spatial-grid-back" type="button" onClick={() => navigate('/')}>← MENU</button>
-            <span>COGNITION // TRAINING 04</span>
+            <button className="spatial-grid-back" type="button" onClick={() => navigate('/')}>← MENÚ</button>
+            <span>COGNITION // ENTRENAMIENTO 04</span>
           </header>
           <div className="spatial-grid-intro">
             <img src="/assets/cognition-brain-logo.png" alt="Cognition" />
-            <span>WORKING MEMORY // VISUOSPATIAL CONTROL</span>
-            <h1>SPATIAL GRID</h1>
+            <span>MEMORIA DE TRABAJO // CONTROL VISUOESPACIAL</span>
+            <h1>MEMORIA ESPACIAL</h1>
             <p>Observa la secuencia. Repite cada posición en el mismo orden.</p>
           </div>
           <div className="spatial-grid-levels">
@@ -158,7 +158,7 @@ export function SpatialGridScreen() {
           {phase === 'countdown' && <div className="spatial-grid-countdown" key={countdown}>{countdown}</div>}
           {phase === 'show' && (
             <div className="spatial-grid-playback">
-              <div className="spatial-grid-status">MEMORIZE {sequenceIndex + 1} / {sequence.length}</div>
+              <div className="spatial-grid-status">MEMORIZA {sequenceIndex + 1} / {sequence.length}</div>
               <div className="spatial-grid-board" style={{ '--grid-size': activeLevel.grid } as React.CSSProperties}>
                 {Array.from({ length: activeLevel.grid * activeLevel.grid }, (_, index) => <span className={index === sequence[sequenceIndex] ? 'is-lit' : ''} key={index} />)}
               </div>
@@ -176,7 +176,7 @@ export function SpatialGridScreen() {
           )}
           {phase === 'result' && result && (
             <div className="spatial-grid-result">
-              <span>SESSION COMPLETE</span>
+              <span>SESIÓN COMPLETA</span>
               <h2>{result.score === 100 ? 'SECUENCIA CONFIRMADA' : 'SESIÓN FINALIZADA'}</h2>
               <strong>{result.score}<small>%</small></strong>
               <p>{result.correct} de {result.total} posiciones correctas</p>
