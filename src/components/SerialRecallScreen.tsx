@@ -85,7 +85,7 @@ const silhouettes = [
   { name: 'Pato', image: '/assets/animals/pato.png' },
   { name: 'Pavo', image: '/assets/animals/pavo.png' },
   { name: 'Perezoso', image: '/assets/animals/perezoso.png' },
-  { name: 'Perro', image: '/assets/animals/perro.png' },
+  { name: 'Perro', image: '/assets/animals/perro.svg' },
   { name: 'Pinguino', image: '/assets/animals/pinguino.png' },
   { name: 'Pulpo', image: '/assets/animals/pulpo.png' },
   { name: 'Puma', image: '/assets/animals/puma.png' },
