@@ -132,6 +132,7 @@ export function MainMenu() {
               <img src={selectedModule.image} alt="" />
             </div>
             <div className="module-modal-copy">
+              <img className="module-modal-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" />
               <div className="module-modal-topline">
                 <span>{selectedModule.available ? 'TRAINING READY' : 'IN DEVELOPMENT'}</span>
                 <button type="button" aria-label="Cerrar" onClick={() => setSelectedModule(null)}>×</button>

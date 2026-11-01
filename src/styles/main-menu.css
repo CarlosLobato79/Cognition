@@ -44,8 +44,8 @@
 }
 
 .menu-brand img {
-  width: 30px;
-  height: 30px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   filter: drop-shadow(0 0 10px rgba(100, 234, 245, 0.3));
 }
@@ -224,6 +224,13 @@
   padding: 34px;
 }
 
+.module-modal-logo {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(100, 232, 244, 0.28));
+}
+
 .module-modal-topline {
   display: flex;
   align-items: center;
@@ -303,6 +310,7 @@
   .menu-header { align-items: flex-start; flex-direction: column-reverse; gap: 20px; padding-right: 24px; }
   .menu-header h1 { font-size: clamp(3.7rem, 18vw, 6rem); }
   .menu-brand { font-size: 0.62rem; }
+  .menu-brand img { width: 40px; height: 40px; }
   .module-rail { grid-template-columns: 1fr; gap: 10px; }
   .module-card { min-height: 118px; }
   .module-card-content { padding-left: 42px; }
