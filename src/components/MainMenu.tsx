@@ -3,11 +3,11 @@ import { animate } from 'animejs'
 import '../styles/main-menu.css'
 
 const modules = [
-  { id: '01', name: 'Perro', image: '/assets/animals/perro.png' },
-  { id: '02', name: 'Gato', image: '/assets/animals/gato.png' },
-  { id: '03', name: 'León', image: '/assets/animals/leon.png' },
-  { id: '04', name: 'Tigre', image: '/assets/animals/tigre.png' },
-  { id: '05', name: 'Elefante', image: '/assets/animals/elefante.png' },
+  { id: '01', name: 'Sequence Core' },
+  { id: '02', name: 'Neural Grid' },
+  { id: '03', name: 'Echo Span' },
+  { id: '04', name: 'Focus Vector' },
+  { id: '05', name: 'Cortex Lock' },
 ]
 
 export function MainMenu() {
@@ -45,7 +45,10 @@ export function MainMenu() {
         {modules.map((module) => (
           <button className="module-card" key={module.id} type="button" aria-label={`Módulo ${module.id}: ${module.name}`}>
             <span className="module-card-number">{module.id}</span>
-            <img src={module.image} alt="" />
+            <span className="module-card-footer">
+              <span className="module-card-status">PROXIMAMENTE</span>
+              <span className="module-card-name">{module.name}</span>
+            </span>
           </button>
         ))}
       </section>
