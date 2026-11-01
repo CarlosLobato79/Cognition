@@ -17,7 +17,16 @@ const levels = [
   { id: 'elite', name: 'ÉLITE', description: 'Máxima exigencia · 5 siluetas', count: 5 },
 ] as const
 
-type TrainingPhase = 'idle' | 'countdown' | 'memorize' | 'selection'
+type TrainingLevel = typeof levels[number]
+
+type TrainingPhase = 'idle' | 'countdown' | 'memorize' | 'selection' | 'result'
+
+type TrainingResult = {
+  score: number
+  correctAnswers: number
+  total: number
+  perfect: boolean
+}
 
 export function SerialRecallScreen() {
   const navigate = useNavigate()
@@ -27,6 +36,8 @@ export function SerialRecallScreen() {
   const [activeSequence, setActiveSequence] = useState<typeof silhouettes>([])
   const [selectionCards, setSelectionCards] = useState<typeof silhouettes>([])
   const [selectionOrder, setSelectionOrder] = useState<string[]>([])
+  const [activeLevel, setActiveLevel] = useState<TrainingLevel>(levels[0])
+  const [trainingResult, setTrainingResult] = useState<TrainingResult | null>(null)
   const [countdown, setCountdown] = useState(3)
   const [memorizeIndex, setMemorizeIndex] = useState(0)
   const sequenceRef = useRef<HTMLDivElement>(null)
@@ -113,18 +124,60 @@ export function SerialRecallScreen() {
     }
   }, [isLevelModalOpen, trainingPhase])
 
-  const startTraining = (count: number) => {
-    const nextSequence = [...silhouettes].sort(() => Math.random() - 0.5).slice(0, count)
+  const startTraining = (level: TrainingLevel) => {
+    const nextSequence = [...silhouettes].sort(() => Math.random() - 0.5).slice(0, level.count)
     setActiveSequence(nextSequence)
+    setActiveLevel(level)
     setCountdown(3)
     setSelectionOrder([])
+    setTrainingResult(null)
     setTrainingPhase('countdown')
     setIsLevelModalOpen(false)
   }
 
   const handleCardSelection = (name: string) => {
     if (selectionOrder.includes(name)) return
-    setSelectionOrder((current) => [...current, name])
+
+    const nextOrder = [...selectionOrder, name]
+    setSelectionOrder(nextOrder)
+
+    if (nextOrder.length !== activeSequence.length) return
+
+    const correctAnswers = nextOrder.reduce(
+      (total, selectedName, index) => total + (selectedName === activeSequence[index].name ? 1 : 0),
+      0,
+    )
+    const result = {
+      score: Math.round((correctAnswers / activeSequence.length) * 100),
+      correctAnswers,
+      total: activeSequence.length,
+      perfect: correctAnswers === activeSequence.length,
+    }
+
+    setTrainingResult(result)
+    setTrainingPhase('result')
+
+    try {
+      const storedScores = JSON.parse(localStorage.getItem('cognition-serial-recall-scores') ?? '[]')
+      const scores = Array.isArray(storedScores) ? storedScores : []
+      scores.push({
+        ...result,
+        level: activeLevel.id,
+        sequence: activeSequence.map((animal) => animal.name),
+        answer: nextOrder,
+        createdAt: new Date().toISOString(),
+      })
+      localStorage.setItem('cognition-serial-recall-scores', JSON.stringify(scores.slice(-20)))
+    } catch {
+      // localStorage may be unavailable in private browsing or restricted webviews.
+    }
+  }
+
+  const resetTraining = () => {
+    setTrainingResult(null)
+    setSelectionOrder([])
+    setTrainingPhase('countdown')
+    setCountdown(3)
   }
 
   return (
@@ -194,7 +247,7 @@ export function SerialRecallScreen() {
 
             <div className="level-options">
               {levels.map((level, index) => (
-                <button className="level-option" type="button" key={level.id} onClick={() => startTraining(level.count)}>
+                <button className="level-option" type="button" key={level.id} onClick={() => startTraining(level)}>
                   <span className="level-index">0{index + 1}</span>
                   <span className="level-copy">
                     <strong>{level.name}</strong>
@@ -246,6 +299,24 @@ export function SerialRecallScreen() {
                     </button>
                   )
                 })}
+              </div>
+            </div>
+          )}
+
+          {trainingPhase === 'result' && trainingResult && (
+            <div className="result-display" role="status">
+              <span className="result-kicker">SESSION COMPLETE</span>
+              <h2>{trainingResult.perfect ? 'SECUENCIA CORRECTA' : 'SECUENCIA INCORRECTA'}</h2>
+              <div className="result-score">{trainingResult.score}<small>%</small></div>
+              <p>{trainingResult.correctAnswers} de {trainingResult.total} posiciones correctas</p>
+              <span className="result-saved">PUNTAJE GUARDADO LOCALMENTE</span>
+              <div className="result-actions">
+                <button className="result-button result-button-primary" type="button" onClick={resetTraining}>
+                  REPETIR NIVEL
+                </button>
+                <button className="result-button" type="button" onClick={() => setTrainingPhase('idle')}>
+                  VOLVER
+                </button>
               </div>
             </div>
           )}
