@@ -118,6 +118,9 @@ const levels = [
   { id: 'level-144', name: 'COMANDO', description: '144 siluetas · próximamente', count: 144, available: false },
 ] as const
 
+const PERFECT_RUNS_REQUIRED = 25
+const PROGRESS_STORAGE_KEY = 'cognition-training-progress'
+
 type TrainingLevel = typeof levels[number]
 
 type TrainingPhase = 'idle' | 'countdown' | 'memorize' | 'selection' | 'result'
@@ -127,6 +130,26 @@ type TrainingResult = {
   correctAnswers: number
   total: number
   perfect: boolean
+  levelPerfectRuns: number
+  gameProgress: number
+}
+
+type LevelProgress = Record<string, number>
+
+function readLevelProgress(): LevelProgress {
+  try {
+    const stored = JSON.parse(localStorage.getItem(PROGRESS_STORAGE_KEY) ?? '{}')
+    return stored && typeof stored === 'object' ? stored : {}
+  } catch {
+    return {}
+  }
+}
+
+function calculateGameProgress(progress: LevelProgress) {
+  const playableLevels = levels.filter((level) => level.available)
+  const totalRuns = playableLevels.reduce((sum, level) => sum + Math.min(progress[level.id] ?? 0, PERFECT_RUNS_REQUIRED), 0)
+  const totalRequired = playableLevels.length * PERFECT_RUNS_REQUIRED
+  return totalRequired ? Math.round((totalRuns / totalRequired) * 100) : 0
 }
 
 export function SerialRecallScreen() {
@@ -141,6 +164,7 @@ export function SerialRecallScreen() {
   const [selectionOrder, setSelectionOrder] = useState<string[]>([])
   const [activeLevel, setActiveLevel] = useState<TrainingLevel>(levels[0])
   const [trainingResult, setTrainingResult] = useState<TrainingResult | null>(null)
+  const [levelProgress, setLevelProgress] = useState<LevelProgress>(readLevelProgress)
   const [countdown, setCountdown] = useState(3)
   const [memorizeIndex, setMemorizeIndex] = useState(0)
   const sequenceRef = useRef<HTMLDivElement>(null)
@@ -244,7 +268,26 @@ export function SerialRecallScreen() {
       correctAnswers,
       total: activeSequence.length,
       perfect: correctAnswers === activeSequence.length,
+      levelPerfectRuns: levelProgress[activeLevel.id] ?? 0,
+      gameProgress: calculateGameProgress(levelProgress),
     }
+
+    let nextProgress = levelProgress
+    if (result.perfect) {
+      nextProgress = {
+        ...levelProgress,
+        [activeLevel.id]: Math.min(PERFECT_RUNS_REQUIRED, (levelProgress[activeLevel.id] ?? 0) + 1),
+      }
+      setLevelProgress(nextProgress)
+      try {
+        localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(nextProgress))
+      } catch {
+        // localStorage may be unavailable in private browsing or restricted webviews.
+      }
+    }
+
+    result.levelPerfectRuns = nextProgress[activeLevel.id] ?? 0
+    result.gameProgress = calculateGameProgress(nextProgress)
 
     setTrainingResult(result)
     setTrainingPhase('result')
@@ -348,7 +391,8 @@ export function SerialRecallScreen() {
                   <strong>{level.name}</strong>
                   <small>{level.description}</small>
                 </span>
-                <span className="training-level-status">{level.available ? 'SELECCIONAR' : 'BLOQUEADO'}</span>
+                  <span className="training-level-status">{level.available ? 'SELECCIONAR' : 'BLOQUEADO'}</span>
+                  <span className="training-level-progress">{levelProgress[level.id] ?? 0}/{PERFECT_RUNS_REQUIRED} PERFECTAS</span>
               </button>
             ))}
           </div>
@@ -439,6 +483,7 @@ export function SerialRecallScreen() {
               <h2>{trainingResult.perfect ? 'SECUENCIA CORRECTA' : 'SECUENCIA INCORRECTA'}</h2>
               <div className="result-score">{trainingResult.score}<small>%</small></div>
               <p>{trainingResult.correctAnswers} de {trainingResult.total} posiciones correctas</p>
+              <span className="result-progress">NIVEL: {trainingResult.levelPerfectRuns}/{PERFECT_RUNS_REQUIRED} PERFECTAS · JUEGO: {trainingResult.gameProgress}%</span>
               <span className="result-saved">PUNTAJE GUARDADO LOCALMENTE</span>
               <div className="result-actions">
                 <button className="result-button result-button-primary" type="button" onClick={startNewSession}>

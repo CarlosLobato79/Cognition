@@ -404,6 +404,13 @@
 .training-level-status { color: rgba(176, 245, 84, 0.72); }
 .training-level-card.is-locked .training-level-status { color: rgba(177, 205, 214, 0.6); }
 
+.training-level-progress {
+  color: rgba(177, 205, 214, 0.52);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
 .training-setup-note {
   margin: 22px auto 0;
   color: rgba(177, 205, 214, 0.46);
@@ -734,6 +741,14 @@
 .result-saved {
   color: rgba(176, 245, 84, 0.72);
   font-size: 0.68rem;
+}
+
+.result-progress {
+  color: rgba(177, 205, 214, 0.7);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .result-actions {
