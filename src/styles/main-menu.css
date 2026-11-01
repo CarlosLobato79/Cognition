@@ -112,6 +112,52 @@
   margin: 0 auto;
 }
 
+.module-filters {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.module-filters > span {
+  color: rgba(100, 232, 244, 0.66);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.module-filters > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.module-filters button {
+  border: 1px solid rgba(117, 160, 173, 0.32);
+  background: rgba(17, 29, 35, 0.72);
+  padding: 9px 13px;
+  color: rgba(177, 205, 214, 0.72);
+  cursor: pointer;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.module-filters button:hover,
+.module-filters button:focus-visible,
+.module-filters button.is-active {
+  border-color: #64e8f4;
+  background: rgba(100, 232, 244, 0.12);
+  color: #64e8f4;
+  outline: none;
+}
+
 .module-card {
   position: relative;
   display: flex;

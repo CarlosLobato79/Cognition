@@ -11,6 +11,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de mantener una secuencia breve en la memoria de trabajo y reproducirla en el orden exacto.',
     benefits: 'Entrena retención visual, asociación imagen-nombre, orden serial y atención sostenida.',
+    areas: ['MEMORIA', 'ATENCIÓN'],
     available: true,
   },
   {
@@ -20,6 +21,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Mide la capacidad de enfocar un estímulo central e inhibir la información distractora que aparece a sus lados.',
     benefits: 'Entrena atención selectiva, control inhibitorio, velocidad de respuesta y resistencia a distractores.',
+    areas: ['ATENCIÓN', 'FUNCIÓN EJECUTIVA'],
     available: true,
   },
   {
@@ -29,6 +31,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Mide la capacidad de ignorar una respuesta automática y seleccionar la información relevante del estímulo.',
     benefits: 'Entrena control inhibitorio, flexibilidad cognitiva, atención selectiva y velocidad de procesamiento.',
+    areas: ['FUNCIÓN EJECUTIVA', 'ATENCIÓN', 'VELOCIDAD'],
     available: true,
   },
   {
@@ -38,6 +41,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de recordar posiciones visuales y reproducir una secuencia espacial en el orden correcto.',
     benefits: 'Entrena memoria visuoespacial, memoria de trabajo, atención sostenida y precisión secuencial.',
+    areas: ['MEMORIA', 'ATENCIÓN'],
     available: true,
   },
   {
@@ -47,6 +51,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de cambiar de una regla mental a otra y mantener la estrategia correcta ante estímulos variables.',
     benefits: 'Entrena flexibilidad cognitiva, cambio de criterio, atención y control ejecutivo.',
+    areas: ['FUNCIÓN EJECUTIVA', 'ATENCIÓN'],
     available: true,
   },
   {
@@ -56,6 +61,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa qué tan rápido puedes comparar dos patrones visuales y detectar si son iguales o diferentes.',
     benefits: 'Entrena velocidad de procesamiento, atención visual y precisión bajo presión de tiempo.',
+    areas: ['VELOCIDAD', 'ATENCIÓN'],
     available: true,
   },
   {
@@ -65,6 +71,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de recordar varios elementos y reorganizarlos mentalmente siguiendo una regla.',
     benefits: 'Entrena memoria de trabajo, organización mental, atención y manipulación de información.',
+    areas: ['MEMORIA', 'FUNCIÓN EJECUTIVA'],
     available: true,
   },
   {
@@ -74,6 +81,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la velocidad con la que puedes asociar símbolos visuales con números usando una clave cambiante.',
     benefits: 'Entrena velocidad de procesamiento, atención, memoria asociativa y precisión bajo presión.',
+    areas: ['VELOCIDAD', 'MEMORIA'],
     available: true,
   },
   {
@@ -83,6 +91,7 @@ const modules = [
     image: '/assets/brain-side-profile.png',
     definition: 'Evalúa la capacidad de escuchar, retener y reconocer palabras presentadas oralmente.',
     benefits: 'Entrena memoria auditiva, aprendizaje verbal, atención sostenida y recuperación de información.',
+    areas: ['MEMORIA AUDITIVA', 'MEMORIA', 'ATENCIÓN'],
     available: true,
   },
 ]
@@ -97,6 +106,7 @@ const listSortingLevels = ['sorting-3', 'sorting-5', 'sorting-8', 'sorting-13', 
 const symbolDigitLevels = ['symbol-3', 'symbol-5', 'symbol-8', 'symbol-13', 'symbol-21']
 const auditoryRecallLevels = ['auditory-3', 'auditory-5', 'auditory-8', 'auditory-13', 'auditory-21']
 const PERFECT_RUNS_REQUIRED = 25
+const filterAreas = ['TODAS', 'MEMORIA', 'ATENCIÓN', 'FUNCIÓN EJECUTIVA', 'VELOCIDAD', 'MEMORIA AUDITIVA'] as const
 
 function readGameProgress(storageKey: string, levelIds: string[]) {
   try {
@@ -112,6 +122,7 @@ export function MainMenu() {
   const navigate = useNavigate()
   const menuRef = useRef<HTMLElement>(null)
   const [selectedModule, setSelectedModule] = useState<(typeof modules)[number] | null>(null)
+  const [activeArea, setActiveArea] = useState<(typeof filterAreas)[number]>('TODAS')
   const [serialRecallPercent, setSerialRecallPercent] = useState(() => readGameProgress('cognition-training-progress', serialRecallLevels))
   const [middleVectorPercent, setMiddleVectorPercent] = useState(() => readGameProgress('cognition-middle-vector-progress', middleVectorLevels))
   const [stroopProtocolPercent, setStroopProtocolPercent] = useState(() => readGameProgress('cognition-stroop-protocol-progress', stroopProtocolLevels))
@@ -136,7 +147,7 @@ export function MainMenu() {
     return () => {
       entrance.pause()
     }
-  }, [])
+  }, [activeArea])
 
   useEffect(() => {
     if (!selectedModule) return
@@ -148,6 +159,10 @@ export function MainMenu() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [selectedModule])
+
+  const visibleModules = activeArea === 'TODAS'
+    ? modules
+    : modules.filter((module) => module.areas.includes(activeArea))
 
   useEffect(() => {
     const refreshProgress = () => {
@@ -192,7 +207,7 @@ export function MainMenu() {
       </header>
 
       <section className="module-rail" aria-label="Módulos de entrenamiento">
-        {modules.map((module) => (
+        {visibleModules.map((module) => (
           <button
             className="module-card"
             key={module.id}
@@ -210,6 +225,17 @@ export function MainMenu() {
           </button>
         ))}
       </section>
+
+      <nav className="module-filters" aria-label="Filtrar por área cognitiva">
+        <span>FILTRAR POR ÁREA</span>
+        <div>
+          {filterAreas.map((area) => (
+            <button className={activeArea === area ? 'is-active' : ''} type="button" key={area} onClick={() => setActiveArea(area)}>
+              {area === 'TODAS' ? 'TODAS' : area}
+            </button>
+          ))}
+        </div>
+      </nav>
 
       <footer className="menu-footer" aria-label="Identidad de Cognition">
         <div className="menu-brand">
