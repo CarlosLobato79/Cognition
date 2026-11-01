@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
+import { MainMenu } from './components/MainMenu'
 import './styles/splash.css'
 
 export function App() {
@@ -79,12 +80,7 @@ export function App() {
         </section>
       )}
 
-      {isBooted && (
-        <section className="dark-ready-state" aria-label="Cognition listo">
-          <div className="ready-mark"><img className="brain-image-logo" src="/assets/cognition-brain-logo.png" alt="Cognition" /></div>
-          <p>COGNITION SYSTEM READY</p>
-        </section>
-      )}
+      {isBooted && <MainMenu />}
     </main>
   )
 }
