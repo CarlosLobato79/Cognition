@@ -129,8 +129,8 @@ export function PatternComparisonScreen() {
   return (
     <main className="pattern-comparison-screen">
       {phase === 'setup' && <section className="pattern-comparison-setup" aria-label="Configuración de Pattern Comparison">
-        <header className="pattern-comparison-header"><button type="button" onClick={() => navigate('/')}>← MENU</button><span>COGNITION // TRAINING 06</span></header>
-        <div className="pattern-comparison-intro"><img src="/assets/cognition-brain-logo.png" alt="Cognition" /><span>PROCESSING SPEED // VISUAL COMPARISON</span><h1>PATTERN COMPARISON</h1><p>Compara los patrones. Decide rápido si son iguales o diferentes.</p></div>
+        <header className="pattern-comparison-header"><button type="button" onClick={() => navigate('/')}>← MENÚ</button><span>COGNITION // ENTRENAMIENTO 06</span></header>
+        <div className="pattern-comparison-intro"><img src="/assets/cognition-brain-logo.png" alt="Cognition" /><span>VELOCIDAD DE PROCESAMIENTO // COMPARACIÓN VISUAL</span><h1>COMPARACIÓN VISUAL</h1><p>Compara los patrones. Decide rápido si son iguales o diferentes.</p></div>
         <div className="pattern-comparison-levels">{levels.map((level, index) => <button className="pattern-comparison-level" type="button" key={level.id} onClick={() => startTraining(level)}><small>0{index + 1}</small><strong>{level.trials}</strong><span><b>{level.name}</b>{level.description}</span><em>{progress[level.id] ?? 0}/{PERFECT_RUNS_REQUIRED} PERFECTAS</em></button>)}</div>
       </section>}
       {phase !== 'setup' && <section className="pattern-comparison-session" aria-label="Sesión Pattern Comparison">
