@@ -25,9 +25,16 @@
 .cognitive-game-setup {
   padding: 30px clamp(24px, 6vw, 96px) 44px;
 }
+.cognitive-game-options {
+  display: grid;
+  width: min(980px, 100%);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 auto 14px;
+}
 .cognitive-game-intro {
   width: min(860px, 100%);
-  margin: clamp(3rem, 8vh, 6rem) auto 3rem;
+  margin: clamp(2rem, 4vh, 3.5rem) auto 2rem;
   text-align: center;
 }
 .cognitive-game-intro img {
@@ -265,6 +272,9 @@
   .cognitive-game-setup {
     padding: 22px 16px 32px;
   }
+  .cognitive-game-options {
+    grid-template-columns: 1fr;
+  }
   .cognitive-levels {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -301,6 +311,10 @@
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.14em;
+}
+.cognitive-game-options .cognitive-speed-picker {
+  width: auto;
+  margin: 0;
 }
 .cognitive-speed-picker > div {
   display: flex;

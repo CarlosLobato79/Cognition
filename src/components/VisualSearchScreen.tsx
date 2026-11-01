@@ -121,9 +121,8 @@ export function VisualSearchScreen() {
     };
   }, [revealed, index]);
   useEffect(() => {
-    if (phase !== "setup") return;
     const old = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = phase === "setup" ? "auto" : "hidden";
     return () => {
       document.body.style.overflow = old;
     };
@@ -201,36 +200,38 @@ export function VisualSearchScreen() {
               aparece o no aparece.
             </p>
           </div>
-          <div className="cognitive-speed-picker">
-            <span>RITMO DE ESTÍMULOS</span>
-            <div>
-              {(["lento", "normal", "rapido"] as Speed[]).map((option) => (
-                <button
-                  className={speed === option ? "is-active" : ""}
-                  type="button"
-                  key={option}
-                  onClick={() => setSpeed(option)}
-                >
-                  {option === "rapido" ? "RÁPIDO" : option.toUpperCase()}
-                </button>
-              ))}
+          <div className="cognitive-game-options">
+            <div className="cognitive-speed-picker">
+              <span>RITMO DE ESTÍMULOS</span>
+              <div>
+                {(["lento", "normal", "rapido"] as Speed[]).map((option) => (
+                  <button
+                    className={speed === option ? "is-active" : ""}
+                    type="button"
+                    key={option}
+                    onClick={() => setSpeed(option)}
+                  >
+                    {option === "rapido" ? "RÁPIDO" : option.toUpperCase()}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="cognitive-speed-picker">
-            <span>MODO DE ENTRENAMIENTO</span>
-            <div>
-              {(["practica", "evaluacion"] as Mode[]).map((option) => (
-                <button
-                  className={mode === option ? "is-active" : ""}
-                  type="button"
-                  key={option}
-                  onClick={() => setMode(option)}
-                >
-                  {option === "practica"
-                    ? "PRÁCTICA · SIN TIEMPO"
-                    : "EVALUACIÓN · CON TIEMPO"}
-                </button>
-              ))}
+            <div className="cognitive-speed-picker">
+              <span>MODO DE ENTRENAMIENTO</span>
+              <div>
+                {(["practica", "evaluacion"] as Mode[]).map((option) => (
+                  <button
+                    className={mode === option ? "is-active" : ""}
+                    type="button"
+                    key={option}
+                    onClick={() => setMode(option)}
+                  >
+                    {option === "practica"
+                      ? "PRÁCTICA · SIN TIEMPO"
+                      : "EVALUACIÓN · CON TIEMPO"}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
           <div className="cognitive-levels">
