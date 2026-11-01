@@ -206,6 +206,17 @@ export function MainMenu() {
         <span className="menu-header-index">09 MÓDULOS</span>
       </header>
 
+      <nav className="module-filters" aria-label="Filtrar por área cognitiva">
+        <span>FILTRAR POR ÁREA</span>
+        <div>
+          {filterAreas.map((area) => (
+            <button className={activeArea === area ? 'is-active' : ''} type="button" key={area} onClick={() => setActiveArea(area)}>
+              {area === 'TODAS' ? 'TODAS' : area}
+            </button>
+          ))}
+        </div>
+      </nav>
+
       <section className="module-rail" aria-label="Módulos de entrenamiento">
         {visibleModules.map((module) => (
           <button
@@ -225,17 +236,6 @@ export function MainMenu() {
           </button>
         ))}
       </section>
-
-      <nav className="module-filters" aria-label="Filtrar por área cognitiva">
-        <span>FILTRAR POR ÁREA</span>
-        <div>
-          {filterAreas.map((area) => (
-            <button className={activeArea === area ? 'is-active' : ''} type="button" key={area} onClick={() => setActiveArea(area)}>
-              {area === 'TODAS' ? 'TODAS' : area}
-            </button>
-          ))}
-        </div>
-      </nav>
 
       <footer className="menu-footer" aria-label="Identidad de Cognition">
         <div className="menu-brand">
