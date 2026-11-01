@@ -184,9 +184,9 @@ export function GoNoGoScreen() {
             </div>
           )}
           {phase === "trial" && (
-            <div className="cognitive-trial">
+            <div className="cognitive-trial gng-trial-enter" key={index}>
               <span>
-                RONDA {index + 1} / {trials.length}
+                NUEVA SEÑAL · RONDA {index + 1} / {trials.length}
               </span>
               <p className="cognitive-instruction">
                 CÍRCULO VERDE = TOCA · X ROJA = NO TOQUES NADA
