@@ -28,7 +28,6 @@ export function App() {
   const splashRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const wordmarkRef = useRef<HTMLHeadingElement>(null);
-  const statusRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     if (isBooted) return;
@@ -45,14 +44,6 @@ export function App() {
       translateY: [14, 0],
       duration: 800,
       delay: 360,
-      ease: "outCubic",
-    });
-
-    const statusIntro = animate(statusRef.current!, {
-      opacity: [0, 1],
-      translateY: [8, 0],
-      duration: 600,
-      delay: 760,
       ease: "outCubic",
     });
 
@@ -84,7 +75,6 @@ export function App() {
       window.clearTimeout(timer);
       logoIntro.pause();
       wordmarkIntro.pause();
-      statusIntro.pause();
       pulse.pause();
     };
   }, [isBooted]);
@@ -108,10 +98,6 @@ export function App() {
               />
             </div>
             <h1 ref={wordmarkRef}>COGNITION</h1>
-            <p ref={statusRef} className="boot-status">
-              <span className="status-dot" />
-              INICIANDO SISTEMA COGNITIVO
-            </p>
           </div>
           <p className="build-label">COGNITION // VERSIÓN 0.1</p>
         </section>
