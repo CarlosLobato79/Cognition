@@ -34,7 +34,7 @@
 }
 .cognitive-game-intro {
   width: min(980px, 100%);
-  margin: 14px auto 20px;
+  margin: 10px auto 14px;
   text-align: left;
 }
 .cognitive-game-intro-heading {
@@ -43,22 +43,22 @@
   gap: 14px;
 }
 .cognitive-game-intro-heading img {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
   filter: drop-shadow(0 0 18px rgba(100, 232, 244, 0.22));
 }
 .cognitive-game-intro h1 {
   margin: 0;
   font-family: "Rajdhani", "Arial Narrow", sans-serif;
-  font-size: clamp(1.55rem, 3vw, 2.6rem);
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
   letter-spacing: 0.03em;
   line-height: 1;
 }
 .cognitive-game-intro p {
-  margin: 8px 0 0 58px;
+  margin: 6px 0 0 52px;
   color: rgba(177, 205, 214, 0.68);
-  font-size: 0.92rem;
+  font-size: 0.84rem;
 }
 .cognitive-levels {
   display: grid;
@@ -270,9 +270,10 @@
     padding: 22px 16px 32px;
   }
   .cognitive-game-intro h1 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
   .cognitive-game-intro p {
+    margin-left: 52px;
     font-size: 0.82rem;
   }
   .cognitive-game-options {
