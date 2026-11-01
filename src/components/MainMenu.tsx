@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { animate } from 'animejs'
+import { useNavigate } from 'react-router-dom'
 import '../styles/main-menu.css'
 
 const modules = [
@@ -10,11 +11,8 @@ const modules = [
   { id: '05', name: 'Cortex Lock' },
 ]
 
-type MainMenuProps = {
-  onSelectModule: (module: 'serial-recall') => void
-}
-
-export function MainMenu({ onSelectModule }: MainMenuProps) {
+export function MainMenu() {
+  const navigate = useNavigate()
   const menuRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -51,7 +49,7 @@ export function MainMenu({ onSelectModule }: MainMenuProps) {
             key={module.id}
             type="button"
             aria-label={`Módulo ${module.id}: ${module.name}`}
-            onClick={module.id === '01' ? () => onSelectModule('serial-recall') : undefined}
+            onClick={module.id === '01' ? () => navigate('/training/immediate-serial-recall') : undefined}
           >
             <span className="module-card-number">{module.id}</span>
             <span className="module-card-footer">

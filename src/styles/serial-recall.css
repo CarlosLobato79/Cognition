@@ -78,6 +78,47 @@
   filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.1));
 }
 
+.training-info {
+  display: grid;
+  width: min(820px, 100%);
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 42px;
+  margin: 34px auto 0;
+  border-top: 1px solid rgba(117, 160, 173, 0.24);
+  padding-top: 24px;
+}
+
+.training-info-kicker {
+  color: rgba(100, 232, 244, 0.72);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.training-definition p {
+  margin: 12px 0 0;
+  color: rgba(177, 205, 214, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.training-features ul {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 0;
+  color: rgba(245, 251, 255, 0.86);
+  font-size: 0.86rem;
+  list-style: none;
+}
+
+.training-features li::before {
+  margin-right: 8px;
+  color: #b0f554;
+  content: '＋';
+}
+
 @media (max-width: 600px) {
   .training-header { align-items: flex-start; flex-direction: column; gap: 16px; }
   .training-code { align-self: flex-end; }
@@ -85,4 +126,5 @@
   .training-intro h1 { font-size: 2.6rem; }
   .preview-sequence { gap: 8px; }
   .preview-silhouette { min-height: 135px; }
+  .training-info { grid-template-columns: 1fr; gap: 22px; margin-top: 20px; }
 }

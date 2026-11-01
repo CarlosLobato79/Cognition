@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { MainMenu } from './components/MainMenu'
 import { SerialRecallScreen } from './components/SerialRecallScreen'
 import './styles/splash.css'
 
 export function App() {
   const [isBooted, setIsBooted] = useState(false)
-  const [activeScreen, setActiveScreen] = useState<'menu' | 'serial-recall'>('menu')
   const splashRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const wordmarkRef = useRef<HTMLHeadingElement>(null)
@@ -82,8 +82,13 @@ export function App() {
         </section>
       )}
 
-      {isBooted && activeScreen === 'menu' && <MainMenu onSelectModule={setActiveScreen} />}
-      {isBooted && activeScreen === 'serial-recall' && <SerialRecallScreen onBack={() => setActiveScreen('menu')} />}
+      {isBooted && (
+        <Routes>
+          <Route path="/" element={<MainMenu />} />
+          <Route path="/training/immediate-serial-recall" element={<SerialRecallScreen />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      )}
     </main>
   )
 }

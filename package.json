@@ -12,7 +12,8 @@
     "@vitejs/plugin-react": "latest",
     "animejs": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-router-dom": "latest"
   },
   "devDependencies": {
     "@types/react": "latest",
