@@ -262,7 +262,9 @@
   inset: 0;
   display: grid;
   place-items: center;
-  overflow-y: auto;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background: #000;
   color: #fff;
 }
@@ -393,5 +395,6 @@
   .memorize-display span { letter-spacing: 0.16em; }
   .selection-display { width: 100%; }
   .selection-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .selection-card { min-height: 190px; }
+  .selection-card { min-height: 150px; }
+  .selection-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 5px); }
 }

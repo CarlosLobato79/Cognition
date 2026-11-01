@@ -101,6 +101,18 @@ export function SerialRecallScreen() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isLevelModalOpen])
 
+  useEffect(() => {
+    const shouldLockScroll = isLevelModalOpen || trainingPhase !== 'idle'
+    if (!shouldLockScroll) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [isLevelModalOpen, trainingPhase])
+
   const startTraining = (count: number) => {
     const nextSequence = [...silhouettes].sort(() => Math.random() - 0.5).slice(0, count)
     setActiveSequence(nextSequence)
