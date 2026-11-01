@@ -366,7 +366,7 @@ export function SerialRecallScreen() {
                   {silhouettes.map((animal) => (
                     <div className="vault-item" key={animal.name}>
                       <div className="vault-item-image">
-                        <img src={animal.image} alt={`Silueta de ${animal.name}`} />
+                        <img loading="lazy" decoding="async" src={animal.image} alt={`Silueta de ${animal.name}`} />
                       </div>
                       <span>{animal.name.toUpperCase()}</span>
                     </div>
