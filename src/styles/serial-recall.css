@@ -277,6 +277,25 @@
   padding-bottom: 20px;
 }
 
+.silhouette-vault-button {
+  border: 1px solid rgba(100, 232, 244, 0.44);
+  background: rgba(100, 232, 244, 0.06);
+  padding: 10px 14px;
+  color: rgba(100, 232, 244, 0.86);
+  cursor: pointer;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.silhouette-vault-button:hover,
+.silhouette-vault-button:focus-visible {
+  border-color: #64e8f4;
+  background: rgba(100, 232, 244, 0.13);
+  outline: none;
+}
+
 .training-setup-intro {
   width: min(900px, 100%);
   margin: clamp(2.8rem, 7vh, 5rem) auto 2.4rem;
@@ -384,6 +403,68 @@
   text-align: center;
 }
 
+.vault-panel-backdrop {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(1, 3, 5, 0.76);
+  padding: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.vault-panel {
+  width: min(560px, 100%);
+  border: 1px solid rgba(100, 232, 244, 0.36);
+  background: rgba(8, 15, 19, 0.98);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  padding: 30px;
+}
+
+.vault-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.vault-panel-heading h2 {
+  margin: 10px 0 0;
+  color: #fff;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  letter-spacing: 0.08em;
+  line-height: 0.92;
+}
+
+.vault-panel-heading button {
+  border: 0;
+  background: transparent;
+  color: rgba(177, 205, 214, 0.72);
+  cursor: pointer;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.vault-panel-heading button:hover,
+.vault-panel-heading button:focus-visible { color: #fff; outline: none; }
+
+.vault-panel p {
+  margin: 26px 0 18px;
+  color: rgba(177, 205, 214, 0.72);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.vault-panel-count {
+  color: #b0f554;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
 .training-session {
   position: fixed;
   z-index: 20;
@@ -459,6 +540,26 @@
   grid-template-columns: repeat(auto-fit, minmax(160px, 220px));
   gap: clamp(8px, 1.5vw, 22px);
   justify-content: center;
+}
+
+.selection-large .selection-cards {
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+  gap: 6px;
+}
+
+.selection-large .selection-card {
+  min-height: 64px;
+}
+
+.selection-large .selection-card img {
+  width: 74%;
+  height: 74%;
+}
+
+.selection-large .selection-order {
+  top: 5px;
+  left: 6px;
+  font-size: 0.72rem;
 }
 
 .selection-card {
@@ -599,10 +700,13 @@
   .selection-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .selection-card { min-height: 150px; }
   .selection-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 5px); }
+  .selection-large .selection-cards { grid-template-columns: repeat(auto-fit, minmax(38px, 1fr)); gap: 4px; }
+  .selection-large .selection-card { min-height: 48px; }
   .result-actions { flex-direction: column; width: min(260px, 100%); }
   .training-setup-screen { padding: 22px 16px 32px; }
   .training-setup-header { align-items: flex-start; flex-direction: column; gap: 14px; }
   .training-code { align-self: flex-end; }
+  .silhouette-vault-button { align-self: stretch; }
   .training-setup-intro { margin-top: 2.8rem; }
   .training-setup-intro h1 { font-size: 2.2rem; }
   .training-setup-intro p { font-size: 0.84rem; line-height: 1.4; }

@@ -4,106 +4,106 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/serial-recall.css'
 
 const silhouettes = [
-  { name: 'Abeja', image: '/assets/animals/abeja.png' },
-  { name: 'Aguila', image: '/assets/animals/aguila.png' },
-  { name: 'Alce', image: '/assets/animals/alce.png' },
-  { name: 'Anguila', image: '/assets/animals/anguila.png' },
-  { name: 'Antilope', image: '/assets/animals/antilope.png' },
-  { name: 'Arana', image: '/assets/animals/arana.png' },
-  { name: 'Ardilla', image: '/assets/animals/ardilla.png' },
-  { name: 'Armadillo', image: '/assets/animals/armadillo.png' },
-  { name: 'Avestruz', image: '/assets/animals/avestruz.png' },
-  { name: 'Ballena', image: '/assets/animals/ballena.png' },
-  { name: 'Bisonte', image: '/assets/animals/bisonte.png' },
-  { name: 'Bufalo', image: '/assets/animals/bufalo.png' },
-  { name: 'Buho', image: '/assets/animals/buho.png' },
-  { name: 'Burro', image: '/assets/animals/burro.png' },
-  { name: 'Caballito De Mar', image: '/assets/animals/caballito-de-mar.png' },
-  { name: 'Caballo', image: '/assets/animals/caballo.png' },
-  { name: 'Cabra', image: '/assets/animals/cabra.png' },
-  { name: 'Camaleon', image: '/assets/animals/camaleon.png' },
-  { name: 'Camaron', image: '/assets/animals/camaron.png' },
-  { name: 'Camello', image: '/assets/animals/camello.png' },
-  { name: 'Cangrejo', image: '/assets/animals/cangrejo.png' },
-  { name: 'Canguro', image: '/assets/animals/canguro.png' },
-  { name: 'Caracol', image: '/assets/animals/caracol.png' },
-  { name: 'Caracol De Mar', image: '/assets/animals/caracol-de-mar.png' },
-  { name: 'Castor', image: '/assets/animals/castor.png' },
-  { name: 'Cebra', image: '/assets/animals/cebra.png' },
-  { name: 'Cerdo', image: '/assets/animals/cerdo.png' },
-  { name: 'Chimpance', image: '/assets/animals/chimpance.png' },
-  { name: 'Ciervo', image: '/assets/animals/ciervo.png' },
-  { name: 'Cisne', image: '/assets/animals/cisne.png' },
-  { name: 'Cocodrilo', image: '/assets/animals/cocodrilo.png' },
-  { name: 'Comadreja', image: '/assets/animals/comadreja.png' },
-  { name: 'Conejo', image: '/assets/animals/conejo.png' },
-  { name: 'Cuervo', image: '/assets/animals/cuervo.png' },
-  { name: 'Delfin', image: '/assets/animals/delfin.png' },
-  { name: 'Elefante', image: '/assets/animals/elefante.png' },
-  { name: 'Erizo', image: '/assets/animals/erizo.png' },
-  { name: 'Escorpion', image: '/assets/animals/escorpion.png' },
-  { name: 'Estrella De Mar', image: '/assets/animals/estrella-de-mar.png' },
-  { name: 'Flamenco', image: '/assets/animals/flamenco.png' },
-  { name: 'Foca', image: '/assets/animals/foca.png' },
-  { name: 'Gacela', image: '/assets/animals/gacela.png' },
-  { name: 'Gallina', image: '/assets/animals/gallina.png' },
-  { name: 'Gallo', image: '/assets/animals/gallo.png' },
-  { name: 'Gato', image: '/assets/animals/gato.png' },
-  { name: 'Gorila', image: '/assets/animals/gorila.png' },
-  { name: 'Guepardo', image: '/assets/animals/guepardo.png' },
-  { name: 'Gusano De Seda', image: '/assets/animals/gusano-de-seda.png' },
-  { name: 'Hiena', image: '/assets/animals/hiena.png' },
-  { name: 'Hipopotamo', image: '/assets/animals/hipopotamo.png' },
-  { name: 'Iguana', image: '/assets/animals/iguana.png' },
-  { name: 'Jabali', image: '/assets/animals/jabali.png' },
-  { name: 'Jaguar', image: '/assets/animals/jaguar.png' },
-  { name: 'Jirafa', image: '/assets/animals/jirafa.png' },
-  { name: 'Koala', image: '/assets/animals/koala.png' },
-  { name: 'Lagarto', image: '/assets/animals/lagarto.png' },
-  { name: 'Langosta', image: '/assets/animals/langosta.png' },
-  { name: 'Leon', image: '/assets/animals/leon.png' },
-  { name: 'Leopardo', image: '/assets/animals/leopardo.png' },
-  { name: 'Libelula', image: '/assets/animals/libelula.png' },
-  { name: 'Llama', image: '/assets/animals/llama.png' },
-  { name: 'Lobo', image: '/assets/animals/lobo.png' },
-  { name: 'Loro', image: '/assets/animals/loro.png' },
-  { name: 'Manati', image: '/assets/animals/manati.png' },
-  { name: 'Mantis', image: '/assets/animals/mantis.png' },
-  { name: 'Mapache', image: '/assets/animals/mapache.png' },
-  { name: 'Mariposa', image: '/assets/animals/mariposa.png' },
-  { name: 'Mariquita', image: '/assets/animals/mariquita.png' },
-  { name: 'Medusa', image: '/assets/animals/medusa.png' },
-  { name: 'Mono', image: '/assets/animals/mono.png' },
-  { name: 'Morsa', image: '/assets/animals/morsa.png' },
-  { name: 'Murcielago', image: '/assets/animals/murcielago.png' },
-  { name: 'Nutria', image: '/assets/animals/nutria.png' },
-  { name: 'Orangutan', image: '/assets/animals/orangutan.png' },
-  { name: 'Oso', image: '/assets/animals/oso.png' },
-  { name: 'Oveja', image: '/assets/animals/oveja.png' },
-  { name: 'Panda', image: '/assets/animals/panda.png' },
-  { name: 'Pantera', image: '/assets/animals/pantera.png' },
-  { name: 'Pato', image: '/assets/animals/pato.png' },
-  { name: 'Pavo', image: '/assets/animals/pavo.png' },
-  { name: 'Perezoso', image: '/assets/animals/perezoso.png' },
+  { name: 'Abeja', image: '/assets/animals/abeja.svg' },
+  { name: 'Aguila', image: '/assets/animals/aguila.svg' },
+  { name: 'Alce', image: '/assets/animals/alce.svg' },
+  { name: 'Anguila', image: '/assets/animals/anguila.svg' },
+  { name: 'Antilope', image: '/assets/animals/antilope.svg' },
+  { name: 'Arana', image: '/assets/animals/arana.svg' },
+  { name: 'Ardilla', image: '/assets/animals/ardilla.svg' },
+  { name: 'Armadillo', image: '/assets/animals/armadillo.svg' },
+  { name: 'Avestruz', image: '/assets/animals/avestruz.svg' },
+  { name: 'Ballena', image: '/assets/animals/ballena.svg' },
+  { name: 'Bisonte', image: '/assets/animals/bisonte.svg' },
+  { name: 'Bufalo', image: '/assets/animals/bufalo.svg' },
+  { name: 'Buho', image: '/assets/animals/buho.svg' },
+  { name: 'Burro', image: '/assets/animals/burro.svg' },
+  { name: 'Caballito De Mar', image: '/assets/animals/caballito-de-mar.svg' },
+  { name: 'Caballo', image: '/assets/animals/caballo.svg' },
+  { name: 'Cabra', image: '/assets/animals/cabra.svg' },
+  { name: 'Camaleon', image: '/assets/animals/camaleon.svg' },
+  { name: 'Camaron', image: '/assets/animals/camaron.svg' },
+  { name: 'Camello', image: '/assets/animals/camello.svg' },
+  { name: 'Cangrejo', image: '/assets/animals/cangrejo.svg' },
+  { name: 'Canguro', image: '/assets/animals/canguro.svg' },
+  { name: 'Caracol', image: '/assets/animals/caracol.svg' },
+  { name: 'Caracol De Mar', image: '/assets/animals/caracol-de-mar.svg' },
+  { name: 'Castor', image: '/assets/animals/castor.svg' },
+  { name: 'Cebra', image: '/assets/animals/cebra.svg' },
+  { name: 'Cerdo', image: '/assets/animals/cerdo.svg' },
+  { name: 'Chimpance', image: '/assets/animals/chimpance.svg' },
+  { name: 'Ciervo', image: '/assets/animals/ciervo.svg' },
+  { name: 'Cisne', image: '/assets/animals/cisne.svg' },
+  { name: 'Cocodrilo', image: '/assets/animals/cocodrilo.svg' },
+  { name: 'Comadreja', image: '/assets/animals/comadreja.svg' },
+  { name: 'Conejo', image: '/assets/animals/conejo.svg' },
+  { name: 'Cuervo', image: '/assets/animals/cuervo.svg' },
+  { name: 'Delfin', image: '/assets/animals/delfin.svg' },
+  { name: 'Elefante', image: '/assets/animals/elefante.svg' },
+  { name: 'Erizo', image: '/assets/animals/erizo.svg' },
+  { name: 'Escorpion', image: '/assets/animals/escorpion.svg' },
+  { name: 'Estrella De Mar', image: '/assets/animals/estrella-de-mar.svg' },
+  { name: 'Flamenco', image: '/assets/animals/flamenco.svg' },
+  { name: 'Foca', image: '/assets/animals/foca.svg' },
+  { name: 'Gacela', image: '/assets/animals/gacela.svg' },
+  { name: 'Gallina', image: '/assets/animals/gallina.svg' },
+  { name: 'Gallo', image: '/assets/animals/gallo.svg' },
+  { name: 'Gato', image: '/assets/animals/gato.svg' },
+  { name: 'Gorila', image: '/assets/animals/gorila.svg' },
+  { name: 'Guepardo', image: '/assets/animals/guepardo.svg' },
+  { name: 'Gusano De Seda', image: '/assets/animals/gusano-de-seda.svg' },
+  { name: 'Hiena', image: '/assets/animals/hiena.svg' },
+  { name: 'Hipopotamo', image: '/assets/animals/hipopotamo.svg' },
+  { name: 'Iguana', image: '/assets/animals/iguana.svg' },
+  { name: 'Jabali', image: '/assets/animals/jabali.svg' },
+  { name: 'Jaguar', image: '/assets/animals/jaguar.svg' },
+  { name: 'Jirafa', image: '/assets/animals/jirafa.svg' },
+  { name: 'Koala', image: '/assets/animals/koala.svg' },
+  { name: 'Lagarto', image: '/assets/animals/lagarto.svg' },
+  { name: 'Langosta', image: '/assets/animals/langosta.svg' },
+  { name: 'Leon', image: '/assets/animals/leon.svg' },
+  { name: 'Leopardo', image: '/assets/animals/leopardo.svg' },
+  { name: 'Libelula', image: '/assets/animals/libelula.svg' },
+  { name: 'Llama', image: '/assets/animals/llama.svg' },
+  { name: 'Lobo', image: '/assets/animals/lobo.svg' },
+  { name: 'Loro', image: '/assets/animals/loro.svg' },
+  { name: 'Manati', image: '/assets/animals/manati.svg' },
+  { name: 'Mantis', image: '/assets/animals/mantis.svg' },
+  { name: 'Mapache', image: '/assets/animals/mapache.svg' },
+  { name: 'Mariposa', image: '/assets/animals/mariposa.svg' },
+  { name: 'Mariquita', image: '/assets/animals/mariquita.svg' },
+  { name: 'Medusa', image: '/assets/animals/medusa.svg' },
+  { name: 'Mono', image: '/assets/animals/mono.svg' },
+  { name: 'Morsa', image: '/assets/animals/morsa.svg' },
+  { name: 'Murcielago', image: '/assets/animals/murcielago.svg' },
+  { name: 'Nutria', image: '/assets/animals/nutria.svg' },
+  { name: 'Orangutan', image: '/assets/animals/orangutan.svg' },
+  { name: 'Oso', image: '/assets/animals/oso.svg' },
+  { name: 'Oveja', image: '/assets/animals/oveja.svg' },
+  { name: 'Panda', image: '/assets/animals/panda.svg' },
+  { name: 'Pantera', image: '/assets/animals/pantera.svg' },
+  { name: 'Pato', image: '/assets/animals/pato.svg' },
+  { name: 'Pavo', image: '/assets/animals/pavo.svg' },
+  { name: 'Perezoso', image: '/assets/animals/perezoso.svg' },
   { name: 'Perro', image: '/assets/animals/perro.svg' },
-  { name: 'Pinguino', image: '/assets/animals/pinguino.png' },
-  { name: 'Pulpo', image: '/assets/animals/pulpo.png' },
-  { name: 'Puma', image: '/assets/animals/puma.png' },
-  { name: 'Rana', image: '/assets/animals/rana.png' },
-  { name: 'Raya', image: '/assets/animals/raya.png' },
-  { name: 'Rinoceronte', image: '/assets/animals/rinoceronte.png' },
-  { name: 'Salamandra', image: '/assets/animals/salamandra.png' },
-  { name: 'Saltamontes', image: '/assets/animals/saltamontes.png' },
-  { name: 'Serpiente', image: '/assets/animals/serpiente.png' },
-  { name: 'Suricata', image: '/assets/animals/suricata.png' },
-  { name: 'Tapir', image: '/assets/animals/tapir.png' },
-  { name: 'Tiburon', image: '/assets/animals/tiburon.png' },
-  { name: 'Tigre', image: '/assets/animals/tigre.png' },
-  { name: 'Topo', image: '/assets/animals/topo.png' },
-  { name: 'Tortuga', image: '/assets/animals/tortuga.png' },
-  { name: 'Vaca', image: '/assets/animals/vaca.png' },
-  { name: 'Yak', image: '/assets/animals/yak.png' },
-  { name: 'Zorro', image: '/assets/animals/zorro.png' },
+  { name: 'Pinguino', image: '/assets/animals/pinguino.svg' },
+  { name: 'Pulpo', image: '/assets/animals/pulpo.svg' },
+  { name: 'Puma', image: '/assets/animals/puma.svg' },
+  { name: 'Rana', image: '/assets/animals/rana.svg' },
+  { name: 'Raya', image: '/assets/animals/raya.svg' },
+  { name: 'Rinoceronte', image: '/assets/animals/rinoceronte.svg' },
+  { name: 'Salamandra', image: '/assets/animals/salamandra.svg' },
+  { name: 'Saltamontes', image: '/assets/animals/saltamontes.svg' },
+  { name: 'Serpiente', image: '/assets/animals/serpiente.svg' },
+  { name: 'Suricata', image: '/assets/animals/suricata.svg' },
+  { name: 'Tapir', image: '/assets/animals/tapir.svg' },
+  { name: 'Tiburon', image: '/assets/animals/tiburon.svg' },
+  { name: 'Tigre', image: '/assets/animals/tigre.svg' },
+  { name: 'Topo', image: '/assets/animals/topo.svg' },
+  { name: 'Tortuga', image: '/assets/animals/tortuga.svg' },
+  { name: 'Vaca', image: '/assets/animals/vaca.svg' },
+  { name: 'Yak', image: '/assets/animals/yak.svg' },
+  { name: 'Zorro', image: '/assets/animals/zorro.svg' },
 ]
 
 const levels = [
@@ -133,6 +133,7 @@ export function SerialRecallScreen() {
   const navigate = useNavigate()
   const [sequence, setSequence] = useState(() => silhouettes.slice(0, 3))
   const [isSetupScreen, setIsSetupScreen] = useState(true)
+  const [isVaultOpen, setIsVaultOpen] = useState(false)
   const [trainingPhase, setTrainingPhase] = useState<TrainingPhase>('idle')
   const [activeSequence, setActiveSequence] = useState<typeof silhouettes>([])
   const [selectionCards, setSelectionCards] = useState<typeof silhouettes>([])
@@ -316,6 +317,9 @@ export function SerialRecallScreen() {
               ← MENU
             </button>
             <span className="training-code">COGNITION // CONFIGURATION</span>
+            <button className="silhouette-vault-button" type="button" onClick={() => setIsVaultOpen(true)}>
+              ALMACÉN DE SILUETAS
+            </button>
           </header>
 
           <div className="training-setup-intro">
@@ -345,6 +349,22 @@ export function SerialRecallScreen() {
           </div>
 
           <p className="training-setup-note">Más niveles estarán disponibles al incorporar nuevas siluetas al sistema.</p>
+
+          {isVaultOpen && (
+            <div className="vault-panel-backdrop" role="presentation" onClick={() => setIsVaultOpen(false)}>
+              <section className="vault-panel" role="dialog" aria-modal="true" aria-labelledby="vault-title" onClick={(event) => event.stopPropagation()}>
+                <div className="vault-panel-heading">
+                  <div>
+                    <span className="training-info-kicker">ASSET LIBRARY</span>
+                    <h2 id="vault-title">ALMACÉN DE SILUETAS</h2>
+                  </div>
+                  <button type="button" aria-label="Cerrar almacén" onClick={() => setIsVaultOpen(false)}>×</button>
+                </div>
+                <p>La biblioteca contiene {silhouettes.length} siluetas vectorizadas para los protocolos de entrenamiento.</p>
+                <span className="vault-panel-count">{silhouettes.length} ACTIVOS DISPONIBLES</span>
+              </section>
+            </div>
+          )}
         </section>
       )}
 
@@ -364,7 +384,7 @@ export function SerialRecallScreen() {
           )}
 
           {trainingPhase === 'selection' && (
-            <div className="selection-display">
+            <div className={`selection-display${activeSequence.length > 5 ? ' selection-large' : ''}`}>
               <div className="selection-heading">
                 <span>RECONSTRUYE LA SECUENCIA</span>
                 <small>{selectionOrder.length} / {activeSequence.length}</small>

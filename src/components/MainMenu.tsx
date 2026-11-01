@@ -15,7 +15,7 @@ const modules = [
   {
     id: '02',
     name: 'Neural Grid',
-    image: '/assets/animals/gato.png',
+    image: '/assets/animals/gato.svg',
     definition: 'Ejercicio de actualización mental para recordar posiciones y detectar cambios dentro de una cuadrícula.',
     benefits: 'Entrena memoria espacial, velocidad de procesamiento y atención selectiva.',
     available: false,
@@ -23,7 +23,7 @@ const modules = [
   {
     id: '03',
     name: 'Echo Span',
-    image: '/assets/animals/leon.png',
+    image: '/assets/animals/leon.svg',
     definition: 'Mide la capacidad de retener y reproducir información breve después de una exposición inmediata.',
     benefits: 'Entrena memoria de trabajo, control atencional y precisión de respuesta.',
     available: false,
@@ -31,7 +31,7 @@ const modules = [
   {
     id: '04',
     name: 'Focus Vector',
-    image: '/assets/animals/tigre.png',
+    image: '/assets/animals/tigre.svg',
     definition: 'Propone mantener el foco mientras estímulos relevantes y distractores aparecen en movimiento.',
     benefits: 'Entrena atención sostenida, inhibición de distractores y velocidad de reacción.',
     available: false,
@@ -39,7 +39,7 @@ const modules = [
   {
     id: '05',
     name: 'Cortex Lock',
-    image: '/assets/animals/elefante.png',
+    image: '/assets/animals/elefante.svg',
     definition: 'Desafío de consolidación y recuperación de patrones complejos bajo presión de tiempo.',
     benefits: 'Entrena flexibilidad cognitiva, planificación y recuperación de información.',
     available: false,
