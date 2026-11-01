@@ -194,9 +194,9 @@ export function NBackScreen() {
             <span>MEMORIA DE TRABAJO // ACTUALIZACIÓN MENTAL</span>
             <h1>MEMORIA N-BACK</h1>
             <p>
-              Las dos primeras posiciones son de preparación. Después indica si
-              el símbolo actual coincide con el que apareció dos posiciones
-              atrás.
+              Mira un símbolo a la vez. Las dos primeras rondas son de
+              preparación. Desde la tercera, responde SÍ si coincide con el
+              símbolo de hace dos rondas o NO si es diferente.
             </p>
           </div>
           <div className="cognitive-speed-picker">
@@ -242,9 +242,10 @@ export function NBackScreen() {
               <div className="nback-symbol">{display}</div>
               <p>
                 {index < 2
-                  ? "OBSERVA EL PATRÓN"
-                  : "¿COINCIDE CON HACE DOS POSICIONES?"}
+                  ? "MEMORIZA ESTE SÍMBOLO"
+                  : "COMPARA CON EL SÍMBOLO DE HACE DOS RONDAS"}
               </p>
+              <strong>{index < 2 ? "PREPARACIÓN" : "RESPONDE AHORA"}</strong>
               <div className="cognitive-actions">
                 <button
                   type="button"
