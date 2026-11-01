@@ -14,6 +14,7 @@ const silhouettes = [
 export function SerialRecallScreen() {
   const navigate = useNavigate()
   const [sequence, setSequence] = useState(() => silhouettes.slice(0, 3))
+  const [isLevelModalOpen, setIsLevelModalOpen] = useState(false)
   const sequenceRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -41,6 +42,17 @@ export function SerialRecallScreen() {
     }
   }, [sequence])
 
+  useEffect(() => {
+    if (!isLevelModalOpen) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsLevelModalOpen(false)
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isLevelModalOpen])
+
   return (
     <main className="serial-recall-screen">
       <header className="training-header">
@@ -54,6 +66,9 @@ export function SerialRecallScreen() {
         <span className="training-kicker">WORKING MEMORY</span>
         <h1>IMMEDIATE SERIAL RECALL</h1>
         <p>Memorize the sequence. Reproduce it in the exact order.</p>
+        <button className="start-training-button" type="button" onClick={() => setIsLevelModalOpen(true)}>
+          ENTRENAR
+        </button>
       </section>
 
       <section ref={sequenceRef} className="preview-sequence" aria-label="Vista previa de la secuencia">
@@ -81,6 +96,56 @@ export function SerialRecallScreen() {
           </ul>
         </div>
       </section>
+
+      {isLevelModalOpen && (
+        <div className="level-modal-backdrop" role="presentation" onClick={() => setIsLevelModalOpen(false)}>
+          <section
+            className="level-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="level-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="level-modal-header">
+              <div>
+                <span className="training-info-kicker">TRAINING PROTOCOL</span>
+                <h2 id="level-modal-title">SELECCIONA TU NIVEL</h2>
+              </div>
+              <button className="modal-close-button" type="button" aria-label="Cerrar" onClick={() => setIsLevelModalOpen(false)}>
+                ×
+              </button>
+            </div>
+
+            <p className="level-modal-description">Configura la intensidad de tu primera sesión.</p>
+
+            <div className="level-options">
+              <button className="level-option" type="button">
+                <span className="level-index">01</span>
+                <span className="level-copy">
+                  <strong>RECLUTA</strong>
+                  <small>Inicio guiado · 3 siluetas</small>
+                </span>
+              </button>
+              <button className="level-option" type="button">
+                <span className="level-index">02</span>
+                <span className="level-copy">
+                  <strong>OPERADOR</strong>
+                  <small>Ritmo táctico · 5 siluetas</small>
+                </span>
+              </button>
+              <button className="level-option" type="button">
+                <span className="level-index">03</span>
+                <span className="level-copy">
+                  <strong>ÉLITE</strong>
+                  <small>Máxima exigencia · 7 siluetas</small>
+                </span>
+              </button>
+            </div>
+
+            <p className="level-modal-note">Más protocolos se desbloquearán con tu progreso.</p>
+          </section>
+        </div>
+      )}
     </main>
   )
 }
