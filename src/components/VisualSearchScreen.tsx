@@ -7,7 +7,7 @@ type Level = typeof levels[number]; type Phase = 'setup' | 'countdown' | 'trial'
 const SHAPES = ['●', '■', '▲', '◆']; const PERFECT = 25; const PROGRESS = 'cognition-visual-search-progress'; const SCORES = 'cognition-visual-search-scores'
 function readProgress() { try { const value = JSON.parse(localStorage.getItem(PROGRESS) ?? '{}'); return value && typeof value === 'object' ? value : {} } catch { return {} } }
 function gamePercent(progress: Record<string, number>) { return Math.round((levels.reduce((sum, level) => sum + Math.min(progress[level.id] ?? 0, PERFECT), 0) / (levels.length * PERFECT)) * 100) }
-function makeTrial(): Item { const target = Math.random() > 0.5; return { shape: target ? (Math.random() > 0.5 ? '◆' : '▲') : '●', target } }
+function makeTrial(): Item { const target = Math.random() > 0.25; return { shape: target ? '◆' : '●', target } }
 
 export function VisualSearchScreen() {
   const navigate = useNavigate(); const [phase, setPhase] = useState<Phase>('setup'); const [level, setLevel] = useState<Level>(levels[0]); const [progress, setProgress] = useState<Record<string, number>>(readProgress); const [items, setItems] = useState<Item[]>([]); const [index, setIndex] = useState(0); const [correct, setCorrect] = useState(0); const [countdown, setCountdown] = useState(3); const [result, setResult] = useState<{ score: number; correct: number; total: number; perfect: number; game: number } | null>(null)
