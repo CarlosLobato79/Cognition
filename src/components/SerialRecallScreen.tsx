@@ -32,10 +32,10 @@ export function SerialRecallScreen({ onBack }: SerialRecallScreenProps) {
 
     const transition = animate(sequenceRef.current.querySelectorAll('.preview-silhouette'), {
       opacity: [0, 1],
-      scale: [0.86, 1],
-      delay: (_element, index) => (index ?? 0) * 90,
-      duration: 520,
-      ease: 'outCubic',
+      scale: [0.96, 1],
+      delay: (_element, index) => (index ?? 0) * 140,
+      duration: 900,
+      ease: 'inOutSine',
     })
 
     return () => {
@@ -61,7 +61,6 @@ export function SerialRecallScreen({ onBack }: SerialRecallScreenProps) {
       <section ref={sequenceRef} className="preview-sequence" aria-label="Vista previa de la secuencia">
         {sequence.map((silhouette, index) => (
           <div className="preview-silhouette" key={`${silhouette.name}-${index}`}>
-            <span className="preview-index">0{index + 1}</span>
             <img src={silhouette.image} alt="" />
           </div>
         ))}

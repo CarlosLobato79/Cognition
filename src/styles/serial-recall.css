@@ -27,8 +27,7 @@
 }
 
 .training-code,
-.training-kicker,
-.preview-index {
+.training-kicker {
   color: rgba(100, 232, 244, 0.72);
   font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
   font-size: 0.75rem;
@@ -67,23 +66,17 @@
 .preview-silhouette {
   position: relative;
   display: grid;
-  min-height: 250px;
+  min-height: 230px;
   place-items: center;
   border-bottom: 1px solid rgba(100, 232, 244, 0.34);
   opacity: 0;
 }
 
 .preview-silhouette img {
-  width: 86%;
-  height: 86%;
+  width: 64%;
+  height: 64%;
   object-fit: contain;
   filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.1));
-}
-
-.preview-index {
-  position: absolute;
-  top: 10px;
-  left: 10px;
 }
 
 @media (max-width: 600px) {
@@ -92,5 +85,5 @@
   .training-intro { margin-top: 4.5rem; }
   .training-intro h1 { font-size: 2.6rem; }
   .preview-sequence { gap: 8px; }
-  .preview-silhouette { min-height: 150px; }
+  .preview-silhouette { min-height: 135px; }
 }
