@@ -77,8 +77,10 @@ export function GoNoGoScreen() {
     if (phase !== "trial") return;
     const duration = speed === "lento" ? 1600 : speed === "rapido" ? 650 : 1000;
     const timer = window.setTimeout(() => {
+      const nextCorrect = correct + (trials[index]?.go ? 0 : 1);
+      setCorrect(nextCorrect);
       if (index < trials.length - 1) setIndex((current) => current + 1);
-      else finish(correct + (trials[index]?.go ? 0 : 1));
+      else finish(nextCorrect);
     }, duration);
     return () => window.clearTimeout(timer);
   }, [phase, index, trials, speed]);
