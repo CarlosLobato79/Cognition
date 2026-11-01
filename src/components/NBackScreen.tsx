@@ -235,9 +235,9 @@ export function NBackScreen() {
             </div>
           )}
           {phase === "trial" && (
-            <div className="cognitive-trial">
+            <div className="cognitive-trial nback-trial-enter" key={index}>
               <span>
-                RONDA {index + 1} / {sequence.length}
+                NUEVO ESTÍMULO · RONDA {index + 1} / {sequence.length}
               </span>
               <div className="nback-symbol">{display}</div>
               <p>
