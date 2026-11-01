@@ -22,7 +22,7 @@ export function SerialRecallScreen({ onBack }: SerialRecallScreenProps) {
     const interval = window.setInterval(() => {
       const shuffled = [...silhouettes].sort(() => Math.random() - 0.5)
       setSequence(shuffled.slice(0, 3))
-    }, 2200)
+    }, 4200)
 
     return () => window.clearInterval(interval)
   }, [])
@@ -32,9 +32,9 @@ export function SerialRecallScreen({ onBack }: SerialRecallScreenProps) {
 
     const transition = animate(sequenceRef.current.querySelectorAll('.preview-silhouette'), {
       opacity: [0, 1],
-      scale: [0.96, 1],
-      delay: (_element, index) => (index ?? 0) * 140,
-      duration: 900,
+      scale: [0.98, 1],
+      delay: (_element, index) => (index ?? 0) * 220,
+      duration: 1600,
       ease: 'inOutSine',
     })
 
