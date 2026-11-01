@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { animate, createTimeline } from 'animejs'
+import { animate } from 'animejs'
 import { BrainLogo } from './components/BrainLogo'
 import './styles/splash.css'
 
@@ -11,12 +11,28 @@ export function App() {
   const statusRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
-    const intro = createTimeline({ defaults: { ease: 'outExpo' } })
+    const logoIntro = animate(logoRef.current!, {
+      opacity: [0, 1],
+      scale: [0.78, 1],
+      duration: 1200,
+      ease: 'outExpo',
+    })
 
-    intro
-      .add(logoRef.current!, { opacity: [0, 1], scale: [0.82, 1], duration: 1100 })
-      .add(wordmarkRef.current!, { opacity: [0, 1], translateY: [16, 0], duration: 700 }, '-=620')
-      .add(statusRef.current!, { opacity: [0, 1], translateY: [8, 0], duration: 500 }, '-=400')
+    const wordmarkIntro = animate(wordmarkRef.current!, {
+      opacity: [0, 1],
+      translateY: [14, 0],
+      duration: 800,
+      delay: 360,
+      ease: 'outCubic',
+    })
+
+    const statusIntro = animate(statusRef.current!, {
+      opacity: [0, 1],
+      translateY: [8, 0],
+      duration: 600,
+      delay: 760,
+      ease: 'outCubic',
+    })
 
     const pulse = animate('.logo-aura', {
       opacity: [0.15, 0.42, 0.15],
@@ -33,11 +49,13 @@ export function App() {
         ease: 'inOutQuad',
         onComplete: () => setIsBooted(true),
       })
-    }, 3000)
+    }, 3900)
 
     return () => {
       window.clearTimeout(timer)
-      intro.pause()
+      logoIntro.pause()
+      wordmarkIntro.pause()
+      statusIntro.pause()
       pulse.pause()
     }
   }, [])

@@ -37,15 +37,15 @@
 .logo-lockup {
   position: relative;
   display: grid;
-  width: 136px;
-  height: 136px;
+  width: 176px;
+  height: 176px;
   place-items: center;
 }
 
 .logo-aura {
   position: absolute;
-  width: 136px;
-  height: 136px;
+  width: 176px;
+  height: 176px;
   border: 1px solid rgba(94, 232, 244, 0.55);
   border-radius: 50%;
   box-shadow: 0 0 48px rgba(50, 207, 224, 0.22), inset 0 0 34px rgba(50, 207, 224, 0.1);
@@ -53,8 +53,8 @@
 
 .brain-logo {
   position: relative;
-  width: 96px;
-  height: 96px;
+  width: 126px;
+  height: 126px;
   fill: #fff;
   filter: drop-shadow(0 0 18px rgba(100, 234, 245, 0.35));
 }
