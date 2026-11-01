@@ -31,7 +31,7 @@ type TrainingResult = {
 export function SerialRecallScreen() {
   const navigate = useNavigate()
   const [sequence, setSequence] = useState(() => silhouettes.slice(0, 3))
-  const [isLevelModalOpen, setIsLevelModalOpen] = useState(false)
+  const [isLevelModalOpen, setIsLevelModalOpen] = useState(true)
   const [trainingPhase, setTrainingPhase] = useState<TrainingPhase>('idle')
   const [activeSequence, setActiveSequence] = useState<typeof silhouettes>([])
   const [selectionCards, setSelectionCards] = useState<typeof silhouettes>([])
