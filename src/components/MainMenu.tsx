@@ -120,10 +120,6 @@ export function MainMenu() {
           <img src="/assets/cognition-brain-logo.png" alt="" />
           <span>COGNITIVE READINESS SYSTEM</span>
         </div>
-        <div className="menu-progress" aria-label={`Progreso de Immediate Serial Recall: ${completionPercent}%`}>
-          <span>TRAINING PROGRESS</span>
-          <strong>{completionPercent}%</strong>
-        </div>
         <h1>COGNITION</h1>
       </header>
 
@@ -140,6 +136,7 @@ export function MainMenu() {
             <span className="module-card-content">
               <span className="module-card-status">{module.available ? 'READY' : 'PROXIMAMENTE'}</span>
               <span className="module-card-name">{module.name}</span>
+              <span className="module-card-progress">{module.id === '01' ? completionPercent : 0}% COMPLETADO</span>
             </span>
             <img className="module-card-image" src={module.image} alt="" />
           </button>
