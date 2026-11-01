@@ -68,7 +68,6 @@
   display: grid;
   min-height: 230px;
   place-items: center;
-  border-bottom: 1px solid rgba(100, 232, 244, 0.34);
   opacity: 0;
 }
 
