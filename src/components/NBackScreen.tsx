@@ -12,6 +12,7 @@ const levels = [
 type Level = (typeof levels)[number];
 type Phase = "setup" | "countdown" | "trial" | "result";
 type Speed = "lento" | "normal" | "rapido";
+type NBackTrial = { symbol: string; match: boolean };
 const SYMBOLS = ["◆", "●", "▲", "■", "✦", "⬟"];
 const PERFECT = 25;
 const PROGRESS = "cognition-nback-progress";
@@ -34,12 +35,42 @@ function gamePercent(progress: Record<string, number>) {
       100,
   );
 }
-function makeSequence(length: number) {
-  return Array.from({ length }, (_, index) =>
-    index >= 2 && Math.random() < 0.38
-      ? "MATCH"
-      : SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-  );
+function makeSequence(length: number): NBackTrial[] {
+  const sequence: NBackTrial[] = [];
+  for (let index = 0; index < length; index += 1) {
+    if (index < 2) {
+      sequence.push({
+        symbol: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
+        match: false,
+      });
+      continue;
+    }
+    const match = Math.random() < 0.42;
+    if (match)
+      sequence.push({ symbol: sequence[index - 2].symbol, match: true });
+    else {
+      const alternatives = SYMBOLS.filter(
+        (symbol) => symbol !== sequence[index - 2].symbol,
+      );
+      sequence.push({
+        symbol: alternatives[Math.floor(Math.random() * alternatives.length)],
+        match: false,
+      });
+    }
+  }
+  const scored = sequence.slice(2);
+  if (scored.length >= 2 && !scored.some((trial) => trial.match))
+    sequence[2] = { symbol: sequence[0].symbol, match: true };
+  if (scored.length >= 2 && scored.every((trial) => trial.match)) {
+    const alternatives = SYMBOLS.filter(
+      (symbol) => symbol !== sequence[1].symbol,
+    );
+    sequence[3] = {
+      symbol: alternatives[Math.floor(Math.random() * alternatives.length)],
+      match: false,
+    };
+  }
+  return sequence;
 }
 
 export function NBackScreen() {
@@ -48,7 +79,7 @@ export function NBackScreen() {
   const [level, setLevel] = useState<Level>(levels[0]);
   const [progress, setProgress] =
     useState<Record<string, number>>(readProgress);
-  const [sequence, setSequence] = useState<string[]>([]);
+  const [sequence, setSequence] = useState<NBackTrial[]>([]);
   const [index, setIndex] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [countdown, setCountdown] = useState(3);
@@ -104,10 +135,6 @@ export function NBackScreen() {
     setResult(null);
     setPhase("countdown");
   };
-  const expected = (position: number) =>
-    position >= 2 && sequence[position] === "MATCH"
-      ? sequence[position - 2]
-      : sequence[position];
   const finish = (totalCorrect: number) => {
     const scoredTrials = Math.max(sequence.length - 2, 1);
     const perfect = totalCorrect === scoredTrials;
@@ -145,18 +172,13 @@ export function NBackScreen() {
   };
   const answer = (match: boolean) => {
     if (phase !== "trial" || index < 2) return;
-    const isMatch = expected(index) === expected(index - 2);
+    const isMatch = sequence[index].match;
     const next = correct + (match === isMatch ? 1 : 0);
     setCorrect(next);
     if (index < sequence.length - 1) setIndex((current) => current + 1);
     else finish(next);
   };
-  const display =
-    index < 2
-      ? sequence[index]
-      : sequence[index] === "MATCH"
-        ? sequence[index - 2]
-        : sequence[index];
+  const display = sequence[index]?.symbol;
   return (
     <main className="cognitive-game-screen">
       <header className="cognitive-game-header">
@@ -172,10 +194,26 @@ export function NBackScreen() {
             <span>MEMORIA DE TRABAJO // ACTUALIZACIÓN MENTAL</span>
             <h1>MEMORIA N-BACK</h1>
             <p>
-              Las dos primeras posiciones son de preparación. Después indica si el símbolo actual coincide con el que apareció dos posiciones atrás.
+              Las dos primeras posiciones son de preparación. Después indica si
+              el símbolo actual coincide con el que apareció dos posiciones
+              atrás.
             </p>
           </div>
-          <div className="cognitive-speed-picker"><span>RITMO DE ESTÍMULOS</span><div>{(["lento", "normal", "rapido"] as Speed[]).map((option) => <button className={speed === option ? "is-active" : ""} type="button" key={option} onClick={() => setSpeed(option)}>{option === "rapido" ? "RÁPIDO" : option.toUpperCase()}</button>)}</div></div>
+          <div className="cognitive-speed-picker">
+            <span>RITMO DE ESTÍMULOS</span>
+            <div>
+              {(["lento", "normal", "rapido"] as Speed[]).map((option) => (
+                <button
+                  className={speed === option ? "is-active" : ""}
+                  type="button"
+                  key={option}
+                  onClick={() => setSpeed(option)}
+                >
+                  {option === "rapido" ? "RÁPIDO" : option.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="cognitive-levels">
             {levels.map((item) => (
               <button type="button" key={item.id} onClick={() => start(item)}>
