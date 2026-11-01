@@ -12,17 +12,15 @@ const silhouettes = [
 ]
 
 const levels = [
-  { id: 'fib-1', name: 'RECLUTA', description: '1 silueta · activación', count: 1, available: true },
-  { id: 'fib-2', name: 'RASTREADOR', description: '2 siluetas · enfoque inicial', count: 2, available: true },
-  { id: 'fib-3', name: 'OPERADOR', description: '3 siluetas · memoria activa', count: 3, available: true },
-  { id: 'fib-5', name: 'VANGUARDIA', description: '5 siluetas · ritmo táctico', count: 5, available: true },
-  { id: 'fib-8', name: 'CENTINELA', description: '8 siluetas · próximamente', count: 8, available: false },
-  { id: 'fib-13', name: 'NÚCLEO', description: '13 siluetas · próximamente', count: 13, available: false },
-  { id: 'fib-21', name: 'ESTRATEGA', description: '21 siluetas · próximamente', count: 21, available: false },
-  { id: 'fib-34', name: 'MAESTRO', description: '34 siluetas · próximamente', count: 34, available: false },
-  { id: 'fib-55', name: 'COMANDO', description: '55 siluetas · próximamente', count: 55, available: false },
-  { id: 'fib-89', name: 'ÉLITE', description: '89 siluetas · próximamente', count: 89, available: false },
-  { id: 'fib-144', name: 'ASCENSIÓN', description: '144 siluetas · próximamente', count: 144, available: false },
+  { id: 'level-3', name: 'RECLUTA', description: '3 siluetas · activación', count: 3, available: true },
+  { id: 'level-5', name: 'RASTREADOR', description: '5 siluetas · enfoque inicial', count: 5, available: true },
+  { id: 'level-8', name: 'OPERADOR', description: '8 siluetas · memoria activa', count: 8, available: false },
+  { id: 'level-13', name: 'VANGUARDIA', description: '13 siluetas · ritmo táctico', count: 13, available: false },
+  { id: 'level-21', name: 'CENTINELA', description: '21 siluetas · próximamente', count: 21, available: false },
+  { id: 'level-34', name: 'NÚCLEO', description: '34 siluetas · próximamente', count: 34, available: false },
+  { id: 'level-55', name: 'ESTRATEGA', description: '55 siluetas · próximamente', count: 55, available: false },
+  { id: 'level-89', name: 'MAESTRO', description: '89 siluetas · próximamente', count: 89, available: false },
+  { id: 'level-144', name: 'COMANDO', description: '144 siluetas · próximamente', count: 144, available: false },
 ] as const
 
 type TrainingLevel = typeof levels[number]
@@ -228,7 +226,7 @@ export function SerialRecallScreen() {
           <div className="training-setup-intro">
             <span className="training-kicker">IMMEDIATE SERIAL RECALL</span>
             <h1>CONFIGURA TU ENTRENAMIENTO</h1>
-            <p>Selecciona la cantidad de siluetas. La progresión sigue la sucesión de Fibonacci.</p>
+            <p>Selecciona la cantidad de siluetas para configurar tu sesión.</p>
           </div>
 
           <div className="training-level-grid">
@@ -251,7 +249,7 @@ export function SerialRecallScreen() {
             ))}
           </div>
 
-          <p className="training-setup-note">Siguiente expansión disponible al incorporar más siluetas al sistema.</p>
+          <p className="training-setup-note">Más niveles estarán disponibles al incorporar nuevas siluetas al sistema.</p>
         </section>
       )}
 
