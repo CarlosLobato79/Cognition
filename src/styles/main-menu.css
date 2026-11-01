@@ -23,7 +23,8 @@
 }
 
 .menu-header,
-.module-rail { position: relative; z-index: 1; }
+.module-rail,
+.menu-footer { position: relative; z-index: 1; }
 
 .menu-header {
   display: flex;
@@ -59,6 +60,25 @@
   letter-spacing: 0.12em;
   line-height: 0.78;
   text-indent: 0.12em;
+}
+
+.menu-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1180px;
+  margin: auto auto 0;
+  border-top: 1px solid rgba(117, 160, 173, 0.24);
+  padding-top: 18px;
+}
+
+.menu-footer-wordmark {
+  color: #fff;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
 .module-rail {
@@ -319,6 +339,8 @@
   .menu-header h1 { font-size: clamp(3.7rem, 18vw, 6rem); }
   .menu-brand { font-size: 0.62rem; }
   .menu-brand img { width: 40px; height: 40px; }
+  .menu-footer { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .menu-footer-wordmark { align-self: flex-end; }
   .module-rail { grid-template-columns: 1fr; gap: 10px; }
   .module-card { min-height: 118px; }
   .module-card-content { padding-left: 42px; }

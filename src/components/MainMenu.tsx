@@ -182,14 +182,6 @@ export function MainMenu() {
   return (
     <main ref={menuRef} className="main-menu" aria-label="Módulos de Cognition">
       <div className="menu-grid" aria-hidden="true" />
-      <header className="menu-header">
-        <div className="menu-brand">
-          <img src="/assets/cognition-brain-logo.png" alt="" />
-          <span>COGNITIVE READINESS SYSTEM</span>
-        </div>
-        <h1>COGNITION</h1>
-      </header>
-
       <section className="module-rail" aria-label="Módulos de entrenamiento">
         {modules.map((module) => (
           <button
@@ -209,6 +201,14 @@ export function MainMenu() {
           </button>
         ))}
       </section>
+
+      <footer className="menu-footer" aria-label="Identidad de Cognition">
+        <div className="menu-brand">
+          <img src="/assets/cognition-brain-logo.png" alt="" />
+          <span>COGNITIVE READINESS SYSTEM</span>
+        </div>
+        <span className="menu-footer-wordmark">COGNITION</span>
+      </footer>
 
       {selectedModule && (
         <div className="module-modal-backdrop" role="presentation" onClick={() => setSelectedModule(null)}>
