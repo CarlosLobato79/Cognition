@@ -103,15 +103,13 @@
   z-index: 3;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .module-card:hover {
-    border-color: #64e8f4;
-    background: linear-gradient(160deg, rgba(22, 43, 50, 0.96), rgba(7, 11, 15, 0.98));
-    outline: none;
-    box-shadow: 0 28px 64px rgba(0, 0, 0, 0.42);
-    transform: translateY(-8px) scaleX(1.1) scaleY(1.035);
-    z-index: 3;
-  }
+.module-card:hover {
+  border-color: #64e8f4;
+  background: linear-gradient(160deg, rgba(22, 43, 50, 0.96), rgba(7, 11, 15, 0.98));
+  outline: none;
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.42);
+  transform: translateY(-8px) scaleX(1.1) scaleY(1.035);
+  z-index: 3;
 }
 
 .module-card-number {

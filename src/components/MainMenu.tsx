@@ -19,10 +19,9 @@ export function MainMenu() {
 
     const entrance = animate(cards, {
       opacity: [0, 1],
-      translateY: [28, 0],
       delay: (_el, index) => (index ?? 0) * 90,
       duration: 680,
-      ease: 'outCubic',
+      ease: 'outQuad',
     })
 
     return () => {
