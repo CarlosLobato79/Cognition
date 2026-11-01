@@ -134,6 +134,7 @@ export function SerialRecallScreen() {
   const [sequence, setSequence] = useState(() => silhouettes.slice(0, 3))
   const [isSetupScreen, setIsSetupScreen] = useState(true)
   const [isVaultOpen, setIsVaultOpen] = useState(false)
+  const [vaultPage, setVaultPage] = useState(0)
   const [trainingPhase, setTrainingPhase] = useState<TrainingPhase>('idle')
   const [activeSequence, setActiveSequence] = useState<typeof silhouettes>([])
   const [selectionCards, setSelectionCards] = useState<typeof silhouettes>([])
@@ -265,6 +266,9 @@ export function SerialRecallScreen() {
   }
 
   const startNewSession = () => startTraining(activeLevel)
+  const vaultPageSize = 20
+  const vaultPageCount = Math.ceil(silhouettes.length / vaultPageSize)
+  const visibleVaultSilhouettes = silhouettes.slice(vaultPage * vaultPageSize, (vaultPage + 1) * vaultPageSize)
 
   return (
     <main className="serial-recall-screen">
@@ -317,7 +321,7 @@ export function SerialRecallScreen() {
               ← MENU
             </button>
             <span className="training-code">COGNITION // CONFIGURATION</span>
-            <button className="silhouette-vault-button" type="button" onClick={() => setIsVaultOpen(true)}>
+            <button className="silhouette-vault-button" type="button" onClick={() => { setVaultPage(0); setIsVaultOpen(true) }}>
               ALMACÉN DE SILUETAS
             </button>
           </header>
@@ -363,7 +367,7 @@ export function SerialRecallScreen() {
                 <p>La biblioteca contiene {silhouettes.length} siluetas vectorizadas para los protocolos de entrenamiento.</p>
                 <span className="vault-panel-count">{silhouettes.length} ACTIVOS DISPONIBLES</span>
                 <div className="vault-grid" aria-label="Siluetas disponibles">
-                  {silhouettes.map((animal) => (
+                  {visibleVaultSilhouettes.map((animal) => (
                     <div className="vault-item" key={animal.name}>
                       <div className="vault-item-image">
                         <img loading="lazy" decoding="async" src={animal.image} alt={`Silueta de ${animal.name}`} />
@@ -371,6 +375,15 @@ export function SerialRecallScreen() {
                       <span>{animal.name.toUpperCase()}</span>
                     </div>
                   ))}
+                </div>
+                <div className="vault-pagination" aria-label="Paginación del almacén">
+                  <button type="button" disabled={vaultPage === 0} onClick={() => setVaultPage((page) => page - 1)}>
+                    ← ANTERIOR
+                  </button>
+                  <span>{vaultPage + 1} / {vaultPageCount}</span>
+                  <button type="button" disabled={vaultPage === vaultPageCount - 1} onClick={() => setVaultPage((page) => page + 1)}>
+                    SIGUIENTE →
+                  </button>
                 </div>
               </section>
             </div>
