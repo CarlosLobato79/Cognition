@@ -1,0 +1,73 @@
+import { useEffect, useRef, useState } from 'react'
+import { animate, createTimeline } from 'animejs'
+import { BrainLogo } from './components/BrainLogo'
+import './styles/splash.css'
+
+export function App() {
+  const [isBooted, setIsBooted] = useState(false)
+  const splashRef = useRef<HTMLDivElement>(null)
+  const logoRef = useRef<HTMLDivElement>(null)
+  const wordmarkRef = useRef<HTMLHeadingElement>(null)
+  const statusRef = useRef<HTMLParagraphElement>(null)
+
+  useEffect(() => {
+    const intro = createTimeline({ defaults: { ease: 'outExpo' } })
+
+    intro
+      .add(logoRef.current!, { opacity: [0, 1], scale: [0.82, 1], duration: 1100 })
+      .add(wordmarkRef.current!, { opacity: [0, 1], translateY: [16, 0], duration: 700 }, '-=620')
+      .add(statusRef.current!, { opacity: [0, 1], translateY: [8, 0], duration: 500 }, '-=400')
+
+    const pulse = animate('.logo-aura', {
+      opacity: [0.15, 0.42, 0.15],
+      scale: [0.92, 1.08, 0.92],
+      duration: 2400,
+      ease: 'inOutSine',
+      loop: true,
+    })
+
+    const timer = window.setTimeout(() => {
+      animate(splashRef.current!, {
+        opacity: [1, 0],
+        duration: 850,
+        ease: 'inOutQuad',
+        onComplete: () => setIsBooted(true),
+      })
+    }, 3000)
+
+    return () => {
+      window.clearTimeout(timer)
+      intro.pause()
+      pulse.pause()
+    }
+  }, [])
+
+  return (
+    <main className="app-shell">
+      {!isBooted && (
+        <section ref={splashRef} className="splash-screen" aria-label="Cargando Cognition">
+          <div className="splash-grid" aria-hidden="true" />
+          <div className="splash-content">
+            <div ref={logoRef} className="logo-lockup">
+              <div className="logo-aura" aria-hidden="true" />
+              <BrainLogo />
+            </div>
+            <h1 ref={wordmarkRef}>COGNITION</h1>
+            <p ref={statusRef} className="boot-status">
+              <span className="status-dot" />
+              INITIALIZING COGNITIVE SYSTEM
+            </p>
+          </div>
+          <p className="build-label">COGNITION // BUILD 0.1</p>
+        </section>
+      )}
+
+      {isBooted && (
+        <section className="dark-ready-state" aria-label="Cognition listo">
+          <div className="ready-mark"><BrainLogo /></div>
+          <p>COGNITION SYSTEM READY</p>
+        </section>
+      )}
+    </main>
+  )
+}

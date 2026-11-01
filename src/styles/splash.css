@@ -1,0 +1,127 @@
+.app-shell {
+  min-height: 100vh;
+  background: #05070a;
+}
+
+.splash-screen,
+.dark-ready-state {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  background: #05070a;
+}
+
+.splash-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(55, 185, 201, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(55, 185, 201, 0.08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+}
+
+.splash-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 18px;
+  padding: 32px;
+  text-align: center;
+}
+
+.logo-lockup {
+  position: relative;
+  display: grid;
+  width: 136px;
+  height: 136px;
+  place-items: center;
+}
+
+.logo-aura {
+  position: absolute;
+  width: 136px;
+  height: 136px;
+  border: 1px solid rgba(94, 232, 244, 0.55);
+  border-radius: 50%;
+  box-shadow: 0 0 48px rgba(50, 207, 224, 0.22), inset 0 0 34px rgba(50, 207, 224, 0.1);
+}
+
+.brain-logo {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  fill: #fff;
+  filter: drop-shadow(0 0 18px rgba(100, 234, 245, 0.35));
+}
+
+.brain-fold {
+  fill: none;
+  stroke: #05070a;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.splash-content h1 {
+  margin: 4px 0 0;
+  color: #fff;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: clamp(3rem, 8vw, 5.8rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 0.9;
+  text-indent: 0.18em;
+}
+
+.boot-status,
+.build-label,
+.dark-ready-state p {
+  color: #64e8f4;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.boot-status { margin: 0; }
+
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 9px 1px 0;
+  border-radius: 50%;
+  background: #b0f554;
+  box-shadow: 0 0 12px #b0f554;
+}
+
+.build-label {
+  position: absolute;
+  right: 32px;
+  bottom: 28px;
+  margin: 0;
+  color: rgba(174, 194, 207, 0.48);
+  font-size: 0.68rem;
+}
+
+.dark-ready-state {
+  align-content: center;
+  gap: 18px;
+}
+
+.ready-mark { opacity: 0.1; }
+.ready-mark .brain-logo { width: 72px; height: 72px; }
+.dark-ready-state p { margin: 0; opacity: 0.32; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+@media (max-width: 520px) {
+  .splash-content h1 { font-size: 3.35rem; }
+  .build-label { right: 20px; bottom: 20px; }
+}
