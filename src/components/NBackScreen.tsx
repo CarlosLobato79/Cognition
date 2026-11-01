@@ -237,7 +237,9 @@ export function NBackScreen() {
           {phase === "trial" && (
             <div className="cognitive-trial nback-trial-enter" key={index}>
               <span>
-                NUEVO ESTÍMULO · RONDA {index + 1} / {sequence.length}
+                {index < 2
+                  ? `PREPARACIÓN ${index + 1} / 2`
+                  : `RESPUESTA ${index - 1} / ${sequence.length - 2}`}
               </span>
               <div className="nback-symbol">{display}</div>
               <p>
@@ -246,22 +248,20 @@ export function NBackScreen() {
                   : "COMPARA CON EL SÍMBOLO DE HACE DOS RONDAS"}
               </p>
               <strong>{index < 2 ? "PREPARACIÓN" : "RESPONDE AHORA"}</strong>
-              <div className="cognitive-actions">
-                <button
-                  type="button"
-                  disabled={index < 2}
-                  onClick={() => answer(true)}
-                >
-                  SÍ COINCIDE
-                </button>
-                <button
-                  type="button"
-                  disabled={index < 2}
-                  onClick={() => answer(false)}
-                >
-                  NO COINCIDE
-                </button>
-              </div>
+              {index < 2 ? (
+                <div className="nback-preparation-note">
+                  NO RESPONDAS TODAVÍA · SOLO MEMORIZA
+                </div>
+              ) : (
+                <div className="cognitive-actions">
+                  <button type="button" onClick={() => answer(true)}>
+                    SÍ COINCIDE
+                  </button>
+                  <button type="button" onClick={() => answer(false)}>
+                    NO COINCIDE
+                  </button>
+                </div>
+              )}
             </div>
           )}
           {phase === "result" && result && (
