@@ -7,7 +7,7 @@ const modules = [
   {
     id: '01',
     name: 'Immediate Serial Recall',
-    image: '/assets/animals/perro.svg',
+    image: '/assets/cognition-brain-logo.png',
     definition: 'Evalúa la capacidad de mantener una secuencia breve en la memoria de trabajo y reproducirla en el orden exacto.',
     benefits: 'Entrena retención visual, asociación imagen-nombre, orden serial y atención sostenida.',
     available: true,
