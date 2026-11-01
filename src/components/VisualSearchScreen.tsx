@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { animate } from "animejs";
 import { useNavigate } from "react-router-dom";
 import "../styles/cognitive-games.css";
 
@@ -90,6 +91,21 @@ export function VisualSearchScreen() {
     }, duration);
     return () => window.clearTimeout(timer);
   }, [phase, index, items, speed, mode, revealed]);
+  useEffect(() => {
+    if (!revealed) return;
+    const cells = document.querySelectorAll(".visual-search-reveal-stage span");
+    const animation = animate(cells, {
+      opacity: [0, 1],
+      scale: [0.35, 1],
+      rotate: [90, 0],
+      delay: (_element, cellIndex) => (cellIndex ?? 0) * 38,
+      duration: 460,
+      ease: "outBack",
+    });
+    return () => {
+      animation.pause();
+    };
+  }, [revealed, index]);
   useEffect(() => {
     if (phase !== "setup") return;
     const old = document.body.style.overflow;
@@ -249,7 +265,7 @@ export function VisualSearchScreen() {
                 </>
               ) : (
                 <>
-                  <div className="search-field">
+                  <div className="search-field visual-search-reveal-stage">
                     {Array.from({ length: 12 }, (_, cell) => (
                       <span
                         className={
