@@ -81,7 +81,7 @@ export function App() {
   }, [isBooted]);
 
   return (
-    <main className="app-shell">
+    <div className="app-shell">
       {!isBooted && (
         <section
           ref={splashRef}
@@ -152,6 +152,6 @@ export function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}
-    </main>
+    </div>
   );
 }

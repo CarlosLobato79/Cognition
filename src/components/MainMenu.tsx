@@ -1,223 +1,206 @@
 import { useEffect, useRef, useState } from 'react'
-import { animate } from 'animejs'
-import { useNavigate } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import '../styles/main-menu.css'
 import { assetUrl } from '../utils/assets'
 
-const modules = [
+const areas = {
+  memory: { name: 'Memoria', description: 'Recuerda secuencias, posiciones y datos recientes.' },
+  attention: { name: 'Atención', description: 'Distingue lo importante entre los distractores.' },
+  executive: { name: 'Función ejecutiva', description: 'Cambia de estrategia y controla respuestas automáticas.' },
+  speed: { name: 'Velocidad', description: 'Compara estímulos y responde con rapidez y precisión.' },
+  auditory: { name: 'Memoria auditiva', description: 'Retén y reconoce información que escuchas.' },
+} as const
+
+type Area = keyof typeof areas
+
+function isArea(value: string | null): value is Area {
+  return value !== null && Object.hasOwn(areas, value)
+}
+
+type TrainingModule = {
+  slug: string
+  name: string
+  summary: string
+  benefits: string
+  areas: [Area, ...Area[]]
+  storageKey: string
+  levels: string[]
+}
+
+const modules: TrainingModule[] = [
   {
-    id: '01',
-    name: 'Memoria Secuencial',
-    path: '/training/immediate-serial-recall',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de mantener una secuencia breve en la memoria de trabajo y reproducirla en el orden exacto.',
-    benefits: 'Entrena retención visual, asociación imagen-nombre, orden serial y atención sostenida.',
-    areas: ['MEMORIA', 'ATENCIÓN'],
-    available: true,
+    slug: 'immediate-serial-recall',
+    name: 'Memoria secuencial',
+    summary: 'Recuerda las imágenes y repite la secuencia en el mismo orden.',
+    benefits: 'Retención visual, asociación entre imagen y nombre, y atención sostenida.',
+    areas: ['memory', 'attention'],
+    storageKey: 'cognition-training-progress',
+    levels: ['level-3', 'level-5', 'level-8', 'level-13', 'level-21', 'level-34', 'level-55', 'level-89'],
   },
   {
-    id: '02',
-    name: 'Atención Central',
-    path: '/training/middle-vector',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Mide la capacidad de enfocar un estímulo central e inhibir la información distractora que aparece a sus lados.',
-    benefits: 'Entrena atención selectiva, control inhibitorio, velocidad de respuesta y resistencia a distractores.',
-    areas: ['ATENCIÓN', 'FUNCIÓN EJECUTIVA'],
-    available: true,
+    slug: 'middle-vector',
+    name: 'Atención central',
+    summary: 'Identifica la dirección de la flecha central e ignora las de los lados.',
+    benefits: 'Atención selectiva, control inhibitorio y velocidad de respuesta.',
+    areas: ['attention', 'executive'],
+    storageKey: 'cognition-middle-vector-progress',
+    levels: ['vector-3', 'vector-5', 'vector-8', 'vector-13', 'vector-21'],
   },
   {
-    id: '03',
-    name: 'Control de Colores',
-    path: '/training/stroop-protocol',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Mide la capacidad de ignorar una respuesta automática y seleccionar la información relevante del estímulo.',
-    benefits: 'Entrena control inhibitorio, flexibilidad cognitiva, atención selectiva y velocidad de procesamiento.',
-    areas: ['FUNCIÓN EJECUTIVA', 'ATENCIÓN', 'VELOCIDAD'],
-    available: true,
+    slug: 'stroop-protocol',
+    name: 'Control de colores',
+    summary: 'Identifica el color de la tinta aunque la palabra diga otro color.',
+    benefits: 'Control inhibitorio, flexibilidad cognitiva y velocidad de procesamiento.',
+    areas: ['executive', 'attention', 'speed'],
+    storageKey: 'cognition-stroop-protocol-progress',
+    levels: ['stroop-3', 'stroop-5', 'stroop-8', 'stroop-13', 'stroop-21'],
   },
   {
-    id: '04',
-    name: 'Memoria Espacial',
-    path: '/training/spatial-grid',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de recordar posiciones visuales y reproducir una secuencia espacial en el orden correcto.',
-    benefits: 'Entrena memoria visuoespacial, memoria de trabajo, atención sostenida y precisión secuencial.',
-    areas: ['MEMORIA', 'ATENCIÓN'],
-    available: true,
+    slug: 'spatial-grid',
+    name: 'Memoria espacial',
+    summary: 'Recuerda qué casillas se iluminan y selecciónalas en el mismo orden.',
+    benefits: 'Memoria visuoespacial, atención sostenida y precisión al reproducir secuencias.',
+    areas: ['memory', 'attention'],
+    storageKey: 'cognition-spatial-grid-progress',
+    levels: ['spatial-3', 'spatial-5', 'spatial-8', 'spatial-13', 'spatial-21'],
   },
   {
-    id: '05',
-    name: 'Cambio de Regla',
-    path: '/training/dimensional-shift',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de cambiar de una regla mental a otra y mantener la estrategia correcta ante estímulos variables.',
-    benefits: 'Entrena flexibilidad cognitiva, cambio de criterio, atención y control ejecutivo.',
-    areas: ['FUNCIÓN EJECUTIVA', 'ATENCIÓN'],
-    available: true,
+    slug: 'dimensional-shift',
+    name: 'Cambio de regla',
+    summary: 'Clasifica las figuras siguiendo la regla que se indica en cada turno.',
+    benefits: 'Flexibilidad cognitiva, cambio de criterio y control ejecutivo.',
+    areas: ['executive', 'attention'],
+    storageKey: 'cognition-dimensional-shift-progress',
+    levels: ['shift-3', 'shift-5', 'shift-8', 'shift-13', 'shift-21'],
   },
   {
-    id: '06',
-    name: 'Comparación Visual',
-    path: '/training/pattern-comparison',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa qué tan rápido puedes comparar dos patrones visuales y detectar si son iguales o diferentes.',
-    benefits: 'Entrena velocidad de procesamiento, atención visual y precisión bajo presión de tiempo.',
-    areas: ['VELOCIDAD', 'ATENCIÓN'],
-    available: true,
+    slug: 'pattern-comparison',
+    name: 'Comparación visual',
+    summary: 'Decide rápidamente si dos patrones son iguales o diferentes.',
+    benefits: 'Velocidad de procesamiento, atención visual y precisión bajo presión de tiempo.',
+    areas: ['speed', 'attention'],
+    storageKey: 'cognition-pattern-comparison-progress',
+    levels: ['pattern-3', 'pattern-5', 'pattern-8', 'pattern-13', 'pattern-21'],
   },
   {
-    id: '07',
-    name: 'Ordenamiento Mental',
-    path: '/training/list-sorting',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de recordar varios elementos y reorganizarlos mentalmente siguiendo una regla.',
-    benefits: 'Entrena memoria de trabajo, organización mental, atención y manipulación de información.',
-    areas: ['MEMORIA', 'FUNCIÓN EJECUTIVA'],
-    available: true,
+    slug: 'list-sorting',
+    name: 'Ordenamiento mental',
+    summary: 'Recuerda los elementos de una lista y ordénalos según la regla del ejercicio.',
+    benefits: 'Memoria de trabajo, organización mental y manipulación de información.',
+    areas: ['memory', 'executive'],
+    storageKey: 'cognition-list-sorting-progress',
+    levels: ['sorting-3', 'sorting-5', 'sorting-8', 'sorting-13', 'sorting-21'],
   },
   {
-    id: '08',
-    name: 'Símbolo y Número',
-    path: '/training/symbol-digit',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la velocidad con la que puedes asociar símbolos visuales con números usando una clave cambiante.',
-    benefits: 'Entrena velocidad de procesamiento, atención, memoria asociativa y precisión bajo presión.',
-    areas: ['VELOCIDAD', 'MEMORIA'],
-    available: true,
+    slug: 'symbol-digit',
+    name: 'Símbolo y número',
+    summary: 'Usa la clave en pantalla para asociar cada símbolo con su número.',
+    benefits: 'Velocidad de procesamiento, atención y memoria asociativa.',
+    areas: ['speed', 'memory'],
+    storageKey: 'cognition-symbol-digit-progress',
+    levels: ['symbol-3', 'symbol-5', 'symbol-8', 'symbol-13', 'symbol-21'],
   },
   {
-    id: '09',
-    name: 'Recuerdo Auditivo',
-    path: '/training/auditory-recall',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de escuchar, retener y reconocer palabras presentadas oralmente.',
-    benefits: 'Entrena memoria auditiva, aprendizaje verbal, atención sostenida y recuperación de información.',
-    areas: ['MEMORIA AUDITIVA', 'MEMORIA', 'ATENCIÓN'],
-    available: true,
+    slug: 'auditory-recall',
+    name: 'Recuerdo auditivo',
+    summary: 'Escucha una lista de palabras y reconoce cuáles oíste.',
+    benefits: 'Memoria auditiva, aprendizaje verbal y recuperación de información.',
+    areas: ['auditory', 'memory', 'attention'],
+    storageKey: 'cognition-auditory-recall-progress',
+    levels: ['auditory-3', 'auditory-5', 'auditory-8', 'auditory-13', 'auditory-21'],
   },
   {
-    id: '10',
+    slug: 'go-no-go',
     name: 'Inhibición',
-    path: '/training/go-no-go',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de responder ante una señal relevante y detener una respuesta automática ante una señal de bloqueo.',
-    benefits: 'Entrena control inhibitorio, atención sostenida y autorregulación de la respuesta.',
-    areas: ['FUNCIÓN EJECUTIVA', 'ATENCIÓN'],
-    available: true,
+    summary: 'Responde a la señal indicada y detente cuando aparezca la señal de bloqueo.',
+    benefits: 'Control inhibitorio, atención sostenida y regulación de la respuesta.',
+    areas: ['executive', 'attention'],
+    storageKey: 'cognition-go-no-go-progress',
+    levels: ['gng-3', 'gng-5', 'gng-8', 'gng-13', 'gng-21'],
   },
   {
-    id: '11',
+    slug: 'n-back',
     name: 'Memoria N-Back',
-    path: '/training/n-back',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de actualizar y comparar información reciente mientras la memoria se mantiene activa.',
-    benefits: 'Entrena memoria de trabajo, actualización mental, atención y control de interferencias.',
-    areas: ['MEMORIA', 'ATENCIÓN'],
-    available: true,
+    summary: 'Detecta si el estímulo actual coincide con el que viste varios turnos antes.',
+    benefits: 'Memoria de trabajo, actualización mental y control de interferencias.',
+    areas: ['memory', 'attention'],
+    storageKey: 'cognition-nback-progress',
+    levels: ['nback-3', 'nback-5', 'nback-8', 'nback-13', 'nback-21'],
   },
   {
-    id: '12',
-    name: 'Búsqueda Visual',
-    path: '/training/visual-search',
-    image: '/assets/brain-side-profile.png',
-    definition: 'Evalúa la capacidad de encontrar rápidamente un estímulo relevante entre elementos distractores.',
-    benefits: 'Entrena atención selectiva, exploración visual y velocidad de detección.',
-    areas: ['ATENCIÓN', 'VELOCIDAD'],
-    available: true,
+    slug: 'visual-search',
+    name: 'Búsqueda visual',
+    summary: 'Encuentra el objetivo entre distractores o indica si no aparece.',
+    benefits: 'Atención selectiva, exploración visual y velocidad de detección.',
+    areas: ['attention', 'speed'],
+    storageKey: 'cognition-visual-search-progress',
+    levels: ['search-3', 'search-5', 'search-8', 'search-13', 'search-21'],
   },
 ]
 
-const serialRecallLevels = ['level-3', 'level-5', 'level-8', 'level-13', 'level-21', 'level-34', 'level-55', 'level-89']
-const middleVectorLevels = ['vector-3', 'vector-5', 'vector-8', 'vector-13', 'vector-21']
-const stroopProtocolLevels = ['stroop-3', 'stroop-5', 'stroop-8', 'stroop-13', 'stroop-21']
-const spatialGridLevels = ['spatial-3', 'spatial-5', 'spatial-8', 'spatial-13', 'spatial-21']
-const dimensionalShiftLevels = ['shift-3', 'shift-5', 'shift-8', 'shift-13', 'shift-21']
-const patternComparisonLevels = ['pattern-3', 'pattern-5', 'pattern-8', 'pattern-13', 'pattern-21']
-const listSortingLevels = ['sorting-3', 'sorting-5', 'sorting-8', 'sorting-13', 'sorting-21']
-const symbolDigitLevels = ['symbol-3', 'symbol-5', 'symbol-8', 'symbol-13', 'symbol-21']
-const auditoryRecallLevels = ['auditory-3', 'auditory-5', 'auditory-8', 'auditory-13', 'auditory-21']
-const goNoGoLevels = ['gng-3', 'gng-5', 'gng-8', 'gng-13', 'gng-21']
-const nBackLevels = ['nback-3', 'nback-5', 'nback-8', 'nback-13', 'nback-21']
-const visualSearchLevels = ['search-3', 'search-5', 'search-8', 'search-13', 'search-21']
-const PERFECT_RUNS_REQUIRED = 25
-const filterAreas = ['TODAS', 'MEMORIA', 'ATENCIÓN', 'FUNCIÓN EJECUTIVA', 'VELOCIDAD', 'MEMORIA AUDITIVA'] as const
+const areaOptions = (Object.keys(areas) as Area[]).map((area) => ({
+  area,
+  ...areas[area],
+  count: modules.filter((module) => module.areas.includes(area)).length,
+}))
+const perfectRunsRequired = 25
 
-function readGameProgress(storageKey: string, levelIds: string[]) {
+function exerciseCount(count: number) {
+  return `${count} ${count === 1 ? 'ejercicio' : 'ejercicios'}`
+}
+
+function readGameProgress({ storageKey, levels }: TrainingModule) {
   try {
-    const stored = JSON.parse(localStorage.getItem(storageKey) ?? '{}')
-    const completedRuns = levelIds.reduce((sum, levelId) => sum + Math.min(Number(stored[levelId]) || 0, PERFECT_RUNS_REQUIRED), 0)
-    return Math.round((completedRuns / (levelIds.length * PERFECT_RUNS_REQUIRED)) * 100)
+    const stored: Record<string, unknown> | null = JSON.parse(localStorage.getItem(storageKey) ?? '{}')
+    const completedRuns = levels.reduce((total, level) => {
+      const value = stored?.[level]
+      const runs = typeof value === 'number' || typeof value === 'string' ? Number(value) : 0
+      return total + (Number.isFinite(runs) ? Math.min(perfectRunsRequired, Math.max(0, Math.floor(runs))) : 0)
+    }, 0)
+    const requiredRuns = levels.length * perfectRunsRequired
+
+    if (completedRuns === 0) return 0
+    if (completedRuns === requiredRuns) return 100
+    return Math.max(1, Math.min(99, Math.round((completedRuns / requiredRuns) * 100)))
   } catch {
     return 0
   }
 }
 
+function readProgress() {
+  return Object.fromEntries(modules.map((module) => [module.slug, readGameProgress(module)]))
+}
+
 export function MainMenu() {
-  const navigate = useNavigate()
-  const menuRef = useRef<HTMLElement>(null)
-  const [selectedModule, setSelectedModule] = useState<(typeof modules)[number] | null>(null)
-  const [activeArea, setActiveArea] = useState<(typeof filterAreas)[number]>('TODAS')
-  const [serialRecallPercent, setSerialRecallPercent] = useState(() => readGameProgress('cognition-training-progress', serialRecallLevels))
-  const [middleVectorPercent, setMiddleVectorPercent] = useState(() => readGameProgress('cognition-middle-vector-progress', middleVectorLevels))
-  const [stroopProtocolPercent, setStroopProtocolPercent] = useState(() => readGameProgress('cognition-stroop-protocol-progress', stroopProtocolLevels))
-  const [spatialGridPercent, setSpatialGridPercent] = useState(() => readGameProgress('cognition-spatial-grid-progress', spatialGridLevels))
-  const [dimensionalShiftPercent, setDimensionalShiftPercent] = useState(() => readGameProgress('cognition-dimensional-shift-progress', dimensionalShiftLevels))
-  const [patternComparisonPercent, setPatternComparisonPercent] = useState(() => readGameProgress('cognition-pattern-comparison-progress', patternComparisonLevels))
-  const [listSortingPercent, setListSortingPercent] = useState(() => readGameProgress('cognition-list-sorting-progress', listSortingLevels))
-  const [symbolDigitPercent, setSymbolDigitPercent] = useState(() => readGameProgress('cognition-symbol-digit-progress', symbolDigitLevels))
-  const [auditoryRecallPercent, setAuditoryRecallPercent] = useState(() => readGameProgress('cognition-auditory-recall-progress', auditoryRecallLevels))
-  const [goNoGoPercent, setGoNoGoPercent] = useState(() => readGameProgress('cognition-go-no-go-progress', goNoGoLevels))
-  const [nBackPercent, setNBackPercent] = useState(() => readGameProgress('cognition-nback-progress', nBackLevels))
-  const [visualSearchPercent, setVisualSearchPercent] = useState(() => readGameProgress('cognition-visual-search-progress', visualSearchLevels))
+  const [searchParams] = useSearchParams()
+  const requestedArea = searchParams.get('area')
+  const activeArea = requestedArea === 'all' || isArea(requestedArea) ? requestedArea : null
+  const [selectedModule, setSelectedModule] = useState<TrainingModule | null>(null)
+  const [progress, setProgress] = useState(readProgress)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const sectionHeading = useRef<HTMLHeadingElement>(null)
+  const previousArea = useRef(activeArea)
+  const visibleModules = isArea(activeArea)
+    ? modules.filter((module) => module.areas.includes(activeArea))
+    : modules
 
   useEffect(() => {
-    const cards = menuRef.current?.querySelectorAll('.module-card')
-    if (!cards?.length) return
+    if (previousArea.current === activeArea) return
 
-    const entrance = animate(cards, {
-      opacity: [0, 1],
-      delay: (_el, index) => (index ?? 0) * 90,
-      duration: 680,
-      ease: 'outQuad',
-    })
-
-    return () => {
-      entrance.pause()
+    previousArea.current = activeArea
+    if (dialogRef.current?.open) {
+      dialogRef.current.close()
+      setSelectedModule(null)
     }
+    window.scrollTo(0, 0)
+    sectionHeading.current?.focus()
   }, [activeArea])
 
   useEffect(() => {
-    if (!selectedModule) return
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setSelectedModule(null)
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [selectedModule])
-
-  const visibleModules = activeArea === 'TODAS'
-    ? modules
-    : modules.filter((module) => module.areas.includes(activeArea))
-
-  useEffect(() => {
-    const refreshProgress = () => {
-      setSerialRecallPercent(readGameProgress('cognition-training-progress', serialRecallLevels))
-      setMiddleVectorPercent(readGameProgress('cognition-middle-vector-progress', middleVectorLevels))
-      setStroopProtocolPercent(readGameProgress('cognition-stroop-protocol-progress', stroopProtocolLevels))
-      setSpatialGridPercent(readGameProgress('cognition-spatial-grid-progress', spatialGridLevels))
-      setDimensionalShiftPercent(readGameProgress('cognition-dimensional-shift-progress', dimensionalShiftLevels))
-      setPatternComparisonPercent(readGameProgress('cognition-pattern-comparison-progress', patternComparisonLevels))
-      setListSortingPercent(readGameProgress('cognition-list-sorting-progress', listSortingLevels))
-      setSymbolDigitPercent(readGameProgress('cognition-symbol-digit-progress', symbolDigitLevels))
-      setAuditoryRecallPercent(readGameProgress('cognition-auditory-recall-progress', auditoryRecallLevels))
-      setGoNoGoPercent(readGameProgress('cognition-go-no-go-progress', goNoGoLevels))
-      setNBackPercent(readGameProgress('cognition-nback-progress', nBackLevels))
-      setVisualSearchPercent(readGameProgress('cognition-visual-search-progress', visualSearchLevels))
-    }
+    const refreshProgress = () => setProgress(readProgress())
     window.addEventListener('storage', refreshProgress)
     window.addEventListener('focus', refreshProgress)
+
     return () => {
       window.removeEventListener('storage', refreshProgress)
       window.removeEventListener('focus', refreshProgress)
@@ -225,101 +208,140 @@ export function MainMenu() {
   }, [])
 
   useEffect(() => {
-    if (!selectedModule) return
-
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = previousOverflow
-    }
+    if (selectedModule) dialogRef.current?.showModal()
   }, [selectedModule])
 
+  function closeDetails() {
+    dialogRef.current?.close()
+    setSelectedModule(null)
+  }
+
   return (
-    <main ref={menuRef} className="main-menu" aria-label="Módulos de Cognition">
-      <div className="menu-grid" aria-hidden="true" />
+    <main className="main-menu" aria-labelledby="menu-title">
       <header className="menu-header">
-        <div className="menu-header-copy">
-          <span>ENTRENAMIENTO COGNITIVO // CENTRO DE CONTROL</span>
-          <h1>MÓDULOS DE ENTRENAMIENTO</h1>
-          <p>Selecciona una habilidad cognitiva para comenzar.</p>
+        <div className="menu-brand">
+          <img src={assetUrl('assets/cognition-brain-logo.png')} alt="" width="36" height="36" />
+          <span>Cognition</span>
         </div>
-        <span className="menu-header-index">12 MÓDULOS</span>
+        <div className="menu-intro">
+          <h1 id="menu-title">Entrenamiento cognitivo</h1>
+          <p>Encuentra ejercicios para practicar memoria, atención y otras habilidades.</p>
+        </div>
       </header>
 
-      <nav className="module-filters" aria-label="Filtrar por área cognitiva">
-        <span>FILTRAR POR ÁREA</span>
-        <div>
-          {filterAreas.map((area) => (
-            <button className={activeArea === area ? 'is-active' : ''} type="button" key={area} onClick={() => setActiveArea(area)}>
-              {area === 'TODAS' ? 'TODAS' : area}
-            </button>
-          ))}
-        </div>
-      </nav>
+      {activeArea === null ? (
+        <section className="module-catalog" aria-labelledby="area-picker-title">
+          <div className="module-catalog-heading">
+            <h2 id="area-picker-title" ref={sectionHeading} tabIndex={-1}>Elige un área</h2>
+          </div>
+          <ul className="area-options" role="list">
+            {areaOptions.map(({ area, name, description, count }) => (
+              <li key={area} data-area={area}>
+                <Link
+                  className="area-option"
+                  to={`/?area=${area}`}
+                  aria-labelledby={`area-${area}-name`}
+                  aria-describedby={`area-${area}-description area-${area}-count`}
+                >
+                  <h3 id={`area-${area}-name`}>{name}</h3>
+                  <p id={`area-${area}-description`}>{description}</p>
+                  <span className="area-option-count" id={`area-${area}-count`}>{exerciseCount(count)}</span>
+                  <span className="area-option-arrow" aria-hidden="true">→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="area-all">
+            <Link to="/?area=all">Ver los {modules.length} ejercicios <span aria-hidden="true">→</span></Link>
+          </div>
+        </section>
+      ) : (
+        <section className="module-catalog" aria-labelledby="module-catalog-title">
+          <div className="module-catalog-heading">
+            <div>
+              <h2 id="module-catalog-title" ref={sectionHeading} tabIndex={-1} aria-describedby="module-catalog-count">
+                {activeArea === 'all' ? 'Todos los ejercicios' : areas[activeArea].name}
+              </h2>
+              <p id="module-catalog-count">{exerciseCount(visibleModules.length)}</p>
+            </div>
+            <Link className="area-back" to="/"><span aria-hidden="true">←</span> Cambiar área</Link>
+          </div>
 
-      <section className="module-rail" aria-label="Módulos de entrenamiento">
-        {visibleModules.map((module) => (
-          <button
-            className="module-card"
-            key={module.id}
-            type="button"
-            aria-label={`Módulo ${module.id}: ${module.name}`}
-            onClick={() => setSelectedModule(module)}
-          >
-            <span className="module-card-number">{module.id}</span>
-            <span className="module-card-content">
-              <span className="module-card-status">{module.available ? 'DISPONIBLE' : 'PRÓXIMAMENTE'}</span>
-              <span className="module-card-name">{module.name}</span>
-              <span className="module-card-description">{module.definition}</span>
-              <span className="module-card-progress">{module.id === '01' ? serialRecallPercent : module.id === '02' ? middleVectorPercent : module.id === '03' ? stroopProtocolPercent : module.id === '04' ? spatialGridPercent : module.id === '05' ? dimensionalShiftPercent : module.id === '06' ? patternComparisonPercent : module.id === '07' ? listSortingPercent : module.id === '08' ? symbolDigitPercent : module.id === '09' ? auditoryRecallPercent : module.id === '10' ? goNoGoPercent : module.id === '11' ? nBackPercent : module.id === '12' ? visualSearchPercent : 0}% COMPLETADO</span>
-            </span>
-            <img className="module-card-image" src={assetUrl(module.image)} alt="" />
-          </button>
-        ))}
-      </section>
+          <ul className="module-rail" role="list">
+            {visibleModules.map((module) => {
+              const percent = progress[module.slug]
+              const area = activeArea === 'all' ? module.areas[0] : activeArea
+              const status = percent === 0 ? 'Sin iniciar' : percent === 100 ? 'Completado' : `${percent}% completado`
 
-      <footer className="menu-footer" aria-label="Identidad de Cognition">
-        <div className="menu-brand">
-          <img src={assetUrl('assets/cognition-brain-logo.png')} alt="" />
-          <span>COGNITIVE READINESS SYSTEM</span>
-        </div>
-        <span className="menu-footer-wordmark">COGNITION</span>
-      </footer>
+              return (
+                <li className="module-card" data-area={area} key={module.slug}>
+                  {activeArea === 'all' && <span className="module-card-area">{areas[area].name}</span>}
+                  <h3 id={`${module.slug}-title`}>{module.name}</h3>
+                  <p>{module.summary}</p>
+                  <div className="module-card-footer">
+                    <div className="module-card-progress">
+                      <span>{status}</span>
+                      <span className="module-progress-track" aria-hidden="true">
+                        <span style={{ width: `${percent}%` }} />
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      id={`${module.slug}-details`}
+                      aria-labelledby={`${module.slug}-details ${module.slug}-title`}
+                      aria-haspopup="dialog"
+                      onClick={(event) => {
+                        event.currentTarget.focus({ preventScroll: true })
+                        setSelectedModule(module)
+                      }}
+                    >
+                      Ver ejercicio <span aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      )}
 
-      {selectedModule && (
-        <div className="module-modal-backdrop" role="presentation" onClick={() => setSelectedModule(null)}>
-          <section
-            className="module-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="module-modal-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="module-modal-copy">
-              <img className="module-modal-logo" src={assetUrl('assets/cognition-brain-logo.png')} alt="Cognition" />
-              <div className="module-modal-topline">
-                <span>{selectedModule.available ? 'ENTRENAMIENTO DISPONIBLE' : 'EN DESARROLLO'}</span>
-                <button type="button" aria-label="Cerrar" onClick={() => setSelectedModule(null)}>×</button>
-              </div>
+      <dialog
+        className="module-modal"
+        ref={dialogRef}
+        aria-labelledby="module-modal-title"
+        onCancel={(event) => {
+          event.preventDefault()
+          closeDetails()
+        }}
+        onClick={(event) => {
+          if (event.target !== event.currentTarget) return
+
+          const { left, right, top, bottom } = event.currentTarget.getBoundingClientRect()
+          if (event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom) {
+            closeDetails()
+          }
+        }}
+      >
+        {selectedModule && (
+          <div className="module-modal-copy">
+            <div className="module-modal-header">
               <h2 id="module-modal-title">{selectedModule.name}</h2>
-              <span className="module-modal-kicker">DEFINICIÓN PSICOLÓGICA</span>
-              <p>{selectedModule.definition}</p>
-              <span className="module-modal-kicker">QUÉ ENTRENA</span>
-              <p>{selectedModule.benefits}</p>
-              <button
-                className="module-modal-action"
-                type="button"
-                disabled={!selectedModule.available}
-                onClick={() => {
-                  if (selectedModule.available) navigate(selectedModule.path)
-                }}
-              >
-                {selectedModule.available ? 'ENTRENAR' : 'PRÓXIMAMENTE'}
+              <button type="button" aria-label="Cerrar ficha" onClick={closeDetails}>
+                <span aria-hidden="true">×</span>
               </button>
             </div>
-          </section>
-        </div>
-      )}
+            <p className="module-modal-summary">{selectedModule.summary}</p>
+            <h3>Qué entrenas</h3>
+            <p>{selectedModule.benefits}</p>
+            <ul className="module-modal-areas" role="list" aria-label="Áreas cognitivas">
+              {selectedModule.areas.map((area) => <li key={area} data-area={area}>{areas[area].name}</li>)}
+            </ul>
+            <Link className="module-modal-action" to={`/training/${selectedModule.slug}`} onClick={closeDetails}>
+              Ir al entrenamiento <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        )}
+      </dialog>
     </main>
   )
 }
