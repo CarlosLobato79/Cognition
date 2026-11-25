@@ -1,0 +1,40 @@
+:root {
+  --training-background: #05070a;
+  --training-divider: rgb(117 160 173 / 24%);
+  --training-cyan: #64e8f4;
+  --training-lime: #b0f554;
+}
+
+.training-label {
+  color: rgb(100 232 244 / 72%);
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.training-emblem {
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgb(100 232 244 / 22%));
+}
+
+.training-panel {
+  border: 1px solid rgb(117 160 173 / 32%);
+  border-radius: 0;
+  background: linear-gradient(145deg, rgb(17 29 35 / 90%), rgb(6 11 15 / 98%));
+  color: #fff;
+}
+
+.training-panel:is(:hover, :focus-visible) {
+  border-color: rgb(176 245 84 / 84%);
+  background: linear-gradient(145deg, rgb(27 49 51 / 94%), rgb(6 11 15 / 98%));
+}
+
+.training-action {
+  border: 1px solid rgb(176 245 84 / 72%);
+  border-radius: 0;
+  background: rgb(176 245 84 / 8%);
+  color: var(--training-lime);
+}
+
+.training-action:is(:hover, :focus-visible) { background: rgb(176 245 84 / 18%); }

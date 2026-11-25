@@ -407,15 +407,15 @@ export function SerialRecallScreen() {
         >
           ← MENÚ
         </button>
-        <span className="training-code">COGNITION // ENTRENAMIENTO 01</span>
+        <span className="training-code training-label">COGNITION // ENTRENAMIENTO 01</span>
       </header>
 
       <section className="training-intro">
-        <span className="training-kicker">MEMORIA DE TRABAJO</span>
+        <span className="training-label">MEMORIA DE TRABAJO</span>
         <h1>MEMORIA SECUENCIAL</h1>
         <p>Memorize the sequence. Reproduce it in the exact order.</p>
         <button
-          className="start-training-button"
+          className="start-training-button training-action"
           type="button"
           onClick={() => setIsSetupScreen(true)}
         >
@@ -474,7 +474,7 @@ export function SerialRecallScreen() {
             >
               ← MENÚ
             </button>
-            <span className="training-code">COGNITION // CONFIGURATION</span>
+            <span className="training-code training-label">COGNITION // CONFIGURATION</span>
             <button
               className="silhouette-vault-button"
               type="button"
@@ -489,11 +489,11 @@ export function SerialRecallScreen() {
 
           <div className="training-setup-intro">
             <img
-              className="training-setup-logo"
+              className="training-setup-logo training-emblem"
               src={assetUrl("assets/cognition-brain-logo.png")}
               alt="Cognition"
             />
-            <span className="training-kicker">MEMORIA SECUENCIAL</span>
+            <span className="training-label">MEMORIA SECUENCIAL</span>
             <h1>CONFIGURA TU ENTRENAMIENTO</h1>
             <p>Selecciona la cantidad de siluetas para configurar tu sesión.</p>
           </div>
@@ -501,7 +501,7 @@ export function SerialRecallScreen() {
           <div className="training-level-grid">
             {levels.map((level, index) => (
               <button
-                className={`training-level-card${level.available ? "" : " is-locked"}`}
+                className={`training-level-card training-panel${level.available ? "" : " is-locked"}`}
                 type="button"
                 key={level.id}
                 disabled={!level.available}

@@ -3,7 +3,7 @@
   min-height: 100vh;
   flex-direction: column;
   padding: 30px clamp(24px, 6vw, 96px) 60px;
-  background: #05070a;
+  background: var(--training-background);
   color: #fff;
 }
 
@@ -11,28 +11,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(117, 160, 173, 0.24);
+  border-bottom: 1px solid var(--training-divider);
   padding-bottom: 20px;
 }
 
 .back-button {
   border: 0;
   background: transparent;
-  color: #64e8f4;
+  color: var(--training-cyan);
   cursor: pointer;
   font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-}
-
-.training-code,
-.training-kicker {
-  color: rgba(100, 232, 244, 0.72);
-  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
 }
 
 .training-intro {
@@ -57,10 +48,7 @@
 
 .start-training-button {
   margin-top: 28px;
-  border: 1px solid rgba(176, 245, 84, 0.72);
-  background: rgba(176, 245, 84, 0.08);
   padding: 13px 30px;
-  color: #b0f554;
   cursor: pointer;
   font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
   font-size: 0.82rem;
@@ -71,7 +59,6 @@
 
 .start-training-button:hover,
 .start-training-button:focus-visible {
-  background: rgba(176, 245, 84, 0.18);
   box-shadow: 0 0 24px rgba(176, 245, 84, 0.16);
   outline: none;
   transform: translateY(-2px);
@@ -265,7 +252,7 @@
   min-height: 100dvh;
   flex-direction: column;
   overflow-y: auto;
-  background: #05070a;
+  background: var(--training-background);
   padding: 30px clamp(24px, 6vw, 96px) 44px;
 }
 
@@ -273,7 +260,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(117, 160, 173, 0.24);
+  border-bottom: 1px solid var(--training-divider);
   padding-bottom: 20px;
 }
 
@@ -307,8 +294,6 @@
   width: clamp(58px, 8vw, 92px);
   height: clamp(58px, 8vw, 92px);
   margin: 0 auto 22px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 18px rgba(100, 232, 244, 0.22));
 }
 
 .training-setup-intro h1 {
@@ -339,10 +324,7 @@
   display: grid;
   min-height: 150px;
   align-content: space-between;
-  border: 1px solid rgba(117, 160, 173, 0.32);
-  background: linear-gradient(145deg, rgba(17, 29, 35, 0.9), rgba(6, 11, 15, 0.98));
   padding: 17px 18px;
-  color: #fff;
   cursor: pointer;
   text-align: left;
   transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
@@ -350,8 +332,6 @@
 
 .training-level-card:hover,
 .training-level-card:focus-visible {
-  border-color: rgba(176, 245, 84, 0.84);
-  background: linear-gradient(145deg, rgba(27, 49, 51, 0.94), rgba(6, 11, 15, 0.98));
   outline: none;
   transform: translateY(-4px);
 }

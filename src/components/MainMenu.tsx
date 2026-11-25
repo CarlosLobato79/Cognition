@@ -220,30 +220,28 @@ export function MainMenu() {
   return (
     <main className="main-menu" aria-labelledby="menu-title">
       <header className="menu-header">
-        <div className="menu-brand">
-          <img src={assetUrl('assets/cognition-brain-logo.png')} alt="" width="28" height="28" />
-          <span>Cognition</span>
-        </div>
+        {activeArea !== null && (
+          <Link className="area-back" to="/"><span aria-hidden="true">←</span> Cambiar área</Link>
+        )}
+        <span className="menu-brand training-label">Cognition</span>
       </header>
 
       <div className="module-catalog">
         <div className="module-catalog-heading">
-          <div>
-            <h1 id="menu-title" ref={sectionHeading} tabIndex={-1} aria-describedby="module-catalog-context">{title}</h1>
-            <p id="module-catalog-context">{activeArea === null ? 'Elige un área' : exerciseCount(visibleModules.length)}</p>
-          </div>
-          {activeArea !== null && (
-            <Link className="area-back" to="/"><span aria-hidden="true">←</span> Cambiar área</Link>
-          )}
+          <img className="menu-emblem training-emblem" src={assetUrl('assets/cognition-brain-logo.png')} alt="" width="44" height="44" />
+          <p className="module-catalog-kicker training-label" id="module-catalog-context">
+            {activeArea === null ? 'Elige un área' : exerciseCount(visibleModules.length)}
+          </p>
+          <h1 id="menu-title" ref={sectionHeading} tabIndex={-1} aria-describedby="module-catalog-context">{title}</h1>
         </div>
 
         {activeArea === null ? (
           <>
             <ul className="area-options" role="list">
               {areaOptions.map(({ area, name, count }) => (
-                <li key={area} data-area={area}>
+                <li key={area}>
                   <Link
-                    className="area-option"
+                    className="area-option training-panel"
                     to={`/?area=${area}`}
                     aria-labelledby={`area-${area}-name`}
                     aria-describedby={`area-${area}-count`}
@@ -258,7 +256,7 @@ export function MainMenu() {
               ))}
             </ul>
             <div className="area-all">
-              <Link to="/?area=all">Ver los {modules.length} ejercicios <span aria-hidden="true">→</span></Link>
+              <Link className="training-action" to="/?area=all">Ver los {modules.length} ejercicios <span aria-hidden="true">→</span></Link>
             </div>
           </>
         ) : (
@@ -269,9 +267,9 @@ export function MainMenu() {
               const status = percent === 0 ? 'Sin iniciar' : percent === 100 ? 'Completado' : `${percent}% completado`
 
               return (
-                <li className="module-card" data-area={area} key={module.slug}>
+                <li className="module-card" key={module.slug}>
                   <button
-                    className="module-card-action"
+                    className="module-card-action training-panel"
                     type="button"
                     id={`${module.slug}-details`}
                     aria-labelledby={`${module.slug}-title`}
@@ -326,9 +324,9 @@ export function MainMenu() {
             <h3>Qué entrenas</h3>
             <p>{selectedModule.benefits}</p>
             <ul className="module-modal-areas" role="list" aria-label="Áreas cognitivas">
-              {selectedModule.areas.map((area) => <li key={area} data-area={area}>{areas[area]}</li>)}
+              {selectedModule.areas.map((area) => <li key={area}>{areas[area]}</li>)}
             </ul>
-            <Link className="module-modal-action" to={`/training/${selectedModule.slug}`} onClick={closeDetails}>
+            <Link className="module-modal-action training-action" to={`/training/${selectedModule.slug}`} onClick={closeDetails}>
               Ir al entrenamiento <span aria-hidden="true">→</span>
             </Link>
           </div>
