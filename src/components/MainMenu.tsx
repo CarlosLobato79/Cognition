@@ -4,11 +4,11 @@ import '../styles/main-menu.css'
 import { assetUrl } from '../utils/assets'
 
 const areas = {
-  memory: { name: 'Memoria', description: 'Recuerda secuencias, posiciones y datos recientes.' },
-  attention: { name: 'Atención', description: 'Distingue lo importante entre los distractores.' },
-  executive: { name: 'Función ejecutiva', description: 'Cambia de estrategia y controla respuestas automáticas.' },
-  speed: { name: 'Velocidad', description: 'Compara estímulos y responde con rapidez y precisión.' },
-  auditory: { name: 'Memoria auditiva', description: 'Retén y reconoce información que escuchas.' },
+  memory: 'Memoria',
+  attention: 'Atención',
+  executive: 'Función ejecutiva',
+  speed: 'Velocidad',
+  auditory: 'Memoria auditiva',
 } as const
 
 type Area = keyof typeof areas
@@ -140,7 +140,7 @@ const modules: TrainingModule[] = [
 
 const areaOptions = (Object.keys(areas) as Area[]).map((area) => ({
   area,
-  ...areas[area],
+  name: areas[area],
   count: modules.filter((module) => module.areas.includes(area)).length,
 }))
 const perfectRunsRequired = 25
@@ -183,6 +183,7 @@ export function MainMenu() {
   const visibleModules = isArea(activeArea)
     ? modules.filter((module) => module.areas.includes(activeArea))
     : modules
+  const title = activeArea === null ? 'Entrenamiento cognitivo' : activeArea === 'all' ? 'Todos los ejercicios' : areas[activeArea]
 
   useEffect(() => {
     if (previousArea.current === activeArea) return
@@ -220,53 +221,47 @@ export function MainMenu() {
     <main className="main-menu" aria-labelledby="menu-title">
       <header className="menu-header">
         <div className="menu-brand">
-          <img src={assetUrl('assets/cognition-brain-logo.png')} alt="" width="36" height="36" />
+          <img src={assetUrl('assets/cognition-brain-logo.png')} alt="" width="28" height="28" />
           <span>Cognition</span>
-        </div>
-        <div className="menu-intro">
-          <h1 id="menu-title">Entrenamiento cognitivo</h1>
-          <p>Encuentra ejercicios para practicar memoria, atención y otras habilidades.</p>
         </div>
       </header>
 
-      {activeArea === null ? (
-        <section className="module-catalog" aria-labelledby="area-picker-title">
-          <div className="module-catalog-heading">
-            <h2 id="area-picker-title" ref={sectionHeading} tabIndex={-1}>Elige un área</h2>
+      <div className="module-catalog">
+        <div className="module-catalog-heading">
+          <div>
+            <h1 id="menu-title" ref={sectionHeading} tabIndex={-1} aria-describedby="module-catalog-context">{title}</h1>
+            <p id="module-catalog-context">{activeArea === null ? 'Elige un área' : exerciseCount(visibleModules.length)}</p>
           </div>
-          <ul className="area-options" role="list">
-            {areaOptions.map(({ area, name, description, count }) => (
-              <li key={area} data-area={area}>
-                <Link
-                  className="area-option"
-                  to={`/?area=${area}`}
-                  aria-labelledby={`area-${area}-name`}
-                  aria-describedby={`area-${area}-description area-${area}-count`}
-                >
-                  <h3 id={`area-${area}-name`}>{name}</h3>
-                  <p id={`area-${area}-description`}>{description}</p>
-                  <span className="area-option-count" id={`area-${area}-count`}>{exerciseCount(count)}</span>
-                  <span className="area-option-arrow" aria-hidden="true">→</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="area-all">
-            <Link to="/?area=all">Ver los {modules.length} ejercicios <span aria-hidden="true">→</span></Link>
-          </div>
-        </section>
-      ) : (
-        <section className="module-catalog" aria-labelledby="module-catalog-title">
-          <div className="module-catalog-heading">
-            <div>
-              <h2 id="module-catalog-title" ref={sectionHeading} tabIndex={-1} aria-describedby="module-catalog-count">
-                {activeArea === 'all' ? 'Todos los ejercicios' : areas[activeArea].name}
-              </h2>
-              <p id="module-catalog-count">{exerciseCount(visibleModules.length)}</p>
-            </div>
+          {activeArea !== null && (
             <Link className="area-back" to="/"><span aria-hidden="true">←</span> Cambiar área</Link>
-          </div>
+          )}
+        </div>
 
+        {activeArea === null ? (
+          <>
+            <ul className="area-options" role="list">
+              {areaOptions.map(({ area, name, count }) => (
+                <li key={area} data-area={area}>
+                  <Link
+                    className="area-option"
+                    to={`/?area=${area}`}
+                    aria-labelledby={`area-${area}-name`}
+                    aria-describedby={`area-${area}-count`}
+                  >
+                    <span>
+                      <span className="catalog-item-title" id={`area-${area}-name`}>{name}</span>
+                      <span className="catalog-item-meta" id={`area-${area}-count`}>{exerciseCount(count)}</span>
+                    </span>
+                    <span className="catalog-item-arrow" aria-hidden="true">→</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="area-all">
+              <Link to="/?area=all">Ver los {modules.length} ejercicios <span aria-hidden="true">→</span></Link>
+            </div>
+          </>
+        ) : (
           <ul className="module-rail" role="list">
             {visibleModules.map((module) => {
               const percent = progress[module.slug]
@@ -275,35 +270,32 @@ export function MainMenu() {
 
               return (
                 <li className="module-card" data-area={area} key={module.slug}>
-                  {activeArea === 'all' && <span className="module-card-area">{areas[area].name}</span>}
-                  <h3 id={`${module.slug}-title`}>{module.name}</h3>
-                  <p>{module.summary}</p>
-                  <div className="module-card-footer">
-                    <div className="module-card-progress">
-                      <span>{status}</span>
-                      <span className="module-progress-track" aria-hidden="true">
-                        <span style={{ width: `${percent}%` }} />
+                  <button
+                    className="module-card-action"
+                    type="button"
+                    id={`${module.slug}-details`}
+                    aria-labelledby={`${module.slug}-title`}
+                    aria-describedby={`${module.slug}-meta`}
+                    aria-haspopup="dialog"
+                    onClick={(event) => {
+                      event.currentTarget.focus({ preventScroll: true })
+                      setSelectedModule(module)
+                    }}
+                  >
+                    <span>
+                      <span className="catalog-item-title" id={`${module.slug}-title`}>{module.name}</span>
+                      <span className="catalog-item-meta" id={`${module.slug}-meta`}>
+                        {activeArea === 'all' ? `${areas[area]} · ` : ''}{status}
                       </span>
-                    </div>
-                    <button
-                      type="button"
-                      id={`${module.slug}-details`}
-                      aria-labelledby={`${module.slug}-details ${module.slug}-title`}
-                      aria-haspopup="dialog"
-                      onClick={(event) => {
-                        event.currentTarget.focus({ preventScroll: true })
-                        setSelectedModule(module)
-                      }}
-                    >
-                      Ver ejercicio <span aria-hidden="true">→</span>
-                    </button>
-                  </div>
+                    </span>
+                    <span className="catalog-item-arrow" aria-hidden="true">→</span>
+                  </button>
                 </li>
               )
             })}
           </ul>
-        </section>
-      )}
+        )}
+      </div>
 
       <dialog
         className="module-modal"
@@ -334,7 +326,7 @@ export function MainMenu() {
             <h3>Qué entrenas</h3>
             <p>{selectedModule.benefits}</p>
             <ul className="module-modal-areas" role="list" aria-label="Áreas cognitivas">
-              {selectedModule.areas.map((area) => <li key={area} data-area={area}>{areas[area].name}</li>)}
+              {selectedModule.areas.map((area) => <li key={area} data-area={area}>{areas[area]}</li>)}
             </ul>
             <Link className="module-modal-action" to={`/training/${selectedModule.slug}`} onClick={closeDetails}>
               Ir al entrenamiento <span aria-hidden="true">→</span>
